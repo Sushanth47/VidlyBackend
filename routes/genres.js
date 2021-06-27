@@ -5,14 +5,14 @@ const { Genre, validate } = require('../models/genre')
 
 
  //to get the complete list
- router.get('/', async (req, res) =>{
+ router.get('/genres', async (req, res) =>{
      const genres = await Genre.find().sort('name');
      res.status(200).json(genres);
  });
  
  
  // to post a new id into genre,
- router.post('/', async(req, res) => {
+ router.post('/creategenres', async(req, res) => {
      const { error } = validate(req.body);
      if(error) return res.status(400).send(error.details[0].message);
  
@@ -24,7 +24,7 @@ const { Genre, validate } = require('../models/genre')
  
  
  //to put ig
- router.put('/:id', async(req, res) =>{
+ router.put('/updategenres/:id', async(req, res) =>{
     const { error } = validate(req.body);
      if(error) return res.status(400).send(error.details[0].message);
     
@@ -37,7 +37,7 @@ const { Genre, validate } = require('../models/genre')
  })
  
  //to delete a genre
- router.delete('/:id', async (req, res) => {
+ router.delete('/deletegenres/:id', async (req, res) => {
    const genre =await Genre.findByIdAndRemove(req.params.id);
 
      if(!genre) return res.status(404).send('Genre not found');
@@ -48,7 +48,7 @@ const { Genre, validate } = require('../models/genre')
  
  
  //to get by id
- router.get('/:id', async(req, res) => {
+ router.get('/getspecificgenre/:id', async(req, res) => {
 
    let genre =  await Genre.findById(req.params.id);
      if(!genre) return res.status(404).send('Genre not found');

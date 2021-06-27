@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Joi= require('joi');
-const Customer = mongoose.model('Customer', new mongoose.Schema({
+const customerSchema = new mongoose.Schema({
     name:{
         required:true,
         type: String,
@@ -15,7 +15,10 @@ const Customer = mongoose.model('Customer', new mongoose.Schema({
         required: true,
          minlength: 4
     }
-}));
+});
+
+const Customer = mongoose.model('Customer', customerSchema)
+
 function vaildateCustomer(customer){
     const schema = Joi.object({
         name: Joi.string().min(3).max(50).required(),
@@ -26,4 +29,5 @@ function vaildateCustomer(customer){
  } 
 
  exports.Customer = Customer;
+ 
  exports.validate = vaildateCustomer;

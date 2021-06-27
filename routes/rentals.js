@@ -10,19 +10,28 @@ Fawn.init(mongoose);
 
 
  //to get the complete list
- router.get('/', async (req, res) =>{
+ router.get('/rentals', async (req, res) =>{
      const rentals = await rental.find().sort('-dateOut');
+     console.log(rentals)
      res.send(rentals);
  });
  
  
  // to post a new id into genre,
- router.post('/', async(req, res) => {
+ router.post('/createrentals', async(req, res) => {
      const { error } = validate(req.body);
      if(error) return res.status(400).send(error.details[0].message);
- 
+     
+     if(!mongoose.Types.ObjectId.isValid(req.body.customerId)){
+        return res.status(400).send('Invalid ID');
+     }
+
      const customer = await Customer.findById(req.body.customerId);
      if (!customer) return res.status(400).send('Invalid customer.');
+
+     if(!mongoose.Types.ObjectId.isValid(req.body.movieId)){
+        return res.status(400).send('Invalid ID');
+     }
 
      const movie = await Movie.findById(req.body.movieId);
      if(!movie) return res.status(400).send('Invalid movie');
@@ -38,7 +47,9 @@ Fawn.init(mongoose);
           movie: {
               _id: movie._id,
               title: movie.title,
-              dailyRentalRate: movie.dailyRentalRate
+              dailyRentalRate: movie.dailyRentalRate,
+              link: movie.link,
+              img: movie.img
           }
      });
      
@@ -59,7 +70,7 @@ Fawn.init(mongoose);
  
  
  //to put ig
- router.put('/:id', async(req, res) =>{
+ router.put('/updaterentals/:id', async(req, res) =>{
     const { error } = validate(req.body);
      if(error) return res.status(400).send(error.details[0].message);
     
@@ -72,7 +83,7 @@ Fawn.init(mongoose);
  })
  
  //to delete a genre
- router.delete('/:id', async (req, res) => {
+ router.delete('/deleterentals/:id', async (req, res) => {
    const rental =await Rental.findByIdAndRemove(req.params.id);
 
      if(!rental) return res.status(404).send('Rental not found');
@@ -83,7 +94,7 @@ Fawn.init(mongoose);
  
  
  //to get by id
- router.get('/:id', async(req, res) => {
+ router.get('/getspecificrental/:id', async(req, res) => {
 
    let rental =  await Rental.findById(req.params.id);
      if(!rental) return res.status(404).send('Rental not found');

@@ -1,26 +1,28 @@
 const {Customer, validate} = require('../models/customer')
 const express = require('express');
-const router = express.Router;
+const router = express.Router();
 
 
-router.get('/', async (req, res) =>{
-    const customers = await Customer.find().sort('name');
+router.get('/customers', async (req, res) =>{
+    const customers = await Customer.find({});
+    console.log(customers);
     res.send(customers);
 });
 
 
 // to post a new id into genre,
-router.post('/', async(req, res) => {
+router.post('/createcustomers', async(req, res) => {
     const { error } = validate(req.body);
     if(error) return res.status(400).send(error.details[0].message);
 
 
     let customer = new Customer({
         name: req.body.name,
-        phone: req.body.number,
+        phone: req.body.phone,
         isGold: req.body.isGold
     });
     customer = await customer.save();
+    console.log(customer);
     res.send(customer);
 });
 
@@ -28,7 +30,7 @@ router.post('/', async(req, res) => {
 
 
 //to put ig
-router.put('/:id', async(req, res) =>{
+router.put('/updatecustomers/:id', async(req, res) =>{
    const { error } = validate(req.body);
     if(error) return res.status(400).send(error.details[0].message);
    
@@ -41,7 +43,7 @@ router.put('/:id', async(req, res) =>{
 })
 
 //to delete a genre
-router.delete('/:id', async (req, res) => {
+router.delete('/deletecustomers/:id', async (req, res) => {
   const customer =await Customer.findByIdAndRemove(req.params.id);
 
     if(!customer) return res.status(404).send('Customer not found');
@@ -52,7 +54,7 @@ router.delete('/:id', async (req, res) => {
 
 
 //to get by id
-router.get('/:id', async(req, res) => {
+router.get('/getspecificcustomer/:id', async(req, res) => {
 
   let customer =  await Customer.findById(req.params.id);
     if(!customer) return res.status(404).send('Customer not found');
