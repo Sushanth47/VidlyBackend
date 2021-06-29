@@ -1,3 +1,6 @@
-<h1><%=title%></h1>
 
-<h5><%=message%></h5>
+<%movies.forEach(list=>{%>
+   <h1><%=list.title%></h1>
+   <h5><%=list.genre.name%></h5>
+   <img src="<%=list.img%>" alt="img"/>
+<%})%>

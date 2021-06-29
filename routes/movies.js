@@ -5,8 +5,9 @@ const mongoose = require('mongoose');
 const router = express.Router();
 
 router.get('/movies', async(req, res) =>{
-    const movies = await Movie.find().sort('name');
-    res.send(movies);
+    const movies = await Movie.find({}).sort('name');
+    console.log(movies);
+    res.render('./index', {movies: movies});
 });
 
 router.post('/createmovies', async(req, res)=>{
