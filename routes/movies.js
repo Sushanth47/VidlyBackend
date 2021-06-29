@@ -23,6 +23,7 @@ router.post('/createmovies', async(req, res)=>{
         },
         img:req.body.img,
         link:req.body.link,
+        description: req.body.description,
         numberInStock: req.body.numberInStock,
         dailyRentalRate: req.body.dailyRentalRate
     })
