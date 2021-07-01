@@ -9,19 +9,21 @@
       <%movies.forEach(list=>{%>
         <div class="col-md-4 col-xs-6">
             <div class="card">
-              <div class="col-md-4">
+              <div class="col-md-5">
                 <img src="<%=list.img%>" class="card-img" alt="...">
               </div>
-              
-                <div class="card-block">
+
+                <div class="card-block" style="padding:4px;">
                     <h4 class="card-title"><%=list.title%>(<%=list.year%>)</h4>
-                    <p class="card-text"><small class="text-muted"><%=list.genre.name%></small></p>
-                    <p class="card-text"><%=list.description%></p>
-                    <small><a href="<%=list.link%>" alt="#" target="_blank">IMDB Page</a></small>
+                    <p class="card-text"><b class="text-muted">   <%=list.genre.name%></b></p>
+                    <span>IMDB Movie Rank: <%=list.rank%></span>
+                    <p class="card-text">   Starring: <%=list.cast%></p>
+                    <small><a href="<%=list.links%>" alt="#" target="_blank"><button class="btn btn-outline-warning" style="padding:4px">IMDB Page</button></a></small>
                 </div>
             </div>
+            <br>
         </div>
         <%})%>
-    </div>
+      </div>
   </div>
   
