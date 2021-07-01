@@ -5,4 +5,8 @@ router.get('/' ,(req, res) =>{
     res.render('index', { title: 'My Express App', message: 'Hello'});
  });
 
+router.get('/', (req, res) =>{
+    res.render('404');
+}
+
  module.exports = router;
