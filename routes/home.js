@@ -5,7 +5,7 @@ router.get('/' ,(req, res) =>{
     res.render('index', { title: 'My Express App', message: 'Hello'});
  });
 
-router.get('/', (req, res) =>{
+router.all('/', (req, res, next) =>{
     res.render('404');
 }
 
