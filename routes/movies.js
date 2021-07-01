@@ -12,7 +12,7 @@ router.get('/movies', async(req, res) =>{
 
 router.post('/createmovies', async(req, res)=>{
 
-    const genre = await Genre.findById(req.body.genreId)
+    const genre = await Genre.findOne({name:req.body.genrename})
     if (!genre) return res.status(400).json('Invalid Genre');
 
     let movie = new Movie({
@@ -21,6 +21,7 @@ router.post('/createmovies', async(req, res)=>{
             _id:genre._id,
             name:genre.name
         },
+        year:req.body.year,
         img:req.body.img,
         link:req.body.link,
         description: req.body.description,
@@ -28,6 +29,7 @@ router.post('/createmovies', async(req, res)=>{
         dailyRentalRate: req.body.dailyRentalRate
     })
      movie.save();
+     console.log(movie);
      res.status(200).send(movie)
 })
 

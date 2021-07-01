@@ -1,21 +1,27 @@
 
 <%- include('./partials/header') %>
 
+<link rel="stylesheet" href="style.css"/>
 
-<%movies.forEach(list=>{%>
-    <div class="card mb-3" style="max-width: 540px;">
-      <div class="row no-gutters">
-        <div class="col-md-4">
-          <img src="<%=list.img%>" class="card-img" alt="...">
+
+  <div class="container">
+    <div class="row">
+      <%movies.forEach(list=>{%>
+        <div class="col-md-4 col-xs-6">
+            <div class="card">
+              <div class="col-md-4">
+                <img src="<%=list.img%>" class="card-img" alt="...">
+              </div>
+              
+                <div class="card-block">
+                    <h4 class="card-title"><%=list.title%>(<%=list.year%>)</h4>
+                    <p class="card-text"><small class="text-muted"><%=list.genre.name%></small></p>
+                    <p class="card-text"><%=list.description%></p>
+                    <small><a href="<%=list.link%>" alt="#" target="_blank">IMDB Page</a></small>
+                </div>
+            </div>
         </div>
-        <div class="col-md-8">
-          <div class="card-body">
-            <h5 class="card-title"><%=list.title%></h5>
-            <p class="card-text"><small class="text-muted"><%=list.genre.name%></small></p>
-            <p class="card-text"><%=list.description%></p>
-            
-          </div>
-        </div>
-      </div>
+        <%})%>
     </div>
-<%})%>
+  </div>
+  
