@@ -3,15 +3,43 @@ const express = require('express');
 const router = express.Router();
 
 
-router.get('/customers', async (req, res) =>{
-    const customers = await Customer.find({});
-    console.log(customers);
-    res.send(customers);
-});
+router.get('/customers', getCustomers);
 
 
 // to post a new id into genre,
-router.post('/createcustomers', async(req, res) => {
+router.post('/createcustomers',createCustomers);
+
+
+
+
+//to put ig
+router.put('/updatecustomers/:id', updateCustomers)
+
+//to delete a genre
+router.delete('/deletecustomers/:id', deleteCustomer)
+
+
+
+//to get by id
+router.get('/getspecificcustomer/:id', getSpecificCustomer);
+
+
+
+
+module.exports = router, Customer;
+
+
+
+//In Controllers
+
+exports.getCustomers= async (req, res) =>{
+    const customers = await Customer.find({});
+    console.log(customers);
+    res.send(customers);
+};
+
+
+exports.createCustomers =  async(req, res) => {
     const { error } = validate(req.body);
     if(error) return res.status(400).send(error.details[0].message);
 
@@ -24,13 +52,9 @@ router.post('/createcustomers', async(req, res) => {
     customer = await customer.save();
     console.log(customer);
     res.send(customer);
-});
+}
 
-
-
-
-//to put ig
-router.put('/updatecustomers/:id', async(req, res) =>{
+exports.updateCustomers = async(req, res) =>{
    const { error } = validate(req.body);
     if(error) return res.status(400).send(error.details[0].message);
    
@@ -40,28 +64,20 @@ router.put('/updatecustomers/:id', async(req, res) =>{
     if(!customer) return res.status(404).send('Customer not found');
 
     res.send(customer);
-})
+}
 
-//to delete a genre
-router.delete('/deletecustomers/:id', async (req, res) => {
+
+exports.deleteCustomer = async (req, res) => {
   const customer =await Customer.findByIdAndRemove(req.params.id);
 
     if(!customer) return res.status(404).send('Customer not found');
 
     res.send(customer);
-})
+}
 
-
-
-//to get by id
-router.get('/getspecificcustomer/:id', async(req, res) => {
+exports.getSpecificCustomer = async(req, res) => {
 
   let customer =  await Customer.findById(req.params.id);
     if(!customer) return res.status(404).send('Customer not found');
     res.send(customer);
-});
-
-
-
-
-module.exports = router, Customer;
+}
