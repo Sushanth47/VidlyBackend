@@ -6,9 +6,13 @@ const customers = require('./routes/customers')
 const rentals = require('./routes/rentals')
 const movies = require('./routes/movies')
 const home = require('./routes/home')
-const router = express.Router();
+
+
 //MongoDB Connections
-mongoose.connect('mongodb://localhost/vidly', { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect('mongodb://localhost/vidly', {
+ useNewUrlParser: true,
+ useUnifiedTopology: true
+})
  .then(()=>console.log('Connected to The Database'))
  .catch((err)=>console.error(err));
 
@@ -27,7 +31,7 @@ app.use('/api/customers', customers);
 app.use('/api/rentals', rentals);
 app.use('/api/movies', movies)
 
-router.all('*', (req, res, next) =>{
+app.all('*', (req, res, next) =>{
    res.render('404');
 });
   
