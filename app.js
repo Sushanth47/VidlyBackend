@@ -27,7 +27,7 @@ app.use('/api/customers', customers);
 app.use('/api/rentals', rentals);
 app.use('/api/movies', movies)
 
-router.all('/', (req, res, next) =>{
+router.all('*', (req, res, next) =>{
    res.render('404');
 });
   
