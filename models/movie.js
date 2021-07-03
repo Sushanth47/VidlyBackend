@@ -33,7 +33,8 @@ const movieSchema = new mongoose.Schema({
         required: true,
         min:0,
         max:255
-    }
+    },
+    ismovieCreated:{type:Boolean, default:false}
 });
 
 const Movie = mongoose.model('Movie', movieSchema);

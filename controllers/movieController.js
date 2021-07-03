@@ -4,8 +4,10 @@ const { Genre } = require('../models/genre');
 
 exports.getMovies = async(req, res) =>{
    const movies = await Movie.find({}).sort('name');
+   
+   const searchmovies = await Movie.find({}).sort('name');
    console.log(movies);
-   res.render('./index', {movies: movies});
+   res.render('./movies', {movies: movies});
 }
 
 exports.createMovies = async(req, res)=>{
@@ -13,7 +15,8 @@ exports.createMovies = async(req, res)=>{
    const genre = await Genre.findOne({_id:req.body.genreId})
    console.log('genre', genre);
    if (!genre) return res.status(400).json('Invalid Genre');
-   const movieadd = req.body.title
+
+   const movieadd = req.body.title;
    var axios = require("axios").default;
 
    var options = {
@@ -27,7 +30,7 @@ exports.createMovies = async(req, res)=>{
    };
 
    axios.request(options).then(function (response) {
-       console.log(response.data);
+    //    console.log(response.data);
        var apidata = response.data
        // response.data.d.forEach(list=>{
            let movie = new Movie({
@@ -44,15 +47,19 @@ exports.createMovies = async(req, res)=>{
            numberInStock: req.body.numberInStock,
            dailyRentalRate: req.body.dailyRentalRate
        })
+       movie.ismovieCreated = true;
     movie.save();
-    console.log(movie.rank);
-    res.status(200).json(movie);
+    // console.log(movie.rank);
+    res.status(200).redirect(`/api/movies/createmoviespage`);
        // })
    }).catch(function (error) {
        console.error(error);
-   });
-   
-    
+   });  
+}
+
+exports.createMoviesPage = async(req, res)=>{
+    let movie = await Movie.find({});
+    return res.status(200).render(`./createmovies`, {movie:movie});
 }
 
 exports.updateMovies = async(req, res) =>{
@@ -79,7 +86,7 @@ exports.deleteMovies = async (req, res) => {
  
  exports.getSpecificMovie = async(req, res) => {
  
-   let movie =  await Movie.findById(req.params.id);
+   let movie =  await Movie.findOne({title:req.body.name});
      if(!movie) return res.status(404).send('Movie not found');
      res.send(movie);
  }

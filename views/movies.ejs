@@ -1,0 +1,33 @@
+
+<%- include('./partials/header') %>
+<head>
+  <title>Vidly-Movies</title> 
+</head>
+<link rel="stylesheet" href="style.css"/>
+
+
+
+  <div class="container">
+    <div class="row">
+      <br>
+      <%movies.forEach(list=>{%>
+        <div class="col-md-4 col-xs-6">
+            <div class="card">
+              <div class="col-md-5">
+                <img src="<%=list.img%>" class="card-img" alt="...">
+              </div>
+
+                <div class="card-block" style="padding:4px;">
+                    <h4 class="card-title"><%=list.title%>(<%=list.year%>)</h4>
+                    <p class="card-text"><b class="text-muted">   <%=list.genre.name%></b></p>
+                    <span>IMDB Movie Rank: <%=list.rank%></span>
+                    <p class="card-text">   Starring: <%=list.cast%></p>
+                    <small><a href="<%=list.links%>" alt="#" target="_blank"><button class="btn btn-outline-warning" style="padding:3.5px">IMDB Page</button></a></small>
+                </div>
+            </div>
+            <br>
+        </div>
+        <%})%>
+      </div>
+  </div>
+  

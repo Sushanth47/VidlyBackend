@@ -31,9 +31,9 @@ app.use('/api/customers', customers);
 app.use('/api/rentals', rentals);
 app.use('/api/movies', movies)
 
-app.all('*', (req, res, next) =>{
-   res.render('404');
-});
+// app.all('*', (req, res, next) =>{
+//    res.render('404');
+// });
   
 const port = process.env.PORT || 3031;
 app.listen(port, () => console.log(`Hello to ${port}`));

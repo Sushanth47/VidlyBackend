@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const { Rental, validate } = require('../models/rental')
-const { getRentals, createRentals, updateGenre, deleteGenre, getSpecificGenre} = require('../controllers/genreController');
+const { getRentals, createRentals, updateRentals, deleteRentals, getSpecificRentals} = require('../controllers/rentalController');
 const Fawn = require('fawn');
 
 Fawn.init(mongoose);
@@ -17,14 +17,14 @@ Fawn.init(mongoose);
  
  
  //to put ig
- router.put('/updaterentals/:id', updateGenre)
+ router.put('/updaterentals/:id', updateRentals)
  
  //to delete a genre
- router.delete('/deleterentals/:id', deleteGenre)
+ router.delete('/deleterentals/:id', deleteRentals)
  
  
  
  //to get by id
- router.get('/getspecificrental/:id', getSpecificGenre);
+ router.get('/getspecificrental/:id', getSpecificRentals);
 
  module.exports = router, Rental;

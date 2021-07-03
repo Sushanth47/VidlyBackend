@@ -4,7 +4,8 @@ const customerSchema = new mongoose.Schema({
     name:{
         required:true,
         type: String,
-        minlength: 4
+        minlength: 4,
+        unique:true
     },
     isGold: {
         type:Boolean, 
@@ -13,8 +14,10 @@ const customerSchema = new mongoose.Schema({
     phone: {
         type: String, 
         required: true,
-         minlength: 4
-    }
+         minlength: 4,
+         unique:true
+    },
+    password:{type:String}
 });
 
 const Customer = mongoose.model('Customer', customerSchema)

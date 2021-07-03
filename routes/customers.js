@@ -2,9 +2,10 @@
 const express = require('express');
 const router = express.Router();
 const {getCustomers, createCustomers, updateCustomers, deleteCustomer, getSpecificCustomer } = require('../controllers/customerController');
+const { signup } = require('../controllers/authController');
 
-router.get('/customers', getCustomers);
-
+router.post('/customers', getCustomers);
+router.post('/signup', signup);
 
 // to post a new id into genre,
 router.post('/createcustomers',createCustomers);

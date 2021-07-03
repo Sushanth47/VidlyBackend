@@ -1,7 +1,7 @@
 const { Movie } = require('../models/movie');
 const { Customer } = require('../models/customer');
 const mongoose = require('mongoose');
-const { Rental, validate } = require('../models/rental')
+const { Rental, validate } = require('../models/rental');
 const Fawn = require('fawn');
 
 

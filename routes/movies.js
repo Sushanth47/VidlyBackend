@@ -1,10 +1,12 @@
 require('dotenv').config()
 const {Movie, validate} = require('../models/movie');
 const express = require('express');
-const {getMovies, createMovies, updateMovies, deleteMovies, getSpecificMovie} = require('../controllers/movieController');
+const {getMovies, createMovies, updateMovies, deleteMovies, getSpecificMovie, createMoviesPage} = require('../controllers/movieController');
 const router = express.Router();
 
 router.get('/movies', getMovies);
+
+router.get('/createmoviespage', createMoviesPage);
 
 router.post('/createmovies', createMovies)
 
@@ -16,7 +18,7 @@ router.put('/updatemovies/:id',updateMovies )
  
  
  //to get by id
- router.get('/getspecificmovies/:id', getSpecificMovie);
+ router.post('/getspecificmovies', getSpecificMovie);
 
  module.exports = router, Movie;
 

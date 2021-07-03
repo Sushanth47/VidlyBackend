@@ -5,20 +5,27 @@ const router = express.Router();
 
 
 exports.getCustomers= async (req, res) =>{
-   const customers = await Customer.find({});
+   const customers = await Customer.findOne({phone:req.body.phone});
+
    console.log(customers);
-   res.send(customers);
+   
+   if(customers.password != req.body.password){
+      res.json('please enter correct password')
+   }else{
+      res.json('Authentication Success');
+   } 
 };
 
 
 exports.createCustomers =  async(req, res) => {
-   const { error } = validate(req.body);
-   if(error) return res.status(400).send(error.details[0].message);
+   // const { error } = validate(req.body);
+   // if(error) return res.status(400).send(error.details[0].message);
 
 
    let customer = new Customer({
        name: req.body.name,
        phone: req.body.phone,
+       password:req.body.password,
        isGold: req.body.isGold
    });
    customer = await customer.save();

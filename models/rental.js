@@ -8,7 +8,8 @@ const rentalSchema = new mongoose.Schema({
                 type:String,
                 required:true,
                 minlength:5,
-                maxlength:50
+                maxlength:50,
+                unique:true
             },
             isGold:{
                 type:Boolean,
@@ -18,8 +19,10 @@ const rentalSchema = new mongoose.Schema({
                 type:String,
                 required:true,
                 minlength:5,
-                maxlength:50
-            }
+                maxlength:50,
+                unique:true
+            },
+            password:{type:String}
         }),
         required:true
     },
