@@ -62,6 +62,12 @@ exports.createMoviesPage = async(req, res)=>{
     return res.status(200).render(`./createmovies`, {movie:movie});
 }
 
+exports.displayMovie = async(req, res)=>{
+   let movie = await Movie.findOne({title: req.params.title});
+   console.log(movie);
+   return res.status(200).render(`./moviePage.ejs, {movie:movie});
+}
+
 exports.updateMovies = async(req, res) =>{
    // const { error } = validate(req.body);
    //  if(error) return res.status(400).send(error.details[0].message);
