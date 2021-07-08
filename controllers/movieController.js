@@ -63,7 +63,7 @@ exports.createMoviesPage = async(req, res)=>{
 }
 
 exports.displayMovie = async(req, res)=>{
-   let movie = await Movie.findOne({title: req.params.title});
+   let movie = await Movie.findOne({title: req.body.title});
    console.log(movie);
    return res.status(200).render(`./moviePage.ejs, {movie:movie});
 }
