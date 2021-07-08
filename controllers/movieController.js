@@ -57,6 +57,8 @@ exports.createMovies = async(req, res)=>{
    });  
 }
 
+exports
+
 exports.createMoviesPage = async(req, res)=>{
     let movie = await Movie.find({});
     return res.status(200).render(`./createmovies`, {movie:movie});
