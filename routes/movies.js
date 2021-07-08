@@ -1,5 +1,6 @@
 require('dotenv').config()
 const {Movie, validate} = require('../models/movie');
+const {Requested} = require('../models/requestedModel');
 const express = require('express');
 const {getMovies, createMovies, updateMovies, deleteMovies, getSpecificMovie, createMoviesPage, displayMovie} = require('../controllers/movieController');
 const router = express.Router();
