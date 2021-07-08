@@ -1,7 +1,7 @@
 require('dotenv').config()
 const {Movie, validate} = require('../models/movie');
 const express = require('express');
-const {getMovies, createMovies, updateMovies, deleteMovies, getSpecificMovie, createMoviesPage} = require('../controllers/movieController');
+const {getMovies, createMovies, updateMovies, deleteMovies, getSpecificMovie, createMoviesPage, displayMovie} = require('../controllers/movieController');
 const router = express.Router();
 
 router.get('/movies', getMovies);
@@ -9,7 +9,7 @@ router.get('/movies', getMovies);
 router.get('/createmoviespage', createMoviesPage);
 
 router.post('/createmovies', createMovies)
-
+router.post('/searchmovie', displayMovie);
 router.put('/updatemovies/:id',updateMovies )
  
  //to delete a genre
