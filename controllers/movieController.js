@@ -6,7 +6,7 @@ exports.getMovies = async(req, res) =>{
    const movies = await Movie.find({}).sort('name');
    
    const searchmovies = await Movie.find({}).sort('name');
-   console.log(movies);
+//    console.log(movies);
    res.render('./movies', {movies: movies});
 }
 
@@ -64,11 +64,21 @@ exports.createMoviesPage = async(req, res)=>{
     return res.status(200).render(`./createmovies`, {movie:movie});
 }
 
-exports.displayMovie = async(req, res)=>{
-   let movie = await Movie.findOne({title: req.body.title});
-   console.log(movie);
-   return res.status(200).render(`./moviePage.ejs, {movie:movie});
+exports.displayMovieSearch = async(req, res)=>{
+    let movie = await Movie.findOne({title:req.body.title});
+    console.log(movie)
+    if(!movie) return res.status(404).send('Movie not found');
+    return res.status(200).render('./moviePage.ejs', {movie:movie});
 }
+
+exports.displayMovie = async(req, res)=>{
+    let movie =  await Movie.findOne({title:req.params.title});
+    console.log(movie)
+    if(!movie) return res.status(404).send('Movie not found');
+    return res.status(200).render('./moviePage.ejs', {movie:movie});
+}
+
+
 
 exports.updateMovies = async(req, res) =>{
    // const { error } = validate(req.body);
@@ -92,9 +102,4 @@ exports.deleteMovies = async (req, res) => {
 
 
  
- exports.getSpecificMovie = async(req, res) => {
  
-   let movie =  await Movie.findOne({title:req.body.name});
-     if(!movie) return res.status(404).send('Movie not found');
-     res.send(movie);
- }

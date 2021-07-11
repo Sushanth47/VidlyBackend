@@ -1,3 +1,31 @@
 
 <%- include('./partials/header') %>
 
+<form action="/api/movies/:title/" method="POST">
+   <div style="text-align:right" class="form-group">
+   <input type="text" id="searchmovie"  style="width:300px; border-color:grey;" name="title" placeholder="Please enter the movie" />
+   <button type="submit" style="background-color:green; border:none; color:white; text-align: center; padding:8px 32px ">Search</button>
+   <br><br><h7 style="text-align:right;padding-right:30px ">Other Popular Movies you may like</h7>
+ </div>
+ </form>
+ 
+<div class="row" style="padding-left:30px">
+   <a target="_blank" href="<%=movie.img%>"><img style="height:500px; width:300px; "  src="<%=movie.img%>" /></a>
+   <div class="container">
+      <h1 ><%=movie.title%> (<%=movie.year%>)</h1>
+      <h5 style="font-weight:lighter">Starring: <b><%=movie.cast%></b></h5>
+      <h5 style="font-weight:lighter">Genre: <b><%=movie.genre.name%></b></h5>
+      <h5 style="font-weight:lighter">Ratings: </h5><br>
+      <h5 style="font-weight:lighter">IMDB Page: <a target="_blank" href="<%=movie.links%>"><b>Click Here</b></a></h5>
+      <h5 style="font-weight:lighter">Movie Rank: <b><%=movie.rank%></b></h5><br>
+      <h4 style="font-weight:lighter">Rental Rate: <b style="color:red">$<%=movie.dailyRentalRate%></b><small><small> +charges for Home delivery</small></small></h4>
+      <h4 style="font-weight:lighter">Gold Customer Rental Rate: <b style="color:red">$<%=movie.dailyRentalRate - 5%></b></h4>
+      <%if(movie.numberInStock <=10){%>
+         <b ><span style="color:red">Available in Stock: <%=movie.numberInStock%></b></span>
+      <%}else{%>
+         <span>Available in Stock: <%=movie.numberInStock%></span>
+      <%}%>
+      <br><br>
+      <span><button class="btn btn-outline-success">Rent</button></span>
+   </div>
+</div>
