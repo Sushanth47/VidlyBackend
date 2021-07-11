@@ -6,12 +6,13 @@ const customers = require('./routes/customers')
 const rentals = require('./routes/rentals')
 const movies = require('./routes/movies')
 const home = require('./routes/home')
-
-
+const users = require('./routes/userRoutes');
+const auth = require('./routes/authRoutes');
 //MongoDB Connections
 mongoose.connect('mongodb://localhost/vidly', {
  useNewUrlParser: true,
- useUnifiedTopology: true
+ useUnifiedTopology: true,
+ useCreateIndex:true
 })
  .then(()=>console.log('Connected to The Database'))
  .catch((err)=>console.error(err));
@@ -28,12 +29,14 @@ app.use(express.static('public'));
 app.use('/', home);
 app.use('/api/genres', genres)
 app.use('/api/customers', customers);
+app.use('/api/users', users);
 app.use('/api/rentals', rentals);
 app.use('/api/movies', movies)
+app.use('/api/auth', auth);
 
-// app.all('*', (req, res, next) =>{
-//    res.render('404');
-// });
+app.all('*', (req, res, next) =>{
+   res.render('404');
+});
   
 const port = process.env.PORT || 3031;
 app.listen(port, () => console.log(`Hello to ${port}`));

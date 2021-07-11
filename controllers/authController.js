@@ -1,18 +1,26 @@
-const express = require('express');
-const router = express.Router();
-const { Customer, validate } = require('../models/customer');
+const bcrypt = require('bcrypt');
+const _ = require('lodash');
+const { User } = require('../models/user');
 
-exports.signup = async(req, res)=>{
-   const signingup = await Customer.find({});
+
+exports.getUserfromdata = async(req, res)=>{
+   let user = await User.findOne({email:req.body.email});
+   console.log(user);
+   if (!user) return res.status(400).send('Invalid Email/Password');
    
-   signingup.forEach(list=>{
-      console.log('ha')
-      list.name = req.body.name;
-      list.phone = req.body.phone;
-      list.password = req.body.password;
-      list.isGold = false
-      list.save();
-   })
-   console.log(signingup);
-   return res.status(200).send(signingup);
+   // const validpassword = await bcrypt.compare(req.body.password, user.password);
+   // if(!validpassword) return res.status(400).send('Invalid Email/Password');
+   if(req.body.password != user.password){
+      return res.status(400).send('Invalid Email/Password')
+   }
+
+   res.send(true);
+}
+
+function validate(req){
+   const schema = Joi.object({
+       email:Joi.string().min(3).required().email(),
+       password: Joi.string.min(3).required()
+     });
+   return schema.validate(user);
 }
