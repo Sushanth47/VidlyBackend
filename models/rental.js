@@ -24,7 +24,7 @@ const rentalSchema = new mongoose.Schema({
         type:Number,
         min:0
     }
-},{timestapms:true});
+},{timestamps:true});
 
 const Rental = mongoose.model('Rental', rentalSchema)
 

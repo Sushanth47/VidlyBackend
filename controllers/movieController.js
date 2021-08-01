@@ -3,6 +3,11 @@ const {Movie, validate} = require('../models/movie');
 const {Requested} = require('../models/movie');
 const { Genre } = require('../models/genre');
 
+async function escapeRegex(text) {
+    console.log(text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&"))
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+  }
+
 exports.getMovies = async(req, res) =>{
    const movies = await Movie.aggregate([
        {
@@ -20,9 +25,15 @@ exports.getMovies = async(req, res) =>{
                dailyRentalRate:1
            }
        }
-   ]).sort({'name':1});
-   res.render('./movies', {movies: movies});
+   ]).sort({'_id':- 1});
+  return res.status(200).render('./movies', {movies: movies});
 }
+
+// exports.headerPage = async(req, res)=>{
+//     var userCheck = req.user;
+//     console.log(userCheck);
+//     return res.status(200).render('./partials/header.ejs', userCheck);
+// }
 
 exports.createMovies = async(req, res)=>{
    const genre = await Genre.findOne({name:req.body.genreName})
@@ -89,6 +100,7 @@ exports.createMoviesPage = async(req, res)=>{
 }
 
 exports.displayMovieSearch = async(req, res)=>{
+    const regex = new RegExp(escapeRegex(req.body.title), 'gi');
     let movie = await Movie.findOne({title:req.body.title}).populate('genreId');
     // console.log(movie)
     if(!movie) return res.status(404).send('Movie not found');
@@ -122,13 +134,13 @@ exports.displayMovie = async(req, res)=>{
 
 
 
-exports.deleteMovies = async (req, res) => {
-   const movie =await Movie.findByIdAndRemove(req.params.id);
+// exports.deleteMovies = async (req, res) => {
+//    const movie =await Movie.findByIdAndRemove(req.params.id);
  
-     if(!movie) return res.status(404).send('Movie not found');
+//      if(!movie) return res.status(404).send('Movie not found');
  
-     res.send(movie);
- }
+//      res.send(movie);
+//  }
 
 
  

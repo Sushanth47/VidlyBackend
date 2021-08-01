@@ -4,22 +4,27 @@ var app = express();
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
+// const {mongoClient} = require
 const genres = require('./routes/genres')
 const customers = require('./routes/customers')
-const rentals = require('./routes/rentals')
-const movies = require('./routes/movies')
-const home = require('./routes/home')
+const rentals = require('./routes/rentals');
+const movies = require('./routes/movies');
+const home = require('./routes/home');
 const users = require('./routes/userRoutes');
 const auth = require('./routes/authRoutes');
 const middlemass = require('./middleware/auth');
 const { User } = require('./models/user');
+const { Genre } = require('./models/genre');
 //MongoDB Connections
-mongoose.connect('mongodb://localhost/vidly', {
+const port = process.env.PORT || 3031;
+const password = 'vidlybackend'
+const dbURI = 'mongodb+srv://vidlybackend:'+password+'@cluster0.eyaim.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+mongoose.connect(dbURI, {
  useNewUrlParser: true,
  useUnifiedTopology: true,
  useCreateIndex:true
 })
- .then(()=>console.log('Connected to The Database'))
+ .then(()=>app.listen(port, '0.0.0.0',() => console.log(`Hello to ${port}`)))
  .catch((err)=>console.error(err));
 
 //Set and Use
@@ -58,12 +63,21 @@ app.get('/phonetoken', async(req, res)=>{
    return res.status(200).json("done")
 })
 
+app.post('/addgenre', async(req, res)=>{
+   console.log(req.body);
+   var obj = {
+      name:req.body.genre
+   };
+   await Genre.create(obj);
+   return res.status(200).json({message:`Genre Added ${req.body.genre}`});
+})
+
 app.get('/cookie', middlemass,function (req, res) {
    // Cookies that have not been signed
    console.log('Cookies: ', req.cookies)
-  
+   res.clearCookie()
    // Cookies that have been signed
-   console.log('Signed Cookies: ', req.signedCookies)
+   console.log('Signed Cookies: ', )
  })
 
 //404 Page
@@ -73,5 +87,3 @@ app.all('*', (req, res, next) =>{
 
 
 //PORT
-const port = process.env.PORT || 3031;
-app.listen(port, () => console.log(`Hello to ${port}`));

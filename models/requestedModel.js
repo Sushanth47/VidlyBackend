@@ -10,6 +10,8 @@ const requestedSchema = new mongoose.Schema({
         trime:true
     },
     ismovieCreated:{type:Boolean, default:false}
+},{
+    timestamps:true
 });
 
 const Requested = mongoose.model('Requested', requestedSchema);
