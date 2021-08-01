@@ -1,5 +1,6 @@
 require('dotenv').config()
 const {Movie, validate} = require('../models/movie');
+const {Requested} = require('../models/movie');
 const { Genre } = require('../models/genre');
 
 exports.getMovies = async(req, res) =>{
@@ -66,10 +67,20 @@ exports.createMovies = async(req, res)=>{
    });  
 }
 
-exports.othermovies = async(req, res)=>{
-   
+exports.requestedMoviePage = async(req, res)=>{
+    const movie = await Requested.find({ismovieCreated:false});
+    return res.status(200).render('./',{movie:movie});
+}
 
-    return res.status(200).render('./moviePage.ejs', otherMovies);
+exports.requestedMovie = async(req, res)=>{
+    const movie = await Movie.findOne({title:req.body.title});
+    if(movie) return res.status(400).send('movie already exists');
+
+    const requested = new Requested({
+        title:req.body.title
+    });
+    customer = await Requested.save();
+    return res.status(200).redirect('/api/movies/movies');
 }
 
 exports.createMoviesPage = async(req, res)=>{

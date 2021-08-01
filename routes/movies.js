@@ -1,11 +1,14 @@
 require('dotenv').config()
 const {Movie, validate} = require('../models/movie');
+const {Requested} = require('../models/requestedModel');
 const isAdmin = require('../middleware/auth');
 const {Requested} = require('../models/requestedModel');
 const express = require('express');
-const {getMovies, createMovies, othermovies, updateMovies, deleteMovies, displayMovieSearch,createMoviesPage, displayMovie} = require('../controllers/movieController');
+const {getMovies, createMovies, othermovies, requestedMovie,updateMovies, deleteMovies, displayMovieSearch,createMoviesPage, displayMovie} = require('../controllers/movieController');
 const router = express.Router();
 const middlemass = require('../middleware/auth');
+
+router.post('/requestmovie', middlemass, requestedMovie);
 
 router.get('/movies', getMovies);
 
