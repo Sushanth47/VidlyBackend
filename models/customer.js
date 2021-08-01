@@ -14,11 +14,15 @@ const customerSchema = new mongoose.Schema({
     phone: {
         type: String, 
         required: true,
-         minlength: 4,
-         unique:true
+        minlength: 4,
+        unique:true
     },
-    password:{type:String}
-});
+    password:{
+        type:String,
+        required:true,
+        minlength:1}
+    },
+    {timestamps: true});
 
 const Customer = mongoose.model('Customer', customerSchema)
 

@@ -17,14 +17,14 @@
       <br>
       <%movies.forEach(list=>{%>
         <div class="col-md-4 col-xs-6">
-            <div class="card">
-              <div class="col-md-5">
-               <a target="_blank" href="<%=list.img%>"><img src="<%=list.img%>" class="card-img" alt="..."></a> 
+            <div class="card" style="width:90%; display:flex; align-items:center; justify-content:center">
+              <div class="col-md-9 col-xs-5">
+               <a target="_blank" href="<%=list.img%>"><img style="padding-left:10px" src="<%=list.img%>" class="card-img" alt="..."></a> 
               </div>
 
                 <div class="card-block" style="padding:4px;">
                     <a href="/api/movies/<%=list.title%>"><h4 class="card-title"><%=list.title%>(<%=list.year%>)</h4></a>
-                    <p class="card-text"><b class="text-muted">   <%=list.genre.name%></b></p>
+                    <p class="card-text"><b class="text-muted">   <%=list.genreId.name%></b></p>
                     <span>IMDB Movie Rank: <%=list.rank%></span>
                     <p class="card-text">   Starring: <%=list.cast%></p>
                     <a href="<%=list.links%>" alt="#" target="_blank">IMDB Page</a>

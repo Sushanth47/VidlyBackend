@@ -9,8 +9,9 @@ const movieSchema = new mongoose.Schema({
         required: true,
         trime:true
     },
-    genre:{
-        type:genreSchema,
+    genreId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Genre',
         required:true
     },
     rank:{type:Number},
@@ -34,7 +35,11 @@ const movieSchema = new mongoose.Schema({
         min:0,
         max:255
     },
-    ismovieCreated:{type:Boolean, default:false}
+    ismovieCreated:{type:Boolean, default:false},
+    requestCount:{type:Number, default:0}
+},
+{
+    timestamps:true
 });
 
 const Movie = mongoose.model('Movie', movieSchema);

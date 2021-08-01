@@ -1,7 +1,11 @@
 const express = require('express');
-const { getUser } = require('../controllers/userController');
+const isAdmin = require('../middleware/auth')
+const { getUser, meUser } = require('../controllers/userController');
 const router = require('./rentals');
 
-router.post('/getusers', getUser);
+router.get('/me', isAdmin, meUser);
+
+
+
 
 module.exports = router;

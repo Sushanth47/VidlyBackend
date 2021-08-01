@@ -3,17 +3,29 @@ const {Movie, validate} = require('../models/movie');
 const { Genre } = require('../models/genre');
 
 exports.getMovies = async(req, res) =>{
-   const movies = await Movie.find({}).sort('name');
-   
-   const searchmovies = await Movie.find({}).sort('name');
-//    console.log(movies);
+   const movies = await Movie.aggregate([
+       {
+           $project:{
+               _id:1,
+               isMovieCreated:1,
+               title:1,
+               genreId:1,
+               year:1,
+               img:1,
+               links:1,
+               cast:1,
+               rank:1,
+               numberInStock:1,
+               dailyRentalRate:1
+           }
+       }
+   ]).sort({'name':1});
    res.render('./movies', {movies: movies});
 }
 
 exports.createMovies = async(req, res)=>{
-
-   const genre = await Genre.findOne({_id:req.body.genreId})
-   console.log('genre', genre);
+   const genre = await Genre.findOne({name:req.body.genreName})
+//    console.log('genre', genre);
    if (!genre) return res.status(400).json('Invalid Genre');
 
    const movieadd = req.body.title;
@@ -35,10 +47,7 @@ exports.createMovies = async(req, res)=>{
        // response.data.d.forEach(list=>{
            let movie = new Movie({
            title:apidata.d[0].l,
-           genre:{
-               _id:genre._id,
-               name:genre.name
-           },
+           genreId:genre._id,
            year:apidata.d[0].y,
            img:apidata.d[0].i.imageUrl,
            links:"https://www.imdb.com/title/"+apidata.d[0].id+"/",
@@ -57,25 +66,46 @@ exports.createMovies = async(req, res)=>{
    });  
 }
 
-exports
+exports.othermovies = async(req, res)=>{
+   
+
+    return res.status(200).render('./moviePage.ejs', otherMovies);
+}
 
 exports.createMoviesPage = async(req, res)=>{
-    let movie = await Movie.find({});
+    let movie = await Movie.find({}).populate('genreId');
     return res.status(200).render(`./createmovies`, {movie:movie});
 }
 
 exports.displayMovieSearch = async(req, res)=>{
-    let movie = await Movie.findOne({title:req.body.title});
-    console.log(movie)
+    let movie = await Movie.findOne({title:req.body.title}).populate('genreId');
+    // console.log(movie)
     if(!movie) return res.status(404).send('Movie not found');
-    return res.status(200).render('./moviePage.ejs', {movie:movie});
+    let genre = await Genre.findOne({name:movie.genreId.name});
+    let otherMovies = await Movie.find({genreId:genre._id});
+    return res.status(200).render('./moviePage.ejs', {
+        movie:movie,
+        otherMovies:otherMovies
+    });
 }
 
 exports.displayMovie = async(req, res)=>{
-    let movie =  await Movie.findOne({title:req.params.title});
-    console.log(movie)
+    let movie =  await Movie.findOne({title:req.params.title}).populate('genreId');
+    // console.log(movie)
     if(!movie) return res.status(404).send('Movie not found');
-    return res.status(200).render('./moviePage.ejs', {movie:movie});
+    let genre = await Genre.findOne({name:movie.genreId.name});
+    let otherMovies = await Movie.find({genreId:genre._id});
+    console.log(otherMovies);
+
+    for(var i=0; i<otherMovies.length; i++){
+        if(otherMovies[i].title == movie.title){
+            otherMovies.splice(i, 1);
+        }
+    }
+    return res.status(200).render('./moviePage.ejs', {
+        movie:movie,
+        otherMovies:otherMovies
+    });
 }
 
 

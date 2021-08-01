@@ -8,7 +8,8 @@ const genreSchema = new mongoose.Schema({
         minlength: 4,
         maxlength: 50
     }
-});
+},
+{timestamps:true});
 
 const Genre = mongoose.model('Genre', genreSchema)
 
