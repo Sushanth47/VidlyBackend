@@ -25,9 +25,10 @@
                 <div class="card-block" style="padding:4px;">
                     <a href="/api/movies/<%=list.title%>"><h4 class="card-title"><%=list.title%>(<%=list.year%>)</h4></a>
                     <p class="card-text"><b class="text-muted">   <%=list.genreId.name%></b></p>
-                    <span><b>Rank</b>: <%=list.rank%></span>
-                    <p class="card-text"> <b>  Starring</b>: <%=list.cast%></p>
-                    <span class="card-text">Ratings : 3/5</span>
+                    <span><b>Rank</b>: <%=list.rank%></span><br>
+                    <span class="card-text"> <b>Starring</b>: <%=list.cast%></span>
+                    <span><b>Ratings</b>  : 3/5</span>
+                    <p class="card-text"><b>Rental Price</b>: $<%=list.dailyRentalRate%></p>
                     <br><a class="card-text " href="<%=list.links%>" alt="#"  target="_blank">IMDB Page</a>
                 </div>
             </div>

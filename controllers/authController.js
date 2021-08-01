@@ -23,7 +23,23 @@ async function generateAuthToken(res, _id, name){
 
 
 exports.loginPage = async(req, res)=>{
-   return res.status(200).render('./loginPage.ejs')
+   var type="userLogin";
+   return res.status(200).render('./loginPage.ejs', {type:type})
+}
+
+exports.signupPage = async(req, res)=>{
+   var type="userLogin";
+   return res.status(200).render('./signupPage', {type:type});
+}
+
+exports.signupPageCustomer = async(req, res)=>{
+   var type="customerLogin";
+   return res.status(200).render('./signupPage', {type:type});
+}
+
+exports.loginPageCustomer = async(req, res)=>{
+   var type="customerLogin";
+   return res.status(200).render('./loginPage.ejs', {type:type});
 }
 
 exports.getUser = async(req, res)=>{
@@ -74,10 +90,12 @@ exports.getCustomer = async(req, res)=>{
       phone:req.body.phone,
       password:req.body.password
    });
-   const token = generateAuthToken(res, req.body._id, req.body.name)
+   const token = generateAuthToken(res, req.body._id, req.body.name);
+   
    newCustomer = await Customer.save();
    return res.status(200).redirect('/api/movies/movies');
 }
+
 
 
 function validate(req){

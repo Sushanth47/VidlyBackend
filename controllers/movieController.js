@@ -26,14 +26,11 @@ exports.getMovies = async(req, res) =>{
            }
        }
    ]).sort({'_id':- 1});
+//    console.log(req.user, 'req.user');
   return res.status(200).render('./movies', {movies: movies});
 }
 
-// exports.headerPage = async(req, res)=>{
-//     var userCheck = req.user;
-//     console.log(userCheck);
-//     return res.status(200).render('./partials/header.ejs', userCheck);
-// }
+
 
 exports.createMovies = async(req, res)=>{
    const genre = await Genre.findOne({name:req.body.genreName})
