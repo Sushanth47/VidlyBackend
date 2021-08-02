@@ -67,9 +67,12 @@ exports.getUserfromdata = async(req, res)=>{
    return res.status(200).redirect('/api/movies/movies');
 }
 
-// exports.logOut = async(req, res)=>{
-//    res.cookie('cookie')
-// }
+exports.logOut = async(req, res)=>{
+   res.cookie('cookie', 'logout', , {
+    expires: new Date(Date.now() + 10 * 1000),
+    httpOnly: true
+  });
+}
 
 exports.getCustomerfromData = async(req, res)=>{
    var customer = await Customer.findOne({phone:req.body.phone});
