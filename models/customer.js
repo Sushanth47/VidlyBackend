@@ -15,6 +15,11 @@ const customerSchema = new mongoose.Schema({
    type:Boolean,
    default:false
    },
+    phoneToken:{
+    type:String,
+    default:"N/A",
+    unique:true
+  },
     phone: {
         type: String, 
         required: true,
