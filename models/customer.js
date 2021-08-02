@@ -11,6 +11,10 @@ const customerSchema = new mongoose.Schema({
         type:Boolean, 
         default:false
     },
+    active: {
+   type:Boolean,
+   default:false
+   },
     phone: {
         type: String, 
         required: true,
@@ -22,6 +26,8 @@ const customerSchema = new mongoose.Schema({
         required:true,
         minlength:1}
     },
+   
+    
     {timestamps: true});
 
 const Customer = mongoose.model('Customer', customerSchema)
