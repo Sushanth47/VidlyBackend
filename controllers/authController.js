@@ -48,7 +48,7 @@ exports.getUser = async(req, res)=>{
    user = new User(_.pick(req.body, ['name', 'email', 'password'])); 
    
    const token = generateAuthToken(res, user._id, user.name);
-   // user.phoneToken = token;
+   user.phoneToken = token;
    // req.user.owner = true;
    await user.save();
    res.header('x-auth-token', token).send(_.pick(user, ['_id', 'name', 'email']));
@@ -61,7 +61,7 @@ exports.getUserfromdata = async(req, res)=>{
       return res.status(400).send('Invalid Email/Password');
    }
    const token = generateAuthToken(res, user._id, user.name);
-   // user.phoneToken = token;
+   user.phoneToken = token;
    // console.log(token);
    user.save();
    return res.status(200).redirect('/api/movies/movies');
@@ -72,6 +72,7 @@ exports.logOut = async(req, res)=>{
     expires: new Date(Date.now() + 10 * 1000),
     httpOnly: true
   });
+return res.status(200).redirect(/api/movies/movies);
 }
 
 exports.getCustomerfromData = async(req, res)=>{
@@ -80,6 +81,7 @@ exports.getCustomerfromData = async(req, res)=>{
       return res.status(400).send('Invalid Email/Password');
    }
    const token = generateAuthToken(res, customer._id, customer.name);
+   customer.phoneToken = token
    customer.save();
    return res.status(200).redirect('/api/movies/movies');
 }
@@ -94,7 +96,6 @@ exports.getCustomer = async(req, res)=>{
       password:req.body.password
    });
    const token = generateAuthToken(res, req.body._id, req.body.name);
-   
    newCustomer = await Customer.save();
    return res.status(200).redirect('/api/movies/movies');
 }
