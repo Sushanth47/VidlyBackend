@@ -24,6 +24,10 @@ const userSchema = new mongoose.Schema({
     type:String,
     required:true
   },
+  active: {
+   type:Boolean,
+   default:false
+   },
   phoneToken:{
     type:String,
     default:"N/A",
