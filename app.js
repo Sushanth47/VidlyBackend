@@ -14,6 +14,7 @@ const users = require('./routes/userRoutes');
 const auth = require('./routes/authRoutes');
 const middlemass = require('./middleware/auth');
 const { User } = require('./models/user');
+const { Customer } = require('./models/customer');
 const { Genre } = require('./models/genre');
 //MongoDB Connections
 const port = process.env.PORT || 3031;
@@ -55,7 +56,7 @@ app.use('/api/auth', auth);
 
 //Some Direct Routes
 app.get('/phonetoken', async(req, res)=>{
-   var auth = await User.find({});
+   var auth = await Customer.find({});
    auth.forEach(list=>{
       list.phoneToken = "N/A";
       list.save();

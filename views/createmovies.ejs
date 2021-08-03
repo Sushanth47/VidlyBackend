@@ -5,16 +5,25 @@
    <h6>Please add the details to add a movie to the collection</h6>
    <br>
 </div>
-
-<div class="d-flex justify-content-center h-100">
-   <form style="text-align: center;" action="/api/movies/createmovies" method="POST">
-      <input type="text" class="form-control" name="genreName" placeholder="Enter Genre" /><br>
-      <input type="text" class="form-control" name="title" placeholder="Title" /><br>
-      <input type="text" class="form-control" name="numberInStock" placeholder="Number in Stock" /><br>
-      <input type="text" class="form-control" name="dailyRentalRate" placeholder="Rent Rate" /><br>
-      <button type="submit" class="btn btn-outline-success">Submit</button>
-   </form>
+<div class="col">
+   <div class="col text-center d-flex" style="padding-left:650px">
+      <form style="text-align: center;" action="/api/movies/createmovies" method="POST">
+         <input type="text" class="form-control" name="genreName" placeholder="Enter Genre" /><br>
+         <input type="text" class="form-control" name="title" placeholder="Title" /><br>
+         <input type="text" class="form-control" name="numberInStock" placeholder="Number in Stock" /><br>
+         <input type="text" class="form-control" name="dailyRentalRate" placeholder="Rent Rate" /><br>
+         <button type="submit" class="btn btn-outline-success">Submit</button>
+      </form>
+      <div class="col text-right">
+         <h3>All Available Genres</h3>
+         <%allGenres.forEach(list=>{%>
+            <h4 style="padding-right:25px"><%=list.name%></h4><br>
+         <%})%>
+      </div> 
+   </div> 
 </div>
+
 <%if(movie.ismovieCreated){%>
    <span>Movie Added to the Store!</span>
 <%}%>
+

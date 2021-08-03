@@ -48,8 +48,8 @@ exports.getUser = async(req, res)=>{
    user = new User(_.pick(req.body, ['name', 'email', 'password'])); 
    
    const token = generateAuthToken(res, user._id, user.name);
-   user.phoneToken = token;
-   // req.user.owner = true;
+   user.phoneToken = token.cookies;
+   user.active = true;
    await user.save();
    res.header('x-auth-token', token).send(_.pick(user, ['_id', 'name', 'email']));
 }
@@ -62,17 +62,27 @@ exports.getUserfromdata = async(req, res)=>{
    }
    const token = generateAuthToken(res, user._id, user.name);
    user.phoneToken = token;
+   user.active = true;
+
    // console.log(token);
    user.save();
    return res.status(200).redirect('/api/movies/movies');
 }
 
-exports.logOut = async(req, res)=>{
-   res.cookie('cookie', 'logout', , {
+exports.logoutUser = async(req, res)=>{
+   res.cookie('cookie', 'logout', {
     expires: new Date(Date.now() + 10 * 1000),
     httpOnly: true
   });
-return res.status(200).redirect(/api/movies/movies);
+return res.status(200).redirect('/api/movies/movies');
+}
+
+exports.logoutCustomer = async(req, res)=>{
+   res.cookie('cookie', 'logout', {
+      expires: new Date(Date.now() + 10 * 1000),
+      httpOnly: true
+    });
+    return res.status(200).redirect('/api/movies/movies'); 
 }
 
 exports.getCustomerfromData = async(req, res)=>{
@@ -81,7 +91,7 @@ exports.getCustomerfromData = async(req, res)=>{
       return res.status(400).send('Invalid Email/Password');
    }
    const token = generateAuthToken(res, customer._id, customer.name);
-   customer.phoneToken = token
+   customer.phoneToken = token.cookies;
    customer.save();
    return res.status(200).redirect('/api/movies/movies');
 }
@@ -89,15 +99,17 @@ exports.getCustomerfromData = async(req, res)=>{
 exports.getCustomer = async(req, res)=>{
    let customer = await Customer.findOne({phone:req.body.phone});
    if(customer) return res.status(400).send('User already Exists');
+   customer = new Customer(_.pick(req.body, ['name', 'email', 'password', 'phone']));
 
-   let newCustomer = new Customer({
-      name: req.body.name,
-      phone:req.body.phone,
-      password:req.body.password
-   });
-   const token = generateAuthToken(res, req.body._id, req.body.name);
-   newCustomer = await Customer.save();
+   const token = generateAuthToken(res, customer._id, customer.name);
+
+   customer.phoneToken = token.cookies;
+   customer.active = true;
+   customer.isGold = false;
+   await customer.save();
+   // res.header('x-auth-token', token).send(_.pick(user, ['_id', 'name', 'email']));
    return res.status(200).redirect('/api/movies/movies');
+   
 }
 
 

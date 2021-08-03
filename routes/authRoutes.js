@@ -4,7 +4,7 @@ const middlemass = require('../middleware/auth');
 const { getUserfromdata, loginPage, 
    getUser, getCustomer, getCustomerfromData,
     loginPageCustomer,signupPage,
-   signupPageCustomer,logOut
+   signupPageCustomer,logoutUser,logoutCustomer
 } = require('../controllers/authController');
 
 
@@ -23,6 +23,7 @@ router.post('/signup', getUser);
 router.get('/signupPage', signupPageCustomer);
 router.post('/customersignup', getCustomer);
 
-router.get('/logout', middlemass, logOut)
+router.get('/logoutuser', middlemass, logoutUser);
+router.get('/logoutcustomer', middlemass, logoutCustomer);
 
 module.exports = router;

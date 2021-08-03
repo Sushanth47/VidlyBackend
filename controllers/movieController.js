@@ -36,7 +36,6 @@ exports.createMovies = async(req, res)=>{
    const genre = await Genre.findOne({name:req.body.genreName})
 //    console.log('genre', genre);
    if (!genre) return res.status(400).json('Invalid Genre');
-
    const movieadd = req.body.title;
    var axios = require("axios").default;
 
@@ -93,7 +92,8 @@ exports.requestedMovie = async(req, res)=>{
 
 exports.createMoviesPage = async(req, res)=>{
     let movie = await Movie.find({}).populate('genreId');
-    return res.status(200).render(`./createmovies`, {movie:movie});
+    const allGenres = await Genre.find({}, 'name');
+    return res.status(200).render(`./createmovies`, {movie:movie, allGenres:allGenres});
 }
 
 exports.displayMovieSearch = async(req, res)=>{
