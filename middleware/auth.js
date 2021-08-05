@@ -1,5 +1,7 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken')
+const { User } = require('../models/user');
+const { Customer } = require('../models/customer');
 
 module.exports = function (req, res, next) {
    console.log(req.header);
@@ -10,7 +12,7 @@ module.exports = function (req, res, next) {
       const decoded = jwt.verify(token, process.env.jwtPrivateKey);
       req.user = decoded;
       // req.user.isGold = 
-
+      // req.user.save()
       console.log(req.user);
       next();
    }

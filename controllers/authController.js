@@ -24,6 +24,7 @@ async function generateAuthToken(res, _id, name){
 
 exports.loginPage = async(req, res)=>{
    var type="userLogin";
+   console.log(req.user, 'req.user');
    return res.status(200).render('./loginPage.ejs', {type:type})
 }
 
@@ -50,6 +51,7 @@ exports.getUser = async(req, res)=>{
    const token = generateAuthToken(res, user._id, user.name);
    user.phoneToken = token.cookies;
    user.active = true;
+   req.user = user
    await user.save();
    res.header('x-auth-token', token).send(_.pick(user, ['_id', 'name', 'email']));
 }
@@ -61,10 +63,11 @@ exports.getUserfromdata = async(req, res)=>{
       return res.status(400).send('Invalid Email/Password');
    }
    const token = generateAuthToken(res, user._id, user.name);
-   user.phoneToken = token;
+   // user.phoneToken = token;
    user.active = true;
-
-   // console.log(token);
+   req.user = user;
+   console.log(req.user);
+   // req.user.save();
    user.save();
    return res.status(200).redirect('/api/movies/movies');
 }
@@ -92,6 +95,7 @@ exports.getCustomerfromData = async(req, res)=>{
    }
    const token = generateAuthToken(res, customer._id, customer.name);
    customer.phoneToken = token.cookies;
+   req.user = customer;
    customer.save();
    return res.status(200).redirect('/api/movies/movies');
 }
@@ -106,6 +110,8 @@ exports.getCustomer = async(req, res)=>{
    customer.phoneToken = token.cookies;
    customer.active = true;
    customer.isGold = false;
+   req.user = customer
+   // req.user.sa
    await customer.save();
    // res.header('x-auth-token', token).send(_.pick(user, ['_id', 'name', 'email']));
    return res.status(200).redirect('/api/movies/movies');

@@ -55,6 +55,8 @@ app.use('/api/movies', movies)
 app.use('/api/auth', auth);
 
 //Some Direct Routes
+
+
 app.get('/phonetoken', async(req, res)=>{
    var auth = await Customer.find({});
    auth.forEach(list=>{
