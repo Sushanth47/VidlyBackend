@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const isAdmin = require('../middleware/auth');
+const {userauth, customerauth} = require('../middleware/auth');
 const mongoose = require('mongoose');
 const { Rental, validate } = require('../models/rental')
 const { getRentals, createRentals, updateRentals, deleteRentals, getSpecificRentals} = require('../controllers/rentalController');
@@ -10,22 +10,22 @@ Fawn.init(mongoose);
 
 
  //to get the complete list
- router.get('/rentals', isAdmin,getRentals);
+ router.get('/rentals', userauth,getRentals);
  
  
  // to post a new id into genre,
- router.post('/createrentals', isAdmin,createRentals);
+ router.post('/createrentals', customerauth,createRentals);
  
  
  //to put ig
- router.put('/updaterentals/:id', isAdmin,updateRentals)
+ router.put('/updaterentals/:id', customerauth,updateRentals)
  
  //to delete a genre
- router.delete('/deleterentals/:id', isAdmin,deleteRentals)
+ router.delete('/deleterentals/:id', customerauth,deleteRentals)
  
  
  
  //to get by id
- router.get('/getspecificrental/:id', isAdmin,getSpecificRentals);
+ router.get('/getspecificrental/:id', customerauth,getSpecificRentals);
 
  module.exports = router, Rental;

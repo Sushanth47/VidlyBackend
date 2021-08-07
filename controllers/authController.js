@@ -73,19 +73,11 @@ exports.getUserfromdata = async(req, res)=>{
 }
 
 exports.logoutUser = async(req, res)=>{
-   res.cookie('cookie', 'logout', {
-    expires: new Date(Date.now() + 10 * 1000),
-    httpOnly: true
-  });
-return res.status(200).redirect('/api/movies/movies');
+res.clearCookie('token').redirect('/api/movies/movies')
 }
 
 exports.logoutCustomer = async(req, res)=>{
-   res.cookie('cookie', 'logout', {
-      expires: new Date(Date.now() + 10 * 1000),
-      httpOnly: true
-    });
-    return res.status(200).redirect('/api/movies/movies'); 
+   res.clearCookie('token').redirect('/api/movies/movies') 
 }
 
 exports.getCustomerfromData = async(req, res)=>{

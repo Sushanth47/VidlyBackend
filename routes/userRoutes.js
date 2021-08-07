@@ -1,9 +1,9 @@
 const express = require('express');
-const isAdmin = require('../middleware/auth')
+const {userauth, customerauth} = require('../middleware/auth')
 const { getUser, meUser } = require('../controllers/userController');
 const router = require('./rentals');
 
-router.get('/me', isAdmin, meUser);
+router.get('/me', userauth, meUser);
 
 
 

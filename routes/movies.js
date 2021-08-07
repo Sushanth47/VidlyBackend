@@ -6,15 +6,15 @@ const isAdmin = require('../middleware/auth');
 const express = require('express');
 const {getMovies, createMovies, othermovies, requestedMovie,updateMovies, deleteMovies, displayMovieSearch,createMoviesPage, displayMovie} = require('../controllers/movieController');
 const router = express.Router();
-const middlemass = require('../middleware/auth');
+const { userauth, customerauth } = require('../middleware/auth');
 
-router.post('/requestmovie', middlemass, requestedMovie);
+router.post('/requestmovie', userauth, requestedMovie);
 
 router.get('/movies', getMovies);
 
-router.get('/createmoviespage',middlemass,createMoviesPage);
+router.get('/createmoviespage',userauth,createMoviesPage);
 
-router.post('/createmovies',middlemass, createMovies)
+router.post('/createmovies',userauth, createMovies)
 router.get('/:title', displayMovie);
 // router.get('/othermovies', othermovies);
 router.post('/search', displayMovieSearch);

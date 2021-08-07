@@ -26,13 +26,14 @@ exports.getMovies = async(req, res) =>{
            }
        }
    ]).sort({'_id':- 1});
-//    console.log(req.user, 'req.user');
+   console.log(movies, 'req.user');
   return res.status(200).render('./movies', {movies: movies});
 }
 
 
 
 exports.createMovies = async(req, res)=>{
+    // console.log(req.user, 'req.user');
    const genre = await Genre.findOne({name:req.body.genreName})
 //    console.log('genre', genre);
    if (!genre) return res.status(400).json('Invalid Genre');

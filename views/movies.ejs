@@ -1,14 +1,19 @@
 
 <%- include('./partials/header') %>
+<style>
+  
+</style>
+
 <head>
   <title>Vidly-Movies</title> 
 </head>
 <link rel="stylesheet" href="style.css"/>
-
  <form action="/api/movies/search/" method="POST">
-  <div style="text-align:right" class="form-group">
-  <input type="text" id="searchmovie"  style="width:300px; border-color:grey;" name="title" placeholder="Please enter the movie" />
-  <button type="submit" style="background-color:green; border:none; color:white; text-align: center; padding:8px 32px ">Search</button>
+  <div style="text-align:right" class="form-group text-right">
+  <div class="input-append">
+    <input type="text" id="searchmovie" class="pull-right" style="width:250px; border:2px solid grey;border-radius:5px;opacity:inherit" name="title" placeholder="Please enter the movie" />
+    <button type="submit" class="btn btn-success" style="padding:5px">Search</button>
+  </div>
 </div>
 </form> 
 
@@ -17,19 +22,21 @@
       <br>
       <%movies.forEach(list=>{%>
         <div class="col-md-4 col-xs-6">
-            <div class="card" style="width:90%; display:flex; align-items:center; justify-content:center; margin-right:50px">
+            <div class="card" style=" display:flex; align-items:center; justify-content:center; margin-right:50px; border-left:5px solid green; filter:drop-shadow(2px 4px 8px #585858)">
               <div class="col-md-9 col-xs-5">
-               <a target="_blank" href="<%=list.img%>"><img style="padding-right:20px" src="<%=list.img%>" class="card-img" alt="..."></a> 
+                <br>
+               <a target="_blank" href="<%=list.img%>"><img class="card-img" style="padding-right:20px" src="<%=list.img%>" class="card-img" alt="..."></a> 
               </div>
-
                 <div class="card-block" style="padding:4px;">
-                    <a href="/api/movies/<%=list.title%>" target="_blank"><h4 class="card-title"><%=list.title%>(<%=list.year%>)</h4></a>
+                    <a href="/api/movies/<%=list.title%>" target="_blank"><h4 class="card-title" style="text-align: center;"><%=list.title%>(<%=list.year%>)</h4></a>
+                    <span class="card-text text-center"><%=list.cast%></span>
+
                     <p class="card-text"><b class="text-muted">   <%=list.genreId.name%></b></p>
                     <span><b>Rank</b>: <%=list.rank%></span><br>
-                    <span class="card-text"> <b>Starring</b>: <%=list.cast%></span>
+                    <span class="card-text"> <b>Starring</b>: </span>
                     <span><b>Ratings</b>  : 3/5</span>
                     <p class="card-text"><b>Rental Price</b>: $<%=list.dailyRentalRate%></p>
-                    <br><a class="card-text " href="<%=list.links%>" alt="#"  target="_blank">IMDB Page</a>
+                    <br><a class="card-text" style="text-align:center" href="<%=list.links%>" alt="#"  target="_blank">IMDB Page</a>
                 </div>
             </div>
             <br>

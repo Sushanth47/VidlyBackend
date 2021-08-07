@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const middlemass = require('../middleware/auth');
+const {userauth, customerauth} = require('../middleware/auth');
 const { getUserfromdata, loginPage, 
    getUser, getCustomer, getCustomerfromData,
     loginPageCustomer,signupPage,
@@ -23,7 +23,7 @@ router.post('/signup', getUser);
 router.get('/signupPage', signupPageCustomer);
 router.post('/customersignup', getCustomer);
 
-router.get('/logoutuser', middlemass, logoutUser);
-router.get('/logoutcustomer', middlemass, logoutCustomer);
+router.get('/logoutuser', userauth, logoutUser);
+router.get('/logoutcustomer', userauth, logoutCustomer);
 
 module.exports = router;

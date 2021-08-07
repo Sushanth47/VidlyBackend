@@ -12,7 +12,7 @@ const movies = require('./routes/movies');
 const home = require('./routes/home');
 const users = require('./routes/userRoutes');
 const auth = require('./routes/authRoutes');
-const middlemass = require('./middleware/auth');
+const {userauth, customerauth} = require('./middleware/auth');
 const { User } = require('./models/user');
 const { Customer } = require('./models/customer');
 const { Genre } = require('./models/genre');
@@ -75,7 +75,7 @@ app.post('/addgenre', async(req, res)=>{
    return res.status(200).json({message:`Genre Added ${req.body.genre}`});
 })
 
-app.get('/cookie', middlemass,function (req, res) {
+app.get('/cookie', userauth,function (req, res) {
    // Cookies that have not been signed
    console.log('Cookies: ', req.cookies)
    res.clearCookie()

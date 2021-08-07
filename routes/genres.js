@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const isAdmin = require('../middleware/auth');
+const {userauth, customerauth} = require('../middleware/auth');
 const { Genre, validate } = require('../models/genre')
 const { getGenres, createGenre, updateGenre, deleteGenre, getSpecificGenre} = require('../controllers/genreController');
 
@@ -10,14 +10,14 @@ const { getGenres, createGenre, updateGenre, deleteGenre, getSpecificGenre} = re
  
  
  // to post a new id into genre,
- router.post('/creategenres', isAdmin,createGenre);
+ router.post('/creategenres', userauth,createGenre);
  
  
  //to put ig
- router.put('/updategenres/:id', isAdmin,updateGenre )
+ router.put('/updategenres/:id', userauth,updateGenre )
  
  //to delete a genre
- router.delete('/deletegenres/:id', isAdmin,deleteGenre)
+ router.delete('/deletegenres/:id', userauth,deleteGenre)
  
  
  
