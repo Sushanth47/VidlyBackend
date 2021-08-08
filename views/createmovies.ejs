@@ -14,11 +14,14 @@
          <input type="text" class="form-control" name="dailyRentalRate" placeholder="Rent Rate" /><br>
          <button type="submit" class="btn btn-outline-success">Submit</button>
       </form>
-      <div class="col text-right">
-         <h3>All Available Genres</h3>
-         <%allGenres.forEach(list=>{%>
-            <h4 style="padding-right:25px"><%=list.name%></h4><br>
-         <%})%>
+      <div class="col text-right pull-right" style="padding-left:480px;">
+            <ul style="width:200px; border:1px solid; border-radius: 5px;" class="list-group pull-right">
+               <li class="list-group-item active text-center">All Available Genres</li>
+               <%allGenres.forEach(list=>{%>
+               <li class="list-group-item text-center" ><%=list.name%></li>
+               <%})%>
+            </ul>
+         
       </div> 
    </div> 
 </div>

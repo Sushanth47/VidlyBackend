@@ -23,7 +23,7 @@ router.post('/signup', getUser);
 router.get('/signupPage', signupPageCustomer);
 router.post('/customersignup', getCustomer);
 
-router.get('/logoutuser', userauth, logoutUser);
-router.get('/logoutcustomer', userauth, logoutCustomer);
+router.get('/logoutuser', userauth,logoutUser);
+router.get('/logoutcustomer', logoutCustomer);
 
 module.exports = router;

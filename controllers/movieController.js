@@ -9,24 +9,8 @@ async function escapeRegex(text) {
   }
 
 exports.getMovies = async(req, res) =>{
-   const movies = await Movie.aggregate([
-       {
-           $project:{
-               _id:1,
-               isMovieCreated:1,
-               title:1,
-               genreId:1,
-               year:1,
-               img:1,
-               links:1,
-               cast:1,
-               rank:1,
-               numberInStock:1,
-               dailyRentalRate:1
-           }
-       }
-   ]).sort({'_id':- 1});
-   console.log(movies, 'req.user');
+   const movies = await Movie.find({}).populate('genreId', 'name _id ').sort({'createdAt':- 1});
+//    console.log(movies, 'req.user');
   return res.status(200).render('./movies', {movies: movies});
 }
 
@@ -38,6 +22,8 @@ exports.createMovies = async(req, res)=>{
 //    console.log('genre', genre);
    if (!genre) return res.status(400).json('Invalid Genre');
    const movieadd = req.body.title;
+   const checkmovie = await Movie.findOne({title:movieadd});
+   if(checkmovie) return res.status(409).send('Movie already exists');
    var axios = require("axios").default;
 
    var options = {

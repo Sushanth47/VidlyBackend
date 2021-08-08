@@ -60,6 +60,7 @@ exports.getUserfromdata = async(req, res)=>{
    let user = await User.findOne({email:req.body.email});
    // console.log(user);
    if (!user || req.body.password != user.password){ 
+      // return req.flash('errorMessage', 'Invalid Credentials')
       return res.status(400).send('Invalid Email/Password');
    }
    const token = generateAuthToken(res, user._id, user.name);
@@ -73,11 +74,22 @@ exports.getUserfromdata = async(req, res)=>{
 }
 
 exports.logoutUser = async(req, res)=>{
-res.clearCookie('token').redirect('/api/movies/movies')
+   // console.log(req.user, 'userhere');
+   var userfind = await User.findOne({_id:req.user._id});
+   userfind.active = false;
+   userfind.save();
+   // console.log(res.cookies, 'cookies here');
+   res.clearCookie('token');
+   console.log('======================================================')
+return res.status(200).redirect('/api/movies/movies')
 }
 
 exports.logoutCustomer = async(req, res)=>{
-   res.clearCookie('token').redirect('/api/movies/movies') 
+   var customerfind = await Customer.findOne({_id:req.user._id});
+   customerfind.active = false;
+   customerfind.save();
+   res.clearCookie('token')
+   return res.status(200).redirect('/api/movies/movies'); 
 }
 
 exports.getCustomerfromData = async(req, res)=>{

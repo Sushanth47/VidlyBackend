@@ -12,8 +12,8 @@ const customerSchema = new mongoose.Schema({
         default:false
     },
     active: {
-   type:Boolean,
-   default:false
+        type:Boolean,
+        default:false
    },
     phoneToken:{
     type:String,

@@ -2,6 +2,8 @@ require('dotenv').config()
 var express = require('express');
 var app = express();
 const cookieParser = require('cookie-parser');
+var session = require('express-session')
+var flash = require('req-flash');
 const cors = require('cors');
 const mongoose = require('mongoose');
 // const {mongoClient} = require
@@ -36,6 +38,8 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.use(cookieParser());
+app.use(session({ secret: '123' }));
+app.use(flash());
 app.use(
    cors({
      origin: [
