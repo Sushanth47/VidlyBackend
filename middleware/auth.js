@@ -14,9 +14,10 @@ exports.userauth = async (req, res, next)=> {
       var fromUserModel = await User.findOne({name:decoded.name});
       fromUserModel.phoneToken = token
       req.user = fromUserModel;
-      // req.user.isGold = 
+      res.locals.currentUser = currentUser;
+      res.locals.role = currentUser.role
       fromUserModel.save()
-      // console.log(req.user);
+     
       next();
    }
    catch(ex){
