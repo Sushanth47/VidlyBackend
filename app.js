@@ -22,13 +22,13 @@ const { Genre } = require('./models/genre');
 const port = process.env.PORT || 3031;
 const password = 'vidlybackend'
 const dbURI = 'mongodb+srv://vidlybackend:'+password+'@cluster0.eyaim.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
-mongoose.connect(dbURI, {
- useNewUrlParser: true,
- useUnifiedTopology: true,
- useCreateIndex:true
-})
- .then(()=>app.listen(port, '0.0.0.0',() => console.log(`Hello to ${port}`)))
- .catch((err)=>console.error(err));
+// mongoose.connect(dbURI, {
+//  useNewUrlParser: true,
+//  useUnifiedTopology: true,
+//  useCreateIndex:true
+// })
+//  .then(()=>app.listen(port, '0.0.0.0',() => console.log(`Hello to ${port}`)))
+//  .catch((err)=>console.error(err));
 
 //Set and Use
 app.set('view engine', 'ejs');
