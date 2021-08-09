@@ -40,6 +40,13 @@ app.use(express.static('public'));
 app.use(cookieParser());
 app.use(session({ secret: '123' }));
 app.use(flash());
+
+app.use(function (req, res, next){
+   res.locals.success = req.flash('success');
+   res.locals.error = req.flash('error');
+   next()
+})
+
 app.use(
    cors({
      origin: [
