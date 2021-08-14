@@ -1,13 +1,11 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
 
-
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
    <a class="navbar-brand" style="font-style:italic; font-family: cursive;" href="/">Vidly</a>
    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
      <span class="navbar-toggler-icon"></span>
    </button>
- 
    <div class="collapse navbar-collapse" id="navbarSupportedContent">
      <ul class="navbar-nav mr-auto">
        <li class="nav-item active">
@@ -68,12 +66,16 @@
         <span>SignUp</span>
       </a>
      </div>
+     <%if(locals.subject == 'Guest'){%>
+     
      <div class="row">
-      <a href="/api/auth/logoutuser" class="dropdown-item">
-        <i class="ni ni-user-run"></i>
-        <span>Logout</span>
-      </a>
+        <a href="/api/auth/logoutuser" class="dropdown-item">
+          <i class="ni ni-user-run"></i>
+          <span>Logout</span>
+        </a>
      </div>
+     <%}%>
+     
  </nav>
 
  

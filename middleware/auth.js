@@ -4,6 +4,16 @@ const { User } = require('../models/user');
 const { Customer } = require('../models/customer');
 // const db = require()
 
+exports.guestauth = async(req, res, next)=>{
+   const expiration = 604800000;
+   var token = req.headers['user-agent'];
+   res.cookie('guestToken', token, {
+      expires: new Date(Date.now() + expiration),
+   });
+   res.locals.subject="Guest"   
+   next();
+}
+
 exports.userauth = async (req, res, next)=> {
    console.log(req.header);
    const token = req.cookies.token || '';
@@ -14,8 +24,9 @@ exports.userauth = async (req, res, next)=> {
       var fromUserModel = await User.findOne({name:decoded.name});
       fromUserModel.phoneToken = token
       req.user = fromUserModel;
-      res.locals.currentUser = currentUser;
-      res.locals.role = currentUser.role
+      res.locals.subject = 'User'
+      res.locals.fromUserModel = fromUserModel;
+      // res.locals.role = currentUser.role
       fromUserModel.save()
      
       next();
@@ -36,6 +47,8 @@ exports.customerauth = async(req, res)=>{
       var fromUserModel = await Customer.findOne({name:decoded.name});
       fromUserModel.phoneToken = token
       req.user = fromUserModel;
+      res.locals.subject = 'Customer'
+      res.locals.fromUserModel = fromUserModel;
       // req.user.isGold = 
       fromUserModel.save()
       console.log(req.user);

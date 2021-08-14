@@ -3,12 +3,12 @@
 <style>
   
 </style>
-
+<%console.log(locals)%>
 <head>
   <title>Vidly-Movies</title> 
 </head>
 <link rel="stylesheet" href="style.css"/>
- <form action="/api/movies/search/" method="POST">
+ <form action="/api/movies/search/" method="GET">
   <div style="text-align:right" class="form-group text-right">
   <div class="input-append">
     <input type="text" id="searchmovie" class="pull-right" style="width:250px; border:2px solid grey;border-radius:5px;opacity:inherit" name="title" placeholder="Please enter the movie" />

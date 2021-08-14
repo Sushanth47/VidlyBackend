@@ -11,13 +11,13 @@ async function escapeRegex(text) {
 exports.getMovies = async(req, res) =>{
    const movies = await Movie.find({}).populate('genreId', 'name _id ').sort({'createdAt':- 1});
 //    console.log(movies, 'req.user');
-  return res.status(200).render('./movies', {movies: movies});
+  return res.status(200).render('./movies', {movies: movies, locals:res.locals});
 }
 
 
 
 exports.createMovies = async(req, res)=>{
-    // console.log(req.user, 'req.user');
+    console.log(res.locals, 'req.user');
    const genre = await Genre.findOne({name:req.body.genreName})
 //    console.log('genre', genre);
    if (!genre) return res.status(400).json('Invalid Genre');
@@ -78,37 +78,25 @@ exports.requestedMovie = async(req, res)=>{
 }
 
 exports.createMoviesPage = async(req, res)=>{
+    console.log(res.locals, 'locals')
     let movie = await Movie.find({}).populate('genreId');
     const allGenres = await Genre.find({}, 'name');
     return res.status(200).render(`./createmovies`, {movie:movie, allGenres:allGenres});
 }
 
-exports.displayMovieSearch = async(req, res)=>{
-    const regex = new RegExp(escapeRegex(req.body.title), 'gi');
-    let movie = await Movie.findOne({title:req.body.title}).populate('genreId');
-    // console.log(movie)
-    if(!movie) return res.status(404).send('Movie not found');
-    let genre = await Genre.findOne({name:movie.genreId.name});
-    let otherMovies = await Movie.find({genreId:genre._id});
-    return res.status(200).render('./moviePage.ejs', {
-        movie:movie,
-        otherMovies:otherMovies
-    });
-}
+// exports.displayMovieSearch = async(req, res)=>{
+//     const regex = new RegExp(escapeRegex(req.body.title), 'gi');
+//     let movie = await Movie.findOne({title:req.body.title}).populate('genreId');
+//     // console.log(movie)
+//     if(!movie) return res.status(404).send('Movie not found');
+//     
+//     
+// }
 
 exports.displayMovie = async(req, res)=>{
-    let movie =  await Movie.findOne({title:req.params.title}).populate('genreId');
-    // console.log(movie)
-    if(!movie) return res.status(404).send('Movie not found');
-    let genre = await Genre.findOne({name:movie.genreId.name});
-    let otherMovies = await Movie.find({genreId:genre._id});
-    console.log(otherMovies);
-
-    for(var i=0; i<otherMovies.length; i++){
-        if(otherMovies[i].title == movie.title){
-            otherMovies.splice(i, 1);
-        }
-    }
+   var movie = await Movie.findOne({title:{$regex:req.query.title, $options:'$i'}}).populate('genreId');
+   let genre = await Genre.findOne({name:movie.genreId.name});
+   let otherMovies = await Movie.find({genreId:genre._id});
     return res.status(200).render('./moviePage.ejs', {
         movie:movie,
         otherMovies:otherMovies
@@ -118,13 +106,6 @@ exports.displayMovie = async(req, res)=>{
 
 
 
-// exports.deleteMovies = async (req, res) => {
-//    const movie =await Movie.findByIdAndRemove(req.params.id);
- 
-//      if(!movie) return res.status(404).send('Movie not found');
- 
-//      res.send(movie);
-//  }
 
 
  

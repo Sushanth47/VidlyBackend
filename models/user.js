@@ -1,7 +1,7 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
-const Joi = require('Joi')
+// const Joi = require('Joi')
 const express = require('express');
 const app = express();
 const userSchema = new mongoose.Schema({
@@ -43,14 +43,14 @@ const userSchema = new mongoose.Schema({
 const User = mongoose.model('User', userSchema)
 
 
-function validateUser(user){
-    const schema = Joi.object({
-        name: Joi.string().min(3).required(),
-        email:Joi.string().min(3).required().email(),
-        password: Joi.string.min(3).required()
-      });
-    return schema.validate(user);
-}
+// function validateUser(user){
+//     const schema = Joi.object({
+//         name: Joi.string().min(3).required(),
+//         email:Joi.string().min(3).required().email(),
+//         password: Joi.string.min(3).required()
+//       });
+//     return schema.validate(user);
+// }
 
 exports.User = User;
-exports.validate = validateUser;
+// exports.validate = validateUser;
