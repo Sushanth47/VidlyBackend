@@ -1,10 +1,12 @@
 
 <%- include('./partials/header') %>
 <br>
- 
+ <title>
+   <%=movie.title%>(<%=movie.year%>)
+ </title>
 
-<div class="row" style="padding-left:30px; ">
-   <a target="_blank" href="<%=movie.img%>"><img style="height:500px; width:300px; "  src="<%=movie.img%>" /></a>
+<div class="row" style="margin-left:30px ">
+   <a target="_blank" href="<%=movie.img%>"><img style="height:500px; width:300px;margin-left: 25px; "  src="<%=movie.img%>" /></a>
    <div class="container">
       <h1 ><%=movie.title%> (<%=movie.year%>)</h1>
       <h5 style="font-weight:lighter">Starring: <b><%=movie.cast%></b></h5><br>
@@ -22,25 +24,26 @@
       <br><br>
       <span><button class="btn btn-outline-success">Add to Cart</button></span>
    </div>
-
+   <br><br>
    <div class="container">
       <br><h5 style="text-align:center;">Other Popular Movies you may like</h5><br>
    </div>
    <%otherMovies.forEach(list=>{%>
-   <div class="col-md-3 ">
-     
-      <div class="card" style="width: 18rem; align-items:center; justify-content:center;">
-         <div class="col-md-9 col-xs-5">
-            <img style="padding-left:7px" class="card-img-top" src="<%=list.img%>" alt="Card image cap">
+   <div class="col-md-4 col-xs-7">
+
+      <div class="card" style="width: 18rem; align-items:center; justify-content:center; border-radius:35px">
+         <div class="col-md-9">
+            <img style="margin-left:7px" class="card-img-top" src="<%=list.img%>" alt="Card image cap">
          </div>
          <div class="card-body" style="width:18rem">
-            <h5 class="card-title" ><%=list.title%> (<%=list.year%>)</h5>
-            <p class="card-text">Ratings: </p>
-            <p class="card-text">Starring: <%=list.cast%></p>
-            <p class="card-text">Movie Rank: <%=list.rank%></p>
+            <a target="_blank" href="/api/movies/<%=list._id%>"><h5 class="card-title" ><%=list.title%> (<%=list.year%>)</h5></a>
+            <span class="card-text">Ratings: </span><br>
+            <span class="card-text">Starring: <%=list.cast%></span><br>
+            <span class="card-text">Movie Rank: <%=list.rank%></span><br><br>
             <a href="#" class="btn btn-success">Add to Cart</a>
          </div>
-      </div><br>
+      </div>
+      <br>
   
    </div>
    <%})%> 

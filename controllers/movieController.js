@@ -4,20 +4,27 @@ const {Requested} = require('../models/movie');
 const { Genre } = require('../models/genre');
 
 async function escapeRegex(text) {
-    console.log(text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&"))
+    // console.log(text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&"))
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
-  }
+}
 
 exports.getMovies = async(req, res) =>{
-   const movies = await Movie.find({}).populate('genreId', 'name _id ').sort({'createdAt':- 1});
-//    console.log(movies, 'req.user');
+  const movies = await Movie.find({}).populate('genreId', 'name _id ').sort({'createdAt':- 1});
+  //console.log(movies, 'req.user');
   return res.status(200).render('./movies', {movies: movies, locals:res.locals});
 }
 
 
 
+exports.getSpecificMovie = async(req, res)=>{
+    // console.log(req.params, 'params');
+    var movie = await Movie.findOne({_id:req.params.mid}).populate('genreId');
+    var otherMovies = await Movie.find({_id:{$nin:[req.params.mid]}});
+    return res.status(200).render('./moviePage.ejs', {movie, otherMovies});
+}
+
 exports.createMovies = async(req, res)=>{
-    console.log(res.locals, 'req.user');
+    // console.log(res.locals, 'req.user');
    const genre = await Genre.findOne({name:req.body.genreName})
 //    console.log('genre', genre);
    if (!genre) return res.status(400).json('Invalid Genre');
@@ -78,7 +85,7 @@ exports.requestedMovie = async(req, res)=>{
 }
 
 exports.createMoviesPage = async(req, res)=>{
-    console.log(res.locals, 'locals')
+    // console.log(res.locals, 'locals')
     let movie = await Movie.find({}).populate('genreId');
     const allGenres = await Genre.find({}, 'name');
     return res.status(200).render(`./createmovies`, {movie:movie, allGenres:allGenres});
@@ -94,12 +101,12 @@ exports.createMoviesPage = async(req, res)=>{
 // }
 
 exports.displayMovie = async(req, res)=>{
-   var movie = await Movie.findOne({title:{$regex:req.query.title, $options:'$i'}}).populate('genreId');
-   let genre = await Genre.findOne({name:movie.genreId.name});
-   let otherMovies = await Movie.find({genreId:genre._id});
-    return res.status(200).render('./moviePage.ejs', {
+   var movie = await Movie.find({title:{$regex:req.query.title, $options:'$i'}}).populate('genreId');
+   let genre = await Genre.find({name:{$regex:req.query.title, $options:'$i'}});
+    return res.status(200).render('./searchResultsPage.ejs', {
         movie:movie,
-        otherMovies:otherMovies
+        genre:genre,
+        title:req.query.title
     });
 }
 

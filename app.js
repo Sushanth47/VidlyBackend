@@ -36,7 +36,8 @@ app.set('views', './views');
 app.use(express.json());
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static('public'));
+// app.use(express.static());
+app.use(express.static( __dirname+'public'));
 app.use(cookieParser());
 // app.use(session({ 
 //    saveUninitialized:true,

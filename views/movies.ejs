@@ -1,41 +1,57 @@
 
 <%- include('./partials/header') %>
 <style>
+  #submitButton{
+    background-color:#0fbd9c;
+    border-radius: 25px;
+    border:1px solid;
+    display:block;
+    color:white;
+    margin-top:3px;
+    margin-left:3px;
+    box-shadow:0.5px 0.5px 5px #343d47;
+  }
+  #cardStyling{
+    align-items:center;
+    justify-content:center;
+    border-left:5px solid #0fbd9c;
+    border-radius:10px;
+    filter:drop-shadow(2px 4px 8px #585858);
+  }
   
 </style>
-<%console.log(locals)%>
 <head>
   <title>Vidly-Movies</title> 
 </head>
-<link rel="stylesheet" href="style.css"/>
- <form action="/api/movies/search/" method="GET">
-  <div style="text-align:right" class="form-group text-right">
-  <div class="input-append">
-    <input type="text" id="searchmovie" class="pull-right" style="width:250px; border:2px solid grey;border-radius:5px;opacity:inherit" name="title" placeholder="Please enter the movie" />
-    <button type="submit" class="btn btn-success" style="padding:5px">Search</button>
-  </div>
-</div>
-</form> 
+<link rel="stylesheet" href="./styles/style.css"/>
 
+
+<form action="/api/movies/search/" method="GET">
+  <div class="container row">
+    <input type="text" id="searchmovie" style="width:210px;border:2px solid grey;margin-left: 10px;margin-top:3px;border-radius:25px;" name="title" placeholder=" Please enter the movie" />
+    <button type="submit" id="submitButton">Search</button>
+  </div>
+</form> 
+<br>
   <div class="container">
     <div class="row">
       <br>
       <%movies.forEach(list=>{%>
         <div class="col-md-4 col-xs-6">
-            <div class="card" style="align-items:center; justify-content:center;  border-left:5px solid green; filter:drop-shadow(2px 4px 8px #585858)">
+            <div class="card" id="cardStyling">
               <div class="col-md-8 col-xs-4">
                 <br>
                <a target="_blank" href="<%=list.img%>"><img class="card-img" style="padding-right:20px" src="<%=list.img%>" class="card-img" alt="..."></a> 
               </div>
                 <div class="card-block" style="padding:4px;">
-                  <ul class="list-group" style="border-radius: 3px;">
-                    <a href="/api/movies/<%=list.title%>" target="_blank"><h4 class="card-title" style="text-align: center;"><%=list.title%>(<%=list.year%>)</h4></a>
+                  <ul class="list-group" style="border-radius: 30px; border-color:white">
+                    <a href="/api/movies/<%=list._id%>" target="_blank"><h4 class="card-title" style="text-align: center;"><%=list.title%>(<%=list.year%>)</h4></a>
                     <li class="list-group-item"><center><p class="card-text "><%=list.cast%></p></li>
                     <li class="list-group-item text-center" ><p class="card-text ">3/5</p></li>
                     <li class="list-group-item text-center"><p class="card-text "><%=list.genreId.name%></p></center></li>
                     <li class="list-group-item text-center"><span><b>Rank</b>: <%=list.rank%></span><br></li>
                     <li class="list-group-item text-center"><p class="card-text"><b>Rental Price</b>: $<%=list.dailyRentalRate%></p></li>
-                    <br><a class="card-text" style="text-align:center" href="<%=list.links%>" alt="#"  target="_blank"><p>IMDB Page</p></a>
+                    <br><a class="card-text" style="text-align:center" href="<%=list.links%>" target="_blank"><p>IMDB Page</p></a>
                   </ul>
                 </div>
             </div>
