@@ -1,6 +1,6 @@
 require('dotenv').config()
 const {Movie, validate} = require('../models/movie');
-const {Requested} = require('../models/movie');
+const {Requested} = require('../models/requestedModel');
 const { Genre } = require('../models/genre');
 
 async function escapeRegex(text) {
@@ -19,7 +19,7 @@ exports.getMovies = async(req, res) =>{
 exports.getSpecificMovie = async(req, res)=>{
     // console.log(req.params, 'params');
     var movie = await Movie.findOne({_id:req.params.mid}).populate('genreId');
-    var otherMovies = await Movie.find({_id:{$nin:[req.params.mid]}});
+    var otherMovies = await Movie.find({_id:{$nin:[req.params.mid]}, genreId:movie.genreId._id});
     return res.status(200).render('./moviePage.ejs', {movie, otherMovies});
 }
 
@@ -69,19 +69,40 @@ exports.createMovies = async(req, res)=>{
 }
 
 exports.requestedMoviePage = async(req, res)=>{
-    const movie = await Requested.find({ismovieCreated:false});
-    return res.status(200).render('./',{movie:movie});
+    return res.status(200).render('./requestMovie');
 }
 
 exports.requestedMovie = async(req, res)=>{
-    const movie = await Movie.findOne({title:req.body.title});
-    if(movie) return res.status(400).send('movie already exists');
-
-    const requested = new Requested({
-        title:req.body.title
-    });
-    customer = await Requested.save();
-    return res.status(200).redirect('/api/movies/movies');
+    try{
+        var requestedCheck = await Requested.find({title:{$regex:req.body.title, $options:'$i'}});
+        const movie = await Movie.findOne({title:{$regex:req.body.title, $options:'$i'}});
+        if(movie){
+            if(movie.numberInStock == 0){
+            return res.status(200).send('The Movie is currently out of Stock. We have getting it asap as possible!') 
+            }else{
+            return res.status(409).send('movie already exists');
+            }
+        } 
+        if(requestedCheck.length>0){
+            requestedCheck.forEach(list=>{
+                list.requestCount+=1;
+                list.save();
+            })
+            return res.status(409).json('Movie Already Requested. We are working on Bringing it to your nearest stores asap as possible!');
+        }else{
+        let requested = new Requested({
+            title:req.body.title,
+            requestCount:requestCount+1
+        });
+        requested.save();
+        return res.status(200).render('/api/movies/movies');
+        }
+    }
+    catch(err){
+        console.log(err);
+        return res.status(200).json(err);
+    }    
+    
 }
 
 exports.createMoviesPage = async(req, res)=>{

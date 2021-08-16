@@ -37,15 +37,15 @@ exports.userauth = async (req, res, next)=> {
 }
 
 
-exports.customerauth = async(req, res)=>{
+exports.customerauth = async(req, res, next)=>{
    console.log(req.header);
    const token = req.cookies.token || '';
    try{
-      console.log(token, 'token')
+      // console.log(token, 'token')
       if(!token) return res.status(401).json('access denied. No token Provided');
       const decoded = jwt.verify(token, process.env.jwtPrivateKey);
       var fromUserModel = await Customer.findOne({name:decoded.name});
-      fromUserModel.phoneToken = token
+      // fromUserModel.phoneToken = token
       req.user = fromUserModel;
       res.locals.subject = 'Customer'
       res.locals.fromUserModel = fromUserModel;
@@ -55,6 +55,7 @@ exports.customerauth = async(req, res)=>{
       next();
    }
    catch(ex){
+      console.log(ex);
       res.status(400).send('Invalid Token');
    }
 }

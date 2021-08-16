@@ -1,17 +1,32 @@
 
 <%- include('./partials/header') %>
+<title>Search Results</title>
 
-<h1>Search Results for "<%=title%>"</h1>
-  
-<div class="media" style="border:1px solid; border-width: 3px; width:300px">
+<h1>Search Results for "<%=title%>"</h1><br><br>
+
+<%if(movie.length == 0){%>
+  <h2>No Movies Found</h2>
+  <%}%>
+<div class="media" style="border:1px solid; border-width: 3px; width:500px; margin-right:10px">
     <%movie.forEach(list=>{%>
-    <a href="/api/movies/<%=list._id%>"><img src="<%=list.img%>" style="margin-left:5px" height="150px" width="90px" class="mr-3" alt="#">
+      <a href="/api/movies/<%=list._id%>"><img src="<%=list.img%>" style="margin-left:5px" height="150px" width="90px" class="mr-3" alt="#">
+      <div class="media-body">
+        <h5 class="mt-0"><%=list.title%> (<%=list.year%>)</h5>
+        <p><%=list.cast%></p></a>
+        <p>$<%=list.dailyRentalRate%></p>
+      </div>
+    <%})%>  
+</div>
+<div class="media" style="border:1px solid; border-width: 3px; width:500px; margin-right:10px">
+  <%genre.forEach(list=>{%>
+    <a href="#"><img src="<%=list.img%>" style="margin-left:5px" height="150px" width="90px" class="mr-3" alt="#">
     <div class="media-body">
       <h5 class="mt-0"><%=list.title%></h5>
-      <p><%=list.cast%></p></a>
+      <!-- <p><%=list.cast%></p></a> -->
+      <p>$<%=list.dailyRentalRate%></p></a>
     </div>
-    <%})%>
-  </div>
+  <%})%>  
+</div>
   
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>

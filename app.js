@@ -94,6 +94,16 @@ app.post('/addgenre', async(req, res)=>{
    return res.status(200).json({message:`Genre Added ${req.body.genre}`});
 })
 
+app.get('/genremodel', async(req, res)=>{
+   var model = await Genre.find({});
+   model.forEach(list=>{
+      list.img="";
+      list.description="";
+      list.save();
+   })
+   return res.json('done');
+})
+
 app.get('/cookie', userauth,function (req, res) {
    // Cookies that have not been signed
    console.log('Cookies: ', req.cookies)

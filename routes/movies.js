@@ -4,17 +4,19 @@ const {Requested} = require('../models/requestedModel');
 const isAdmin = require('../middleware/auth');
 // const {Requested} = require('../models/requestedModel');
 const express = require('express');
-const {getMovies, createMovies, othermovies, requestedMovie,updateMovies, deleteMovies, createMoviesPage, displayMovie, getSpecificMovie} = require('../controllers/movieController');
+const {getMovies, createMovies, othermovies, requestedMovie,updateMovies, deleteMovies, createMoviesPage, displayMovie, getSpecificMovie, requestedMoviePage} = require('../controllers/movieController');
 const router = express.Router();
 const { userauth, customerauth, guestauth } = require('../middleware/auth');
 
-router.post('/requestmovie', userauth, requestedMovie);
+router.get('/requestMovie', customerauth, requestedMoviePage);
+
+router.post('/requestmovie', requestedMovie);
 
 router.get('/movies', guestauth,getMovies);
 
 router.get('/createmoviespage',userauth,createMoviesPage);
 
-router.post('/createmovies',userauth, createMovies)
+router.post('/createmovies', createMovies)
 router.get('/search', displayMovie);
 
 router.get('/:mid', getSpecificMovie);

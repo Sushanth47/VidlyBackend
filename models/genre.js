@@ -7,7 +7,9 @@ const genreSchema = new mongoose.Schema({
         required: true,
         minlength: 4,
         maxlength: 50
-    }
+    },
+    img:{type:String},
+    description:{type:String}
 },
 {timestamps:true});
 

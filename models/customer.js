@@ -15,10 +15,11 @@ const customerSchema = new mongoose.Schema({
         type:Boolean,
         default:false
    },
-    phoneToken:{
-    type:String,
+    phoneToken: {
+    type: String,
     default:"N/A",
-    unique:true
+    sparse:true,
+
   },
     phone: {
         type: String, 
@@ -36,15 +37,6 @@ const customerSchema = new mongoose.Schema({
     {timestamps: true});
 
 const Customer = mongoose.model('Customer', customerSchema)
-
-// function vaildateCustomer(customer){
-//     const schema = Joi.object({
-//         name: Joi.string().min(3).max(50).required(),
-//         phone: Joi.string().min(4).max(50).required(),
-//         isGold: Joi.boolean()
-//       });
-//     return schema.validate(customer);
-//  } 
 
  exports.Customer = Customer;
  

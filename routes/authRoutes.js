@@ -1,3 +1,4 @@
+// /api/auth/'route'
 const express = require('express');
 const router = express.Router();
 const {userauth, customerauth} = require('../middleware/auth');

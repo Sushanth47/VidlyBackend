@@ -1,0 +1,19 @@
+<%- include('./partials/header') %>
+
+<div style="text-align: center;">
+   <h1 style="text-size-adjust: 30px;">Request Movies</h1>
+   <h6>Please add the title to request a specific movie</h6>
+   <h7>**Make sure to add the right title for the movie**</h7><br>
+   <br>
+</div>
+<div class="container">
+    <div class="col d-flex justify-content-center">
+      <form style="text-align: center;" action="/api/movies/requestmovie" method="POST">
+        <input type="text" class="form-control" name="title" placeholder="Add movie name here..." style="border-radius: 10px;" /><br>
+        <button type="submit" class="btn btn-outline-success" style="border-radius:10px;">Submit</button>
+      </form>  
+    </div> 
+</div>
+<h4 class="text-center">Movies you might like</h4>
+
+

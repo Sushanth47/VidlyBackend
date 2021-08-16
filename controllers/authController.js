@@ -52,7 +52,7 @@ exports.getUser = async(req, res)=>{
    user = new User(_.pick(req.body, ['name', 'email', 'password'])); 
    
    const token = generateAuthToken(res, user._id, user.name, req);
-   user.phoneToken = token.cookies;
+   // user.phoneToken = token.cookies;
    user.active = true;
    req.user = user
    await user.save();
@@ -100,34 +100,40 @@ exports.logoutCustomer = async(req, res)=>{
 exports.getCustomerfromData = async(req, res)=>{
    res.clearCookie(req.headers['cookie']);
    res.locals.subject='User';
-   var customer = await Customer.findOne({phone:req.body.phone});
+   var customer = await Customer.findOne({phone:req.body.phone, password:req.body.password});
    if(!customer || req.body.password!=customer.password){
-      return res.status(400).send('Invalid Email/Password');
+      return res.status(400).json('Invalid Email/Password');
    }
    const token = generateAuthToken(res, customer._id, customer.name, req);
-   customer.phoneToken = token.cookies;
+   // customer.phoneToken = token.cookies;
    req.user = customer;
    customer.save();
    return res.status(200).redirect('/api/movies/movies');
 }
 
 exports.getCustomer = async(req, res)=>{
-   res.clearCookie(req.headers['cookie']);
-   res.locals={};
-   let customer = await Customer.findOne({phone:req.body.phone});
-   if(customer) return res.status(400).send('User already Exists');
-   customer = new Customer(_.pick(req.body, ['name', 'email', 'password', 'phone']));
+   // res.clearCookie(req.headers['cookie']);
+   try{
+      res.locals={};
+      let customer = await Customer.findOne({phone:req.body.phone});
+      if(customer) {return res.status(400).send('User already Exists');}
+      customer = new Customer(_.pick(req.body, ['name', 'email', 'password', 'phone']));
 
-   const token = generateAuthToken(res, customer._id, customer.name, req);
-
-   customer.phoneToken = token.cookies;
-   customer.active = true;
-   customer.isGold = false;
-   req.user = customer
-   // req.user.sa
-   await customer.save();
-   // res.header('x-auth-token', token).send(_.pick(user, ['_id', 'name', 'email']));
-   return res.status(200).redirect('/api/movies/movies');
+      const token = await generateAuthToken(res, customer._id, customer.name, req);
+      // console.log(token, 'token');
+      // customer.phoneToken = token.cookies;
+      customer.active = true;
+      customer.isGold = false;
+      req.user = customer;
+      res.locals = customer;
+      // req.user.sa
+      await customer.save();
+      // res.header('x-auth-token', token).send(_.pick(user, ['_id', 'name', 'email']));
+      return res.status(200).redirect('/api/movies/movies');
+   }
+   catch(err){
+      console.log(err);
+   }
    
 }
 

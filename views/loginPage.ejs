@@ -37,13 +37,13 @@
               <br><br>
               <a style="text-align:center; padding-left:100px; padding-bottom:100px" href="/api/auth/signupData"><button type="submit" class="btn btn-success">Create an account</button></a>
               <%}else if(type=="customerLogin"){%>
-                <form role="form" action="/api/auth/loginCustomer" method="POST">
+                <form role="form" action="/api/auth/customerlogin" method="POST">
                   <div class="form-group mb-3">
                     <div class="input-group input-group-merge input-group-alternative">
                       <div class="input-group-prepend">
                         <span class="input-group-text"><i class="ni ni-email-83"></i></span>
                       </div>
-                      <input class="form-control" name="email" placeholder="username or email or phone">
+                      <input class="form-control" name="phone" placeholder="phone">
                     </div>
                   </div>
                   <div class="form-group">
