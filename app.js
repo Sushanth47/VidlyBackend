@@ -102,6 +102,7 @@ app.get('/genremodel', async(req, res)=>{
       list.save();
    })
    return res.json('done');
+   
 })
 
 app.get('/cookie', userauth,function (req, res) {
