@@ -52,9 +52,7 @@ app.use(cookieParser());
 //    next()
 // })
 
-app.use(
-   cors({})
- );
+app.use(cors({}));
 
 //Routes
 app.use('/', home);
@@ -102,7 +100,7 @@ app.get('/genremodel', async(req, res)=>{
       list.save();
    })
    return res.json('done');
-   
+
 })
 
 app.get('/cookie', userauth,function (req, res) {
