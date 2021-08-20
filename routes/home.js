@@ -5,7 +5,5 @@ router.get('/' ,(req, res) =>{
     res.redirect('/api/movies/movies');
  });
 
-
-
  module.exports = router;
   

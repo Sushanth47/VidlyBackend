@@ -27,14 +27,18 @@ const customerSchema = new mongoose.Schema({
         minlength: 4,
         unique:true
     },
+    reviews:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Review',
+    },
     password:{
         type:String,
         required:true,
         minlength:1}
     },
-   
-    
-    {timestamps: true});
+    {
+        timestamps: true
+    });
 
 const Customer = mongoose.model('Customer', customerSchema)
 

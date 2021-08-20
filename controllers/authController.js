@@ -25,7 +25,7 @@ async function generateAuthToken(res, _id, name, req){
 
 exports.loginPage = async(req, res)=>{
    var type="userLogin";
-   console.log(req.user, 'req.user');
+   // console.log(req.user, 'req.user');
    return res.status(200).render('./loginPage.ejs', {type:type})
 }
 
@@ -44,6 +44,9 @@ exports.loginPageCustomer = async(req, res)=>{
    return res.status(200).render('./loginPage.ejs', {type:type});
 }
 
+
+
+
 exports.getUser = async(req, res)=>{
    res.clearCookie(req.headers['cookie']);
    res.locals = {}
@@ -57,6 +60,7 @@ exports.getUser = async(req, res)=>{
    req.user = user
    await user.save();
    res.header('x-auth-token', token).send(_.pick(user, ['_id', 'name', 'email']));
+
 }
 
 exports.getUserfromdata = async(req, res)=>{
@@ -72,14 +76,17 @@ exports.getUserfromdata = async(req, res)=>{
    // user.phoneToken = token;
    user.active = true;
    req.user = user;
-   console.log(req.user);
+   // console.log(req.user);
    // req.user.save();
    user.save();
    return res.status(200).redirect('/api/movies/movies');
 }
 
+//
+
+
 exports.logoutUser = async(req, res)=>{
-   // console.log(req.user, 'userhere');
+   console.log(req.user, 'userhere');
    var userfind = await User.findOne({_id:req.user._id});
    userfind.active = false;
    userfind.save();

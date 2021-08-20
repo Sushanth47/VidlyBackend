@@ -18,17 +18,19 @@ const {userauth, customerauth} = require('./middleware/auth');
 const { User } = require('./models/user');
 const { Customer } = require('./models/customer');
 const { Genre } = require('./models/genre');
+
+var db = require('./models/index');
 //MongoDB Connections
 const port = process.env.PORT || 3031;
-const password = 'vidlybackend'
-const dbURI = 'mongodb+srv://vidlybackend:'+password+'@cluster0.eyaim.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
-mongoose.connect(dbURI, {
- useNewUrlParser: true,
- useUnifiedTopology: true,
- useCreateIndex:true
-})
- .then(()=>app.listen(port, '0.0.0.0',() => console.log(`Hello to ${port}`)))
- .catch((err)=>console.error(err));
+// const password = 'vidlybackend'
+// const dbURI = 'mongodb+srv://vidlybackend:'+password+'@cluster0.eyaim.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+// mongoose.connect(dbURI, {
+//  useNewUrlParser: true,
+//  useUnifiedTopology: true,
+//  useCreateIndex:true
+// })
+//  .then(()=>app.listen(port, '0.0.0.0',() => console.log(`Hello to ${port}`)))
+//  .catch((err)=>console.error(err));
 
 //Set and Use
 app.set('view engine', 'ejs');
@@ -36,21 +38,9 @@ app.set('views', './views');
 app.use(express.json());
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
-// app.use(express.static());
 app.use(express.static( __dirname+'public'));
 app.use(cookieParser());
-// app.use(session({ 
-//    saveUninitialized:true,
-//    resave:true,
-//    secret:'123'
-//  }));
-// app.use(flash());
 
-// app.use(function (req, res, next){
-//    res.locals.success = req.flash('success');
-//    res.locals.error = req.flash('error');
-//    next()
-// })
 
 app.use(cors({}));
 
@@ -73,6 +63,12 @@ app.get('/phonetoken', async(req, res)=>{
       list.save();
    })
    return res.status(200).json("done")
+})
+
+app.get('/getallmoviestest', async(req, res)=>{
+   var mov = await db.Customer.find({});
+   // console.log(v);
+   return res.json(mov);
 })
 
 app.get('/guestdetails', async(req, res)=>{
@@ -112,9 +108,10 @@ app.get('/cookie', userauth,function (req, res) {
  })
 
 //404 Page
-app.all('*', (req, res, next) =>{
-   res.render('404');
-});
+// app.all('*', (req, res, next) =>{
+//    res.render('404');
+// });
 
 
 //PORT
+app.listen(port, '0.0.0.0',() => console.log(`Hello to ${port}`))

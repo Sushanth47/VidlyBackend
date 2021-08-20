@@ -1,16 +1,24 @@
 const mongoose = require('mongoose');
 
-// mongoose.set('debug', true);
-// mongoose.Promise = Promise
+const password = 'vidlybackend'
 
-// mongoose.
-//  connect(, {
-//          useNewUrlParser: true,
-//          useCreateIndex: true,
-//          useFindAndModify: false,
-//          useUnifiedTopology: true
-//          })
-// .then(() =>console.log('DB connection successful'));
+const dbURI = 'mongodb+srv://vidlybackend:'+password+'@cluster0.eyaim.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+
+mongoose.set('debug', true);
+mongoose.Promise = Promise
+
+
+mongoose.
+ connect(dbURI, {
+         useNewUrlParser: true,
+         useCreateIndex: true,
+         useFindAndModify: false,
+         useUnifiedTopology: true
+         })
+.then(() =>console.log('DB connection successful'))
+.catch((err)=>console.log(err));
+
+
 
 module.exports.Customer = require('./customer');
 module.exports.Genre = require('./genre');

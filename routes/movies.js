@@ -6,7 +6,7 @@ const isAdmin = require('../middleware/auth');
 const express = require('express');
 const {getMovies, createMovies, othermovies, requestedMovie,updateMovies, deleteMovies, createMoviesPage, displayMovie, getSpecificMovie, requestedMoviePage} = require('../controllers/movieController');
 const router = express.Router();
-const { userauth, customerauth, guestauth } = require('../middleware/auth');
+const { userauth, customerauth, guestauth,renderHeaderPage } = require('../middleware/auth');
 
 router.get('/requestMovie', customerauth, requestedMoviePage);
 

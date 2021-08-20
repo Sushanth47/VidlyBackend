@@ -20,6 +20,6 @@ const requestedSchema = new mongoose.Schema(
 
 const Requested = mongoose.model('Requested', requestedSchema);
 
-exports.requestedSchema = requestedSchema
+
 
 exports.Requested = Requested;

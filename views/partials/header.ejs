@@ -1,21 +1,21 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-   <a class="navbar-brand" style="font-style:italic; font-family: cursive;" href="/">Vidly</a>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+   <a class="navbar-brand text-uppercase" style="font-style:italic; font-family: 'Times New Roman', Times, serif; margin-left:5px;" href="/">Vidly</a>
    <div class="navbar-collapse " id="navbarSupportedContent">
-     <ul class="navbar-nav mr-auto nav-tabs">
-       <li class="nav-item active">
+     <ul class="navbar-nav ">
+       <li class="nav-item ">
          <a class="nav-link" href="/api/movies/movies">Movies <span class="sr-only">(current)</span></a>
        </li>
-       <li class="nav-item active">
+       <li class="nav-item ">
          <a class="nav-link" href="#">Rentals</a>
        </li>
-       <li class="nav-item active">
+       <li class="nav-item ">
          <a class="nav-link" href="/api/movies/createmoviespage" role="button" >
            AddMovie
          </a>
-        <li class="nav-item active">
+        <li class="nav-item ">
           <a class="nav-link" href="/api/movies/requestMovie" role="button" >
             Request
           </a>
@@ -58,35 +58,36 @@
                 <div class="container nav justify-content-end">
                 <div class="row">
                   <a href="/api/auth/loginCustomer" class="dropdown-item">
-                    <i class="ni ni-user-run"></i>
-                    <span>Customer login</span>
+                    
+                    <span style="color:white">Login</span>
                   </a>
                  </div>
                 <div class="row">
       <a href="/api/auth/login" class="dropdown-item">
-        <i class="ni ni-user-run"></i>
-        <span>Login</span>
-      </a>
+        
+        <span style="color:white">Owner</span>
+      </a>  
      </div>
-     <div class="row">
+     <!-- <div class="row">
       <a href="/api/auth/signupPage" class="dropdown-item">
-        <i class="ni ni-user-run"></i>
-        <span>SignUp</span>
+        
+        <span style="color:white">SignUp</span>
       </a>
-     </div>
-     <%if(locals.subject == 'Guest'){%>
+     </div> -->
+     <%console.log(locals.subject)%>
+     
      
      <div class="row">
         <a href="/api/auth/logoutuser" class="dropdown-item">
-          <i class="ni ni-user-run"></i>
-          <span>Logout</span>
+          
+          <span style="color:white">Logout</span>
         </a>
      </div>
     
-     <%}%>
+
     </div> 
  </nav>
-
+<br>
  
 
 

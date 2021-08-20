@@ -15,11 +15,11 @@ exports.guestauth = async(req, res, next)=>{
 }
 
 exports.userauth = async (req, res, next)=> {
-   console.log(req.header);
+   // console.log(req.header);
    const token = req.cookies.token || '';
    try{
-      console.log(token, 'token')
-      if(!token) return res.status(401).json('access denied. No token Provided');
+      // console.log(token, 'token')
+      if(!token) return res.status(401).render('./401');
       const decoded = jwt.verify(token, process.env.jwtPrivateKey);
       var fromUserModel = await User.findOne({name:decoded.name});
       fromUserModel.phoneToken = token
@@ -33,6 +33,7 @@ exports.userauth = async (req, res, next)=> {
    }
    catch(ex){
       res.status(400).send('Invalid Token');
+      console.log(ex);
    }
 }
 
@@ -58,4 +59,8 @@ exports.customerauth = async(req, res, next)=>{
       console.log(ex);
       res.status(400).send('Invalid Token');
    }
+}
+
+exports.renderHeaderPage = async(req, res)=>{
+   res.status(200).render('./views/header', {locals:req.user});
 }
