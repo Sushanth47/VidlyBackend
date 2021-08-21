@@ -1,6 +1,62 @@
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
 
-
+<style>
+  /* Style The Dropdown Button */
+  .dropbtn {
+    background-color: #4CAF50;
+    color: white;
+    border-radius:12px;
+    padding: 7px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  /* The container <div> - needed to position the dropdown content */
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  /* Dropdown Content (Hidden by Default) */
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  /* Links inside the dropdown */
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  /* Change color of dropdown links on hover */
+  .dropdown-content a:hover {background-color: #f1f1f1}
+  
+  /* Show the dropdown menu on hover */
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+  
+  /* Change the background color of the dropdown button when the dropdown content is shown */
+  .dropdown:hover .dropbtn {
+    background-color: #3e8e41;
+  }
+  </style>
+<body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
    <a class="navbar-brand text-uppercase" style="font-style:italic; font-family: 'Times New Roman', Times, serif; margin-left:5px;" href="/">Vidly</a>
    <div class="navbar-collapse " id="navbarSupportedContent">
@@ -56,42 +112,20 @@
                   <span>Support</span>
                 </a> -->
                 <div class="container nav justify-content-end">
-                <div class="row">
-                  <a href="/api/auth/loginCustomer" class="dropdown-item">
-                    
-                    <span style="color:white">Login</span>
-                  </a>
-                 </div>
-                <div class="row">
-      <a href="/api/auth/login" class="dropdown-item">
-        
-        <span style="color:white">Owner</span>
-      </a>  
-     </div>
-     <!-- <div class="row">
-      <a href="/api/auth/signupPage" class="dropdown-item">
-        
-        <span style="color:white">SignUp</span>
-      </a>
-     </div> -->
-     <%console.log(locals.subject)%>
-     
-     
-     <div class="row">
-        <a href="/api/auth/logoutuser" class="dropdown-item">
-          
-          <span style="color:white">Logout</span>
-        </a>
-     </div>
-    
-
-    </div> 
+                  
+                  <div class="dropdown">
+                    <button class="dropbtn">My Account</button>
+                    <div class="dropdown-content">
+                      <a href="/api/auth/loginCustomer">Log In</a>
+                      <a href="/api/auth/signupPage">SignUp</a>
+                      <a href="/api/auth/login">Owner</a>
+                    </div>
+                </div>
+              </div> 
  </nav>
 <br>
- 
+</body>
 
 
 
- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+

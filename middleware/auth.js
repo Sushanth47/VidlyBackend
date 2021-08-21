@@ -32,7 +32,7 @@ exports.userauth = async (req, res, next)=> {
       next();
    }
    catch(ex){
-      res.status(400).send('Invalid Token');
+      res.status(400).render('401');
       console.log(ex);
    }
 }
@@ -57,7 +57,7 @@ exports.customerauth = async(req, res, next)=>{
    }
    catch(ex){
       console.log(ex);
-      res.status(400).send('Invalid Token');
+      res.status(400).render('401');
    }
 }
 

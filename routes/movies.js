@@ -12,7 +12,7 @@ router.get('/requestMovie', customerauth, requestedMoviePage);
 
 router.post('/requestmovie', requestedMovie);
 
-router.get('/movies', guestauth,getMovies);
+router.get('/movies', getMovies);
 
 router.get('/createmoviespage',userauth,createMoviesPage);
 

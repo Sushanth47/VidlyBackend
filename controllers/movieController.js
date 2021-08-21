@@ -14,8 +14,6 @@ exports.getMovies = async(req, res) =>{
   return res.status(200).render('./movies', {movies: movies, locals:res.locals});
 }
 
-
-
 exports.getSpecificMovie = async(req, res)=>{
     // console.log(req.params, 'params');
     var movie = await Movie.findOne({_id:req.params.mid}).populate('genreId');
