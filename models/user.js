@@ -32,7 +32,10 @@ const userSchema = new mongoose.Schema({
     type:String,
     default:"N/A",
     unique:true
-  }
+  },
+  imgs:[
+    {type:String}
+  ]
 },
 {
   timestamp:true

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 // const Joi = require('Joi')
 
-const genreSchema = new mongoose.Schema({
+var genreSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
@@ -13,7 +13,7 @@ const genreSchema = new mongoose.Schema({
 },
 {timestamps:true});
 
-const Genre = mongoose.model('Genre', genreSchema)
+var Genre = mongoose.model('Genre', genreSchema)
 
 
 

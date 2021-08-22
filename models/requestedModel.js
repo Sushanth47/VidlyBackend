@@ -15,11 +15,9 @@ const requestedSchema = new mongoose.Schema(
 },
 {
     timestamps:true
-    }
+}
 );
 
 const Requested = mongoose.model('Requested', requestedSchema);
-
-
 
 exports.Requested = Requested;

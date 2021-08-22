@@ -88,6 +88,15 @@ app.post('/addgenre', async(req, res)=>{
    return res.status(200).json({message:`Genre Added ${req.body.genre}`});
 })
 
+app.get('/addimages', async(req, res)=>{
+   var img = await User.find({}, 'imgs');
+   img.forEach(list=>{
+      list.imgs.push(req.body.photo);
+      list.save();
+   });
+   return res.status(200).json('done');
+})
+
 app.get('/genremodel', async(req, res)=>{
    var model = await Genre.find({});
    model.forEach(list=>{

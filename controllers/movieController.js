@@ -27,10 +27,11 @@ exports.createMovies = async(req, res)=>{
 //    console.log('genre', genre);
    if (!genre) return res.status(400).json('Invalid Genre');
    const movieadd = req.body.title;
-   const checkmovie = await Movie.findOne({title:movieadd});
+   const checkmovie = await Movie.findOne({title:{$regex:req.body.title, $options:'$i'}});
    if(checkmovie) return res.status(409).send('Movie already exists');
    var axios = require("axios").default;
-
+   await Requested.findOneAndUpdate({title:{$regex:req.body.title, $options:'$i'}}, {ismovieCreated:true});
+   
    var options = {
    method: 'GET',
    url: 'https://imdb8.p.rapidapi.com/auto-complete',
@@ -90,10 +91,10 @@ exports.requestedMovie = async(req, res)=>{
         }else{
         let requested = new Requested({
             title:req.body.title,
-            requestCount:requestCount+1
+            requestCount:1
         });
         requested.save();
-        return res.status(200).render('/api/movies/movies');
+        return res.status(200).redirect('/api/movies/requestMovie');
         }
     }
     catch(err){

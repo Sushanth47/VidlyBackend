@@ -8,11 +8,11 @@ exports.getGenres = async (req, res) =>{
 }
 
 exports.createGenre = async(req, res) =>{
-   const { error } = validate(req.body);
-   if(error) return res.status(400).send(error.details[0].message);
-   let genre = new Genre({name: req.body.name});
-   genre = await genre.save();
-   res.send(genre);
+   var obj = {
+      name: req.body.name, img:req.body.img, description:req.body.description
+   }
+   await Genre.create(obj);
+   res.send(obj);
 }
 
 exports.updateGenre = async(req, res) =>{

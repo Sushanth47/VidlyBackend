@@ -35,6 +35,10 @@ const movieSchema = new mongoose.Schema({
         min:0,
         max:255
     },
+    rentedCustomers:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Customer'
+    }],
     ismovieCreated:{type:Boolean, default:false},
     requestCount:{type:Number, default:0}
 },

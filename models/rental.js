@@ -23,7 +23,8 @@ const rentalSchema = new mongoose.Schema({
     rentalFee:{
         type:Number,
         min:0
-    }
+    },
+    checkOut:{type:Boolean}
 },{timestamps:true});
 
 const Rental = mongoose.model('Rental', rentalSchema)

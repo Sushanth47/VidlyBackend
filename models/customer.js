@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
-// const Joi= require('joi');
-const customerSchema = new mongoose.Schema({
+var mongoose = require('mongoose');
+
+var customerSchema = new mongoose.Schema({
     name:{
         required:true,
         type: String,
@@ -21,6 +21,14 @@ const customerSchema = new mongoose.Schema({
     sparse:true,
 
   },
+    rentedMovies:[{
+        type:mongoose.Schema.Types.ObjectId,
+        reg:'Movie'
+    }],
+    wishList:[{
+        type:mongoose.Schema.Types.ObjectId,
+        reg:'Movie'
+    }],
     phone: {
         type: String, 
         required: true,
@@ -40,7 +48,7 @@ const customerSchema = new mongoose.Schema({
         timestamps: true
     });
 
-const Customer = mongoose.model('Customer', customerSchema)
+var Customer = mongoose.model('Customer', customerSchema)
 
  exports.Customer = Customer;
  
