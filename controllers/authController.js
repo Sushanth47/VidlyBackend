@@ -8,7 +8,7 @@ const { Customer } = require('../models/customer');
 
 
 async function generateAuthToken(res, _id, name, req){
-   res.clearCookie(req.headers['cookie']);
+//    res.clearCookie(req.headers['cookie']);
    const expiration = 604800000;
   const token = jwt.sign(
     {_id: _id, name: name},
@@ -18,10 +18,11 @@ async function generateAuthToken(res, _id, name, req){
     
   });
   console.log(token);
-  return res.cookie('token', token, {
+   res.cookie('token', token, {
     expires: new Date(Date.now() + expiration),
     httpOnly:true
-  })
+  });
+   return token;
 }
 
 
@@ -63,8 +64,8 @@ exports.getUser = async(req, res)=>{
 }
 
 exports.getUserfromdata = async(req, res)=>{
-   res.clearCookie(req.headers['cookie']);
-   res.locals.subject='User'
+//    res.clearCookie(req.headers['cookie']);
+//    res.locals.subject='User'
    let user = await User.findOne({email:req.body.email});
    // console.log(user);
    if (!user || req.body.password != user.password){ 
@@ -72,11 +73,9 @@ exports.getUserfromdata = async(req, res)=>{
       return res.status(400).send('Invalid Email/Password');
    }
    const token = generateAuthToken(res, user._id, user.name, req);
-   // user.phoneToken = token;
+   user.phoneToken = token;
    user.active = true;
    req.user = user;
-   // console.log(req.user);
-   // req.user.save();
    user.save();
    return res.status(200).redirect('/api/movies/movies');
 }
