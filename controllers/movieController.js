@@ -3,15 +3,18 @@ const {Movie, validate} = require('../models/movie');
 const {Requested} = require('../models/requestedModel');
 const { Genre } = require('../models/genre');
 
-async function escapeRegex(text) {
-    // console.log(text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&"))
-    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
-}
+
 
 exports.getMovies = async(req, res) =>{
+    var userispresent;
   const movies = await Movie.find({}).populate('genreId', 'name _id ').sort({'createdAt':- 1});
   //console.log(movies, 'req.user');
-  return res.status(200).render('./movies', {movies: movies, locals:res.locals});
+    if(req.user){
+        userispresent = true
+    }else{
+        userispresent = false
+    }
+  return res.status(200).render('./movies', {movies: movies, userispresent:userispresent});
 }
 
 exports.getSpecificMovie = async(req, res)=>{
