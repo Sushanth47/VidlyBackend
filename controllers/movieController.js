@@ -7,13 +7,42 @@ const { Genre } = require('../models/genre');
 
 exports.getMovies = async(req, res) =>{
     var userispresent;
-  const movies = await Movie.find({}).populate('genreId', 'name _id ').sort({'createdAt':- 1});
+//   const movies = await Movie.find({}).populate('genreId', 'name _id ').sort({'createdAt':- 1});
   //console.log(movies, 'req.user');
-    if(req.user){
-        userispresent = true
-    }else{
-        userispresent = false
-    }
+  const movies = await Movie.aggregate([
+      {
+          $lookup:{
+            from:'genres',
+            localField:'genreId',
+            foreignField:'_id',
+            as:'genre'
+          }
+      },
+      {
+          "$unwind":"$genre"
+      },
+      {
+          $project:{
+              _id:1,
+              title:1,
+              img:1,
+              genreId:1,
+              rank:1,
+              cast:1,
+              year:1,
+              links:1,
+              numberInStock:1,
+              dailyRentalRate:1,
+              rentedCustomers:1,
+              ismovieCreated:1,
+              requestCount:1,
+              "genre":1,
+            //   "genre.img":1,
+            //   "genre.description":1
+          }
+      }
+  ]);
+//   console.log(movies[0])
   return res.status(200).render('./movies', {movies: movies, userispresent:userispresent});
 }
 

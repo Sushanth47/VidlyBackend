@@ -7,7 +7,7 @@ const cookieParser = require('cookie-parser');
 const { Customer } = require('../models/customer');
 
 
-async function generateAuthToken(res, _id, name, req){
+async function generateAuthToken(res, _id, name, subject){
 //    res.clearCookie(req.headers['cookie']);
    const expiration = 604800000;
   const token = jwt.sign(
@@ -17,11 +17,17 @@ async function generateAuthToken(res, _id, name, req){
     expiresIn:process.env.DB_ENV === 'testing' ? '1d': '7d'
     
   });
-  console.log(token);
-   res.cookie('token', token, {
+//   console.log(token);
+  var obj={
+     token:token,
+     name:name,
+     subject:subject
+  }
+   res.cookie('token', obj, {
     expires: new Date(Date.now() + expiration),
     httpOnly:true
   });
+//   req.cookies._id = _id
    return token;
 }
 
@@ -55,7 +61,7 @@ exports.getUser = async(req, res)=>{
    if (user) return res.status(400).send('User already registered');
    user = new User(_.pick(req.body, ['name', 'email', 'password'])); 
    
-   const token = generateAuthToken(res, user._id, user.name, req);
+   const token = generateAuthToken(res, user._id, user.name, 'User');
    // user.phoneToken = token.cookies;
    user.active = true;
    req.user = user
@@ -64,16 +70,16 @@ exports.getUser = async(req, res)=>{
 }
 
 exports.getUserfromdata = async(req, res)=>{
-//    res.clearCookie(req.headers['cookie']);
-//    res.locals.subject='User'
+
    let user = await User.findOne({email:req.body.email});
-   // console.log(user);
+ 
    if (!user || req.body.password != user.password){ 
-      // return req.flash('errorMessage', 'Invalid Credentials')
       return res.status(400).send('Invalid Email/Password');
    }
-   const token = generateAuthToken(res, user._id, user.name, req);
-   user.phoneToken = token;
+   const token = generateAuthToken(res, user._id, user.name, 'User');
+   token.then((value=>{
+      user.phoneToken = value;
+   }))
    user.active = true;
    req.user = user;
    user.save();
@@ -117,8 +123,10 @@ exports.getCustomerfromData = async(req, res)=>{
    if(!customer || req.body.password!=customer.password){
       return res.status(400).json('Invalid Email/Password');
    }
-   const token = generateAuthToken(res, customer._id, customer.name, req);
-   // customer.phoneToken = token.cookies;
+   const token = generateAuthToken(res, customer._id, customer.name, 'Customer');
+   token.then((value)=>{
+      customer.phoneToken = value;
+   })
    req.user = customer;
    customer.save();
    return res.status(200).redirect('/api/movies/movies');
@@ -129,14 +137,13 @@ exports.getCustomerfromData = async(req, res)=>{
 }
 
 exports.getCustomer = async(req, res)=>{
-   // res.clearCookie(req.headers['cookie']);
    try{
       res.locals={};
       let customer = await Customer.findOne({phone:req.body.phone});
       if(customer) {return res.status(400).send('User already Exists');}
       customer = new Customer(_.pick(req.body, ['name', 'email', 'password', 'phone']));
 
-      const token = await generateAuthToken(res, customer._id, customer.name, req);
+      const token = await generateAuthToken(res, customer._id, customer.name, 'Customer');
       // console.log(token, 'token');
       // customer.phoneToken = token.cookies;
       customer.active = true;
@@ -156,10 +163,3 @@ exports.getCustomer = async(req, res)=>{
 
 
 
-// function validate(req){
-//    const schema = Joi.object({
-//        email:Joi.string().min(3).required().email(),
-//        password: Joi.string.min(3).required()
-//      });
-//    return schema.validate(user);
-// }

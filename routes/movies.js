@@ -6,13 +6,13 @@ const isAdmin = require('../middleware/auth');
 const express = require('express');
 const {getMovies, createMovies, othermovies, requestedMovie,updateMovies, deleteMovies, createMoviesPage, displayMovie, getSpecificMovie, requestedMoviePage} = require('../controllers/movieController');
 const router = express.Router();
-const { userauth, customerauth, guestauth,renderHeaderPage } = require('../middleware/auth');
+const { userauth, customerauth, allAuth,renderHeaderPage, checkauth } = require('../middleware/auth');
 
 router.get('/requestMovie', customerauth, requestedMoviePage);
 
 router.post('/requestmovie', requestedMovie);
 
-router.get('/movies', getMovies);
+router.get('/movies',checkauth,getMovies);
 
 router.get('/createmoviespage',userauth,createMoviesPage);
 

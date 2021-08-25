@@ -35,5 +35,8 @@
     "regex": "^0.1.1",
     "req-flash": "0.0.3",
     "video.js": "^7.13.3"
+  },
+  "devDependencies": {
+    "prettier": "2.3.2"
   }
 }

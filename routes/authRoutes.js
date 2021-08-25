@@ -25,6 +25,6 @@ router.get('/signupPage', signupPageCustomer);
 router.post('/customersignup', getCustomer);
 
 router.get('/logoutuser', userauth,logoutUser);
-router.get('/logoutcustomer', logoutCustomer);
+router.get('/logoutcustomer',customerauth, logoutCustomer);
 
 module.exports = router;
