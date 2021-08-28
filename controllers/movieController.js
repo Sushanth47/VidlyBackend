@@ -2,6 +2,7 @@ require('dotenv').config()
 const {Movie, validate} = require('../models/movie');
 const {Requested} = require('../models/requestedModel');
 const { Genre } = require('../models/genre');
+const { Customer } = require('../models/customer');
 
 
 
@@ -43,14 +44,23 @@ exports.getMovies = async(req, res) =>{
       }
   ]);
 //   console.log(movies[0])
-  return res.status(200).render('./movies', {movies: movies, userispresent:userispresent});
+  return res.status(200).render('./movies', {movies: movies});
 }
 
 exports.getSpecificMovie = async(req, res)=>{
     // console.log(req.params, 'params');
+    var user = req.user;
     var movie = await Movie.findOne({_id:req.params.mid}).populate('genreId');
     var otherMovies = await Movie.find({_id:{$nin:[req.params.mid]}, genreId:movie.genreId._id});
-    return res.status(200).render('./moviePage.ejs', {movie, otherMovies});
+    return res.status(200).render('./moviePage.ejs', {movie, otherMovies, user});
+}
+
+exports.addToWishlist = async(req, res)=>{
+    console.log(req.params, 'params');
+    console.log(req.user._id);
+     var cust=await Customer.updateOne({_id:req.user._id}, {$addToSet:{wishList:req.params.movieId}});
+    //  console.log(cust)
+    return res.status(200).redirect('/api/movies/movies');
 }
 
 exports.createMovies = async(req, res)=>{
@@ -100,7 +110,40 @@ exports.createMovies = async(req, res)=>{
 }
 
 exports.requestedMoviePage = async(req, res)=>{
-    return res.status(200).render('./requestMovie');
+    var movies = await Movie.aggregate([
+        {
+            $lookup:{
+              from:'genres',
+              localField:'genreId',
+              foreignField:'_id',
+              as:'genre'
+            }
+        },
+        {
+            "$unwind":"$genre"
+        },
+        {
+            $project:{
+                _id:1,
+                title:1,
+                img:1,
+                genreId:1,
+                rank:1,
+                cast:1,
+                year:1,
+                links:1,
+                numberInStock:1,
+                dailyRentalRate:1,
+                rentedCustomers:1,
+                ismovieCreated:1,
+                requestCount:1,
+                "genre":1,
+              //   "genre.img":1,
+              //   "genre.description":1
+            }
+        }
+    ])
+    return res.status(200).render('./requestMovie', {movies});
 }
 
 exports.requestedMovie = async(req, res)=>{

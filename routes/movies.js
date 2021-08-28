@@ -1,23 +1,27 @@
 require('dotenv').config()
-const {Movie, validate} = require('../models/movie');
-const {Requested} = require('../models/requestedModel');
-const isAdmin = require('../middleware/auth');
+const {Movie} = require('../models/movie');
 // const {Requested} = require('../models/requestedModel');
 const express = require('express');
-const {getMovies, createMovies, othermovies, requestedMovie,updateMovies, deleteMovies, createMoviesPage, displayMovie, getSpecificMovie, requestedMoviePage} = require('../controllers/movieController');
+const {
+    getMovies, createMovies, othermovies, requestedMovie,updateMovies, deleteMovies,
+     createMoviesPage, displayMovie, getSpecificMovie, requestedMoviePage,addToWishlist
+} = require('../controllers/movieController');
 const router = express.Router();
-const { userauth, customerauth, allAuth,renderHeaderPage, checkauth } = require('../middleware/auth');
+const {  checkauth, customerauth } = require('../middleware/auth');
+const { Customer } = require('../models');
 
-router.get('/requestMovie', customerauth, requestedMoviePage);
+router.get('/requestMovie', requestedMoviePage);
+
+router.get('/addtowishlist/:movieId', customerauth, addToWishlist);
 
 router.post('/requestmovie', requestedMovie);
 
-router.get('/movies',checkauth,getMovies);
+router.get('/movies',getMovies);
 
-router.get('/createmoviespage',userauth,createMoviesPage);
+router.get('/createmoviespage',checkauth,createMoviesPage);
 
-router.post('/createmovies', createMovies)
-router.get('/search', displayMovie);
+router.post('/createmovies', checkauth,createMovies)
+router.get('/search', checkauth,displayMovie);
 
 router.get('/:mid', getSpecificMovie);
 // router.get('/othermovies', othermovies);

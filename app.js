@@ -14,7 +14,7 @@ const movies = require('./routes/movies');
 const home = require('./routes/home');
 const users = require('./routes/userRoutes');
 const auth = require('./routes/authRoutes');
-const {userauth, customerauth} = require('./middleware/auth');
+const {userauth, checkauth} = require('./middleware/auth');
 const { User } = require('./models/user');
 const { Customer } = require('./models/customer');
 const { Genre } = require('./models/genre');
@@ -108,7 +108,7 @@ app.get('/genremodel', async(req, res)=>{
 
 })
 
-app.get('/cookie', userauth,function (req, res) {
+app.get('/cookie', checkauth,function (req, res) {
    // Cookies that have not been signed
    console.log('Cookies: ', req.cookies)
    res.clearCookie()

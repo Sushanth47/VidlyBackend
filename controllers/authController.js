@@ -21,6 +21,7 @@ async function generateAuthToken(res, _id, name, subject){
   var obj={
      token:token,
      name:name,
+     _id:_id,
      subject:subject
   }
    res.cookie('token', obj, {

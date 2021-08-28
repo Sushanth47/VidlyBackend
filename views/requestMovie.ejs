@@ -15,5 +15,24 @@
     </div> 
 </div>
 <h4 class="text-center">Movies you might like</h4>
+<br>
 
+
+<div class="card-group">
+  <%movies.forEach(list=>{%>
+    <div class="card" style="width: 18rem; align-items:center; justify-content:center; border-radius:35px">
+       <div class="col-md-5">
+          <img class="card-img-top" src="<%=list.img%>" alt="Card image cap">
+       </div>
+       <div class="card-body" style="width:18rem">
+          <a target="_blank" href="/api/movies/<%=list._id%>"><h5 class="card-title" ><%=list.title%> (<%=list.year%>)</h5></a>
+          <span class="card-text">Ratings: </span><br>
+          <span class="card-text">Starring: <%=list.cast%></span><br>
+          <span class="card-text">Movie Rank: <%=list.rank%></span><br><br>
+          <a href="#" class="btn btn-success">Add to Cart</a>
+       </div>
+    </div>
+    <br>
+  <%})%>
+</div>
 

@@ -4,41 +4,42 @@ const { User } = require('../models/user');
 const { Customer } = require('../models/customer');
 // const db = require()
 
-exports.guestauth = async(req, res, next)=>{
-   const expiration = 604800000;
-   var token = req.headers['user-agent'];
-   res.cookie('guestToken', token, {
-      expires: new Date(Date.now() + expiration),
-   });
-   res.locals.subject="Guest"   
-   next();
-}
+
 
 exports.checkauth = async(req, res, next)=>{
-   // console.log(req.cookies);
    if(!req.cookies.token){
       console.log('hey');
+      req.user = {name:'Guest'}
    }else{
       if(req.cookies.token.subject == 'User'){
+         // req.user.subject = 'User'
+         console.log('User');
+         userauth(req, res);
          
+      }else if(req.cookies.token.subject == 'Customer'){
+         // req.user.subject = 'Customer'
+         console.log('Customer');
+         console.log(req.cookies.token);
+         customerauth(req, res);
       }
    }
-   next()
+  
 }
 
-exports.userauth = async (req, res, next)=> {
-   const token = req.cookies.token || '';
+ exports.userauth = async function(req, res, next) {
+    console.log(req.cookies.token)
+   const token = req.cookies.token.token || '';
    try{
       if(!token) return res.status(401).render('./401');
       const decoded = jwt.verify(token, process.env.jwtPrivateKey);
       var fromUserModel = await User.findOne({name:decoded.name});
       req.user = fromUserModel;
       res.locals.subject = 'User'
-      console.log(req.user.name, 'req.user');
+      console.log(req.user, 'req.user');
+
       res.locals.fromUserModel = fromUserModel;
-      fromUserModel.save()
-     
-      next();
+      fromUserModel.save()  
+      next()
    }
    catch(ex){
       res.status(400).render('401');
@@ -47,9 +48,8 @@ exports.userauth = async (req, res, next)=> {
 }
 
 
-exports.customerauth = async(req, res, next)=>{
-   console.log(req.header);
-   const token = req.cookies.token || '';
+ exports.customerauth = async function(req, res, next){
+   const token = req.cookies.token.token || '';
    try{
       // console.log(token, 'token')
       if(!token) return res.status(401).json('access denied. No token Provided');
@@ -61,7 +61,7 @@ exports.customerauth = async(req, res, next)=>{
       // req.user.isGold = 
       fromUserModel.save()
       console.log(req.user);
-      next();
+      next()
    }
    catch(ex){
       console.log(ex);

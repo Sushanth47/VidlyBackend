@@ -23,11 +23,15 @@ var customerSchema = new mongoose.Schema({
   },
     rentedMovies:[{
         type:mongoose.Schema.Types.ObjectId,
-        reg:'Movie'
+        ref:'Movie'
     }],
+    // cart:[{
+    //     type:mongoose.Schema.Types.ObjectId,
+    //     ref:'Movie'
+    // }],
     wishList:[{
         type:mongoose.Schema.Types.ObjectId,
-        reg:'Movie'
+        ref:'Movie'
     }],
     phone: {
         type: String, 
@@ -42,7 +46,8 @@ var customerSchema = new mongoose.Schema({
     password:{
         type:String,
         required:true,
-        minlength:1}
+        minlength:1
+    }
     },
     {
         timestamps: true

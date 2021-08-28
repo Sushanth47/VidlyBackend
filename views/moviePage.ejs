@@ -22,7 +22,10 @@
          <span>Available in Stock: <%=movie.numberInStock%></span><br>
       <%}%>
       <br><br>
-      <span><button class="btn btn-outline-success">Add to Cart</button></span>
+    
+         <span><button class="btn btn-outline-success" >Add to Cart</button></span>
+         &nbsp;&nbsp;<a href="/api/movies/addtowishlist/<%=movie._id%>"><button class="btn btn-outline-success" >Wishlist</button></a>
+     
    </div>
    <br><br>
    <div class="container">
@@ -50,3 +53,8 @@
 
 </div>
 
+<script>
+   function get(){
+      alert("Login To Access this feature");
+   }
+</script>
