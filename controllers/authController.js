@@ -26,9 +26,10 @@ async function generateAuthToken(res, _id, name, subject){
   }
    res.cookie('token', obj, {
     expires: new Date(Date.now() + expiration),
-    httpOnly:true
+    httpOnly:true,
+    secure:true
   });
-//   req.cookies._id = _id
+   
    return token;
 }
 
@@ -62,8 +63,8 @@ exports.getUser = async(req, res)=>{
    if (user) return res.status(400).send('User already registered');
    user = new User(_.pick(req.body, ['name', 'email', 'password'])); 
    
-   const token = generateAuthToken(res, user._id, user.name, 'User');
-   // user.phoneToken = token.cookies;
+   const token = await generateAuthToken(res, user._id, user.name, 'User');
+   // user.phoneToken = token;
    user.active = true;
    req.user = user
    await user.save();
@@ -78,9 +79,9 @@ exports.getUserfromdata = async(req, res)=>{
       return res.status(400).send('Invalid Email/Password');
    }
    const token = generateAuthToken(res, user._id, user.name, 'User');
-   token.then((value=>{
+   token.then((value)=>{
       user.phoneToken = value;
-   }))
+   });
    user.active = true;
    req.user = user;
    user.save();
@@ -93,7 +94,7 @@ exports.logoutUser = async(req, res)=>{
    var userfind = await User.findOne({_id:req.user._id});
    userfind.active = false;
    userfind.save();
-   // console.log(res.cookies, 'cookies here');
+  
    res.clearCookie('token');
    console.log('======================================================')
    return res.status(200).redirect('/api/movies/movies');
@@ -143,17 +144,13 @@ exports.getCustomer = async(req, res)=>{
       let customer = await Customer.findOne({phone:req.body.phone});
       if(customer) {return res.status(400).send('User already Exists');}
       customer = new Customer(_.pick(req.body, ['name', 'email', 'password', 'phone']));
-
       const token = await generateAuthToken(res, customer._id, customer.name, 'Customer');
-      // console.log(token, 'token');
-      // customer.phoneToken = token.cookies;
+      customer.phoneToken = token
       customer.active = true;
       customer.isGold = false;
       req.user = customer;
       res.locals = customer;
-      // req.user.sa
       await customer.save();
-      // res.header('x-auth-token', token).send(_.pick(user, ['_id', 'name', 'email']));
       return res.status(200).redirect('/api/movies/movies');
    }
    catch(err){
