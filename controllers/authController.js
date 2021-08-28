@@ -64,7 +64,9 @@ exports.getUser = async(req, res)=>{
    user = new User(_.pick(req.body, ['name', 'email', 'password'])); 
    
    const token = await generateAuthToken(res, user._id, user.name, 'User');
-   // user.phoneToken = token;
+   token.then((value)=>{
+      user.phoneToken = value;
+   });
    user.active = true;
    req.user = user
    await user.save();
