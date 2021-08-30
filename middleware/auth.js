@@ -28,7 +28,7 @@ exports.checkauth = async(req, res, next)=>{
 
  exports.userauth = async function(req, res, next) {
     console.log(req.cookies.token)
-   const token = req.cookies.token.token || '';
+   const token = req.cookies.token.token;
    try{
       if(!token) return res.status(401).render('./401');
       const decoded = jwt.verify(token, process.env.jwtPrivateKey);
@@ -47,9 +47,21 @@ exports.checkauth = async(req, res, next)=>{
    }
 }
 
+exports.newauth = async(req, res, next)=>{
+   if(req.cookies.token){
+      if(req.cookies.token.token){
+         req.guest = false;
+      }
+   }else{
+      console.log('reqguesttrue')
+      req.guest = true;
+      // res.render('../views/partials/header');
+   }
+   next();
+}
 
  exports.customerauth = async function(req, res, next){
-   const token = req.cookies.token.token || '';
+   const token = req.cookies.token.token;
    try{
       // console.log(token, 'token')
       if(!token) return res.status(401).json('access denied. No token Provided');

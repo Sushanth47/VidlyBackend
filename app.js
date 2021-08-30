@@ -71,6 +71,8 @@ app.get('/getallmoviestest', async(req, res)=>{
    return res.json(mov);
 })
 
+
+
 app.get('/guestdetails', async(req, res)=>{
    // const loc = navigator.geolocation;
    console.log(req.headers['user-agent']);

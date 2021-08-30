@@ -12,12 +12,11 @@ exports.getRentals= async (req, res) =>{
 }
 
 exports.addToCart = async(req, res) => {
-    
+    await Customer.updateOne({_id:req.user._id}, {$addToSet: {cart:req.params.movieId}});
+    return res.status(200).redirect(`/api/movies/${req.params.movieId}`);
 }
 
 exports.createRentals = async(req, res) => {
-  
-   
    if(!mongoose.Types.ObjectId.isValid(req.body.customerId)){
       return res.status(400).send('Invalid ID');
    }

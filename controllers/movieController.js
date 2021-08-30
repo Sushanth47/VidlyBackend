@@ -7,7 +7,7 @@ const { Customer } = require('../models/customer');
 
 
 exports.getMovies = async(req, res) =>{
-    var userispresent;
+    console.log(req.guest, 'guest')
 //   const movies = await Movie.find({}).populate('genreId', 'name _id ').sort({'createdAt':- 1});
   //console.log(movies, 'req.user');
   const movies = await Movie.aggregate([
@@ -41,18 +41,21 @@ exports.getMovies = async(req, res) =>{
             //   "genre.img":1,
             //   "genre.description":1
           }
+      },
+      {
+          $sort:{_id:-1}
       }
   ]);
 //   console.log(movies[0])
-  return res.status(200).render('./movies', {movies: movies});
+  return res.status(200).render('./movies', {movies: movies, guest:req.guest});
 }
 
 exports.getSpecificMovie = async(req, res)=>{
     // console.log(req.params, 'params');
-    var user = req.user;
+    //
     var movie = await Movie.findOne({_id:req.params.mid}).populate('genreId');
     var otherMovies = await Movie.find({_id:{$nin:[req.params.mid]}, genreId:movie.genreId._id});
-    return res.status(200).render('./moviePage.ejs', {movie, otherMovies, user});
+    return res.status(200).render('./moviePage.ejs', {movie, otherMovies, guest:req.guest});
 }
 
 exports.addToWishlist = async(req, res)=>{
@@ -62,6 +65,14 @@ exports.addToWishlist = async(req, res)=>{
     //  console.log(cust)
     return res.status(200).redirect('/api/movies/movies');
 }
+
+exports.getWishlist = async(req, res)=> {
+    var cust = await Customer.findOne({_id:req.user._id}).populate('wishList');
+    console.log(cust);
+    return res.status(200).render('./myWatchlist.ejs', {cust:cust});
+}
+
+
 
 exports.createMovies = async(req, res)=>{
     // console.log(res.locals, 'req.user');

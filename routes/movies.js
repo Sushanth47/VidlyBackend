@@ -7,7 +7,7 @@ const {
      createMoviesPage, displayMovie, getSpecificMovie, requestedMoviePage,addToWishlist
 } = require('../controllers/movieController');
 const router = express.Router();
-const {  checkauth, customerauth } = require('../middleware/auth');
+const {  checkauth, customerauth, newauth, userauth } = require('../middleware/auth');
 const { Customer } = require('../models');
 
 router.get('/requestMovie', requestedMoviePage);
@@ -16,12 +16,12 @@ router.get('/addtowishlist/:movieId', customerauth, addToWishlist);
 
 router.post('/requestmovie', requestedMovie);
 
-router.get('/movies',getMovies);
+router.get('/movies',newauth,getMovies);
 
-router.get('/createmoviespage',checkauth,createMoviesPage);
+router.get('/createmoviespage',userauth,createMoviesPage);
 
-router.post('/createmovies', checkauth,createMovies)
-router.get('/search', checkauth,displayMovie);
+router.post('/createmovies', userauth,createMovies)
+router.get('/search',displayMovie);
 
 router.get('/:mid', getSpecificMovie);
 // router.get('/othermovies', othermovies);
