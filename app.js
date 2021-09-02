@@ -7,6 +7,8 @@ var flash = require('req-flash');
 const cors = require('cors');
 const mongoose = require('mongoose');
 // const {mongoClient} = require
+const morgan = require('morgan');
+
 const genres = require('./routes/genres')
 const customers = require('./routes/customers')
 const rentals = require('./routes/rentals');
@@ -38,6 +40,8 @@ app.set('views', './views');
 app.use(express.json());
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
+app.use(morgan('dev'));
+
 app.use(express.static( __dirname+'public'));
 app.use(cookieParser());
 
