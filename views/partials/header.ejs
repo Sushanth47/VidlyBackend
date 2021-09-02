@@ -6,7 +6,6 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
-
 <style>
   /* Style The Dropdown Button */
   .dropbtn {
@@ -57,9 +56,6 @@
   }
   </style>
 <body>
-  <script>
-    console.log(req.cookies);
-  </script>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
    <a class="navbar-brand text-uppercase" style="font-style:italic; font-family: 'Times New Roman', Times, serif; margin-left:5px;" href="/">Vidly</a>
    <div class="navbar-collapse " id="navbarSupportedContent">
@@ -117,11 +113,24 @@
                 <div class="container nav justify-content-end">
                   
                   <div class="dropdown">
-                    <button class="dropbtn">My Account </button>
+                    <button class="dropbtn">My Account</button>
                     <div class="dropdown-content">
+                      <%console.log(currentUser)%>
+                      <%if(currentUser){%>
+                        
+                      <%if(currentUser.subject == 'Guest'){%>
                       <a href="/api/auth/loginCustomer">Log In</a>
                       <a href="/api/auth/signupPage">SignUp</a>
                       <a href="/api/auth/login">Owner</a>
+                      <%}else if(currentUser.subject == 'User'){%>
+                        <a href="/api/auth/logoutuser">Logout</a>
+                      <%}else if(currentUser.subject == 'Customer'){%>
+                        <a href="#">My Wishlist</a>
+                        <a href="#">My Cart</a>
+                        <a href="/api/auth/logoutcustomer">Logout</a>
+                        <%}%>
+                     
+                      <%}%>
                     </div>
                 </div>
               </div> 

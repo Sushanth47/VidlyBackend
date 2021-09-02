@@ -1,83 +1,126 @@
-require('dotenv').config();
-const jwt = require('jsonwebtoken')
-const { User } = require('../models/user');
-const { Customer } = require('../models/customer');
+require("dotenv").config();
+const jwt = require("jsonwebtoken");
+const { User } = require("../models/user");
+const { Customer } = require("../models/customer");
 // const db = require()
 
+exports.checkauth = async (req, res, next) => {
+  console.log(req.cookies);
+  if (!req.cookies.token) {
+    console.log("hey");
+    req.user = { subject: "Guest" };
+    res.locals.currentUser = req.user;
+    next();
+  } else {
+    if (req.cookies.token.subject == "User") {
+      userauth(req, res);
+      next();
+    } else if (req.cookies.token.subject == "Customer") {
+      customerauth(req, res);
+      next();
+    }
+  }
+};
 
-
-exports.checkauth = async(req, res, next)=>{
-   if(!req.cookies.token){
-      console.log('hey');
-      req.user = {name:'Guest'}
-   }else{
-      if(req.cookies.token.subject == 'User'){
-         // req.user.subject = 'User'
-         console.log('User');
-         userauth(req, res);
-         
-      }else if(req.cookies.token.subject == 'Customer'){
-         // req.user.subject = 'Customer'
-         console.log('Customer');
-         console.log(req.cookies.token);
-         customerauth(req, res);
-      }
-   }
-  
+async function userauth(req, res, next) {
+  const token = req.cookies.token.token;
+  try {
+    if (!token) return res.status(409).render("./401");
+    const decoded = jwt.verify(token, process.env.jwtPrivateKey);
+    if (decoded.subject == "User") {
+      console.log(decoded, "decoded");
+      req.user = decoded;
+      res.locals.currentUser = req.user;
+      console.log(req.user, "authcheck");
+    } else {
+      return res.status(409).render("./401");
+    }
+    // next();
+  } catch (ex) {
+    res.status(400).render("401");
+    console.log(ex);
+  }
 }
 
- exports.userauth = async function(req, res, next) {
-    console.log(req.cookies.token)
-   const token = req.cookies.token.token;
-   try{
-      if(!token) return res.status(401).render('./401');
-      const decoded = jwt.verify(token, process.env.jwtPrivateKey);
-      var fromUserModel = await User.findOne({name:decoded.name});
-      req.user = fromUserModel;
-      res.locals.subject = 'User'
-      console.log(req.user, 'req.user');
+exports.userauth = async function (req, res, next) {
+  const token = req.cookies.token.token;
+  try {
+    if (!token) return res.status(409).render("./401");
+    const decoded = jwt.verify(token, process.env.jwtPrivateKey);
+    if (decoded.subject == "User") {
+      console.log(decoded, "decoded");
+      req.user = decoded;
+      res.locals.currentUser = req.user;
+      console.log(req.user, "authcheck");
+    } else {
+      return res.status(409).render("./401");
+    }
+    next();
+  } catch (ex) {
+    res.status(400).render("401");
+    console.log(ex);
+  }
+};
 
-      res.locals.fromUserModel = fromUserModel;
-      fromUserModel.save()  
-      next()
-   }
-   catch(ex){
-      res.status(400).render('401');
-      console.log(ex);
-   }
+exports.newauth = async (req, res, next) => {
+  if (req.cookies.token) {
+    if (req.cookies.token.token) {
+      req.guest = false;
+    }
+  } else {
+    console.log("reqguesttrue");
+    req.guest = true;
+    // res.render('../views/partials/header');
+  }
+  next();
+};
+
+async function customerauth(req, res, next) {
+  const token = req.cookies.token.token;
+  try {
+    // console.log(token, 'token')
+    if (!token)
+      return res.status(409).render("access denied. No token Provided");
+    const decoded = jwt.verify(token, process.env.jwtPrivateKey);
+    if (decoded.subject == "Customer") {
+      var fromUserModel = await Customer.findOne({ _id: decoded._id });
+      req.user = decoded;
+      // res.locals.subject = 'Customer'
+      res.locals.currentUser = req.user;
+      // req.user.isGold =
+      fromUserModel.save();
+      // console.log(req.user);
+      next();
+    } else {
+      return res.status(409).json("access denied. No token Provided");
+    }
+  } catch (ex) {
+    console.log(ex);
+    res.status(400).render("401");
+  }
 }
 
-exports.newauth = async(req, res, next)=>{
-   if(req.cookies.token){
-      if(req.cookies.token.token){
-         req.guest = false;
-      }
-   }else{
-      console.log('reqguesttrue')
-      req.guest = true;
-      // res.render('../views/partials/header');
-   }
-   next();
-}
-
- exports.customerauth = async function(req, res, next){
-   const token = req.cookies.token.token;
-   try{
-      // console.log(token, 'token')
-      if(!token) return res.status(401).json('access denied. No token Provided');
-      const decoded = jwt.verify(token, process.env.jwtPrivateKey);
-      var fromUserModel = await Customer.findOne({name:decoded.name});
-      req.user = fromUserModel;
-      res.locals.subject = 'Customer'
-      res.locals.fromUserModel = fromUserModel;
-      // req.user.isGold = 
-      fromUserModel.save()
-      console.log(req.user);
-      next()
-   }
-   catch(ex){
-      console.log(ex);
-      res.status(400).render('401');
-   }
-}
-
+exports.customerauth = async function (req, res, next) {
+  const token = req.cookies.token.token;
+  try {
+    // console.log(token, 'token')
+    if (!token)
+      return res.status(409).render("access denied. No token Provided");
+    const decoded = jwt.verify(token, process.env.jwtPrivateKey);
+    if (decoded.subject == "Customer") {
+      var fromUserModel = await Customer.findOne({ _id: decoded._id });
+      req.user = decoded;
+      // res.locals.subject = 'Customer'
+      res.locals.currentUser = req.user;
+      // req.user.isGold =
+      fromUserModel.save();
+      // console.log(req.user);
+      next();
+    } else {
+      return res.status(409).json("access denied. No token Provided");
+    }
+  } catch (ex) {
+    console.log(ex);
+    res.status(400).render("401");
+  }
+};
