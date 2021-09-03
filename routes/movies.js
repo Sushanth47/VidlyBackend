@@ -8,6 +8,7 @@ const {
   othermovies,
   requestedMovie,
   updateMovies,
+  addToCart,
   deleteMovies,
   createMoviesPage,
   displayMovie,
@@ -26,6 +27,8 @@ const {
 router.get("/requestMovie", customerauth, requestedMoviePage);
 
 router.get("/addtowishlist/:movieId", customerauth, addToWishlist);
+
+router.get("/addToCart/:movieId", customerauth, addToCart);
 
 router.post("/requestmovie", customerauth, requestedMovie);
 
@@ -48,4 +51,4 @@ router.get("/:mid", checkauth, getSpecificMovie);
 //to get by id
 //  router.post('/getspecificmovies', getSpecificMovie);
 
-module.exports = router, Movie;
+(module.exports = router), Movie;

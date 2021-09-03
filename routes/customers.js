@@ -1,30 +1,20 @@
 // const {Customer, validate} = require('../models/customer')
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const { updateCustomers, deleteCustomer, getSpecificCustomer } = require('../controllers/customerController');
+const {
+  updateCustomers,
+  deleteCustomer,
+  getSpecificCustomer,
+  getWishlist,
+  getMyCart,
+} = require("../controllers/customerController");
+const { customerauth, checkauth } = require("../middleware/auth");
 // const { signup } = require('../controllers/authController');
 
+router.get("/getWishlist", customerauth, getWishlist);
 
-
-
-
-//to put ig
-router.put('/updatecustomers/:id', updateCustomers)
-
-//to delete a genre
-router.delete('/deletecustomers/:id', deleteCustomer)
-
-
-
-//to get by id
-router.get('/getspecificcustomer/:id', getSpecificCustomer);
-
-
-
+router.get("/getMyCart", customerauth, getMyCart);
 
 module.exports = router;
 
-
-
 //In Controllers
-

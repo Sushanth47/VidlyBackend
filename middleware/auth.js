@@ -43,8 +43,8 @@ async function userauth(req, res, next) {
 }
 
 exports.userauth = async function (req, res, next) {
-  const token = req.cookies.token.token;
   try {
+    const token = req.cookies.token.token;
     if (!token) return res.status(409).render("./401");
     const decoded = jwt.verify(token, process.env.jwtPrivateKey);
     if (decoded.subject == "User") {
@@ -57,7 +57,7 @@ exports.userauth = async function (req, res, next) {
     }
     next();
   } catch (ex) {
-    res.status(400).render("401");
+    res.status(401).render("401");
     console.log(ex);
   }
 };
@@ -90,7 +90,7 @@ async function customerauth(req, res, next) {
       // req.user.isGold =
       fromUserModel.save();
       // console.log(req.user);
-      next();
+      // next();
     } else {
       return res.status(409).json("access denied. No token Provided");
     }
@@ -101,9 +101,9 @@ async function customerauth(req, res, next) {
 }
 
 exports.customerauth = async function (req, res, next) {
-  const token = req.cookies.token.token;
   try {
-    // console.log(token, 'token')
+    const token = req.cookies.token.token;
+
     if (!token)
       return res.status(409).render("access denied. No token Provided");
     const decoded = jwt.verify(token, process.env.jwtPrivateKey);
@@ -121,6 +121,6 @@ exports.customerauth = async function (req, res, next) {
     }
   } catch (ex) {
     console.log(ex);
-    res.status(400).render("401");
+    res.status(401).render("401");
   }
 };

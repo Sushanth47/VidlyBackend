@@ -285,6 +285,18 @@ exports.getMoviesSort = async (req, res) => {
   return res.status(200).render("./movies", { movies: movies });
 };
 
+exports.addToCart = async (req, res) => {
+  try {
+    await Customer.updateOne(
+      { _id: req.user._id },
+      { $addToSet: { cart: req.params.movieId } }
+    );
+    return res.status(200).redirect(`/api/movies/${req.params.movieId}`);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 exports.getSpecificMovie = async (req, res) => {
   var movie = await Movie.findOne({ _id: req.params.mid }).populate("genreId");
   var otherMovies = await Movie.find(
@@ -298,72 +310,74 @@ exports.getSpecificMovie = async (req, res) => {
 };
 
 exports.addToWishlist = async (req, res) => {
-  console.log(req.params, "params");
-  console.log(req.user._id);
-  var cust = await Customer.updateOne(
-    { _id: req.user._id },
-    { $addToSet: { wishList: req.params.movieId } }
-  );
-  //  console.log(cust)
-  return res.status(200).redirect("/api/movies/movies");
-};
-
-exports.getWishlist = async (req, res) => {
-  var cust = await Customer.findOne({ _id: req.user._id }).populate("wishList");
-  console.log(cust);
-  return res.status(200).render("./myWatchlist.ejs", { cust: cust });
+  try {
+    console.log(req.params, "params");
+    console.log(req.user._id);
+    var cust = await Customer.updateOne(
+      { _id: req.user._id },
+      { $addToSet: { wishList: req.params.movieId } }
+    );
+    //  console.log(cust)
+    return res.status(200).redirect("/api/movies/" + req.params.movieId + "/");
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 exports.createMovies = async (req, res) => {
-  const genre = await Genre.findOne({ name: req.body.genreName });
-  if (!genre) return res.status(400).json("Invalid Genre");
-  const movieadd = req.body.title;
-  const checkmovie = await Movie.findOne({
-    title: { $regex: req.body.title, $options: "$i" },
-  });
-  if (checkmovie) return res.status(409).send("Movie already exists");
-  var axios = require("axios").default;
-  await Requested.findOneAndUpdate(
-    { title: { $regex: req.body.title, $options: "$i" } },
-    { ismovieCreated: true }
-  );
-
-  var options = {
-    method: "GET",
-    url: "https://imdb8.p.rapidapi.com/auto-complete",
-    params: { q: movieadd },
-    headers: {
-      "x-rapidapi-key": process.env.API_KEY,
-      "x-rapidapi-host": process.env.API_HOST,
-    },
-  };
-
-  axios
-    .request(options)
-    .then(function (response) {
-      //    console.log(response.data);
-      var apidata = response.data;
-      // response.data.d.forEach(list=>{
-      let movie = new Movie({
-        title: apidata.d[0].l,
-        genreId: genre._id,
-        year: apidata.d[0].y,
-        img: apidata.d[0].i.imageUrl,
-        links: "https://www.imdb.com/title/" + apidata.d[0].id + "/",
-        cast: apidata.d[0].s,
-        rank: apidata.d[0].rank,
-        numberInStock: req.body.numberInStock,
-        dailyRentalRate: req.body.dailyRentalRate,
-      });
-      movie.ismovieCreated = true;
-      movie.save();
-      // console.log(movie.rank);
-      res.status(200).redirect(`/api/movies/createmoviespage`);
-      // })
-    })
-    .catch(function (error) {
-      console.error(error);
+  try {
+    const genre = await Genre.findOne({ name: req.body.genreName });
+    if (!genre) return res.status(400).json("Invalid Genre");
+    const movieadd = req.body.title;
+    const checkmovie = await Movie.findOne({
+      title: { $regex: req.body.title, $options: "$i" },
     });
+    if (checkmovie) return res.status(409).send("Movie already exists");
+    var axios = require("axios").default;
+    await Requested.findOneAndUpdate(
+      { title: { $regex: req.body.title, $options: "$i" } },
+      { ismovieCreated: true }
+    );
+
+    var options = {
+      method: "GET",
+      url: "https://imdb8.p.rapidapi.com/auto-complete",
+      params: { q: movieadd },
+      headers: {
+        "x-rapidapi-key": process.env.API_KEY,
+        "x-rapidapi-host": process.env.API_HOST,
+      },
+    };
+
+    axios
+      .request(options)
+      .then(function (response) {
+        //    console.log(response.data);
+        var apidata = response.data;
+        // response.data.d.forEach(list=>{
+        let movie = new Movie({
+          title: apidata.d[0].l,
+          genreId: genre._id,
+          year: apidata.d[0].y,
+          img: apidata.d[0].i.imageUrl,
+          links: "https://www.imdb.com/title/" + apidata.d[0].id + "/",
+          cast: apidata.d[0].s,
+          rank: apidata.d[0].rank,
+          numberInStock: req.body.numberInStock,
+          dailyRentalRate: req.body.dailyRentalRate,
+        });
+        movie.ismovieCreated = true;
+        movie.save();
+        // console.log(movie.rank);
+        res.status(200).redirect(`/api/movies/createmoviespage`);
+        // })
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 exports.requestedMoviePage = async (req, res) => {
@@ -452,15 +466,6 @@ exports.createMoviesPage = async (req, res) => {
     .status(200)
     .render(`./createmovies`, { movie: movie, allGenres: allGenres });
 };
-
-// exports.displayMovieSearch = async(req, res)=>{
-//     const regex = new RegExp(escapeRegex(req.body.title), 'gi');
-//     let movie = await Movie.findOne({title:req.body.title}).populate('genreId');
-//     // console.log(movie)
-//     if(!movie) return res.status(404).send('Movie not found');
-//
-//
-// }
 
 exports.displayMovie = async (req, res) => {
   var movie = await Movie.find({

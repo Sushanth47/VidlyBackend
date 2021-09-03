@@ -1,0 +1,64 @@
+<%- include('./partials/header') %>
+<%if(subject == "wishList"){%>
+    <br>
+    <title>My Wishlist</title>
+
+<h1 class="text-center">My Wishlist</h1>
+
+<div class="container">
+    <div class="row">
+      <br>
+      <%cust.wishList.forEach(list=>{%>
+        <div class="col-md-4 col-xs-6">
+            <div class="card" id="cardStyling">
+              <div class="col-md-8 col-xs-4">
+                <br>
+               <a target="_blank" href="/api/movies/<%=list._id%>"><img class="card-img align-items-center" style="padding-right:20px; border-radius:10px; margin-right:30px;align-items: center;" src="<%=list.img%>" class="card-img" alt="..."></a> 
+              </div>
+                <div class="card-block" style="padding:4px;">
+                  <ul class="list-group" style="border-radius: 30px; border-color:white">
+                    <a href="/api/movies/<%=list._id%>" target="_blank"><h4 class="card-title" style="text-align: center;"><%=list.title%>(<%=list.year%>)</h4></a>
+                    <li class="list-group-item"><center><p class="card-text "><%=list.cast%></p></li>
+                    <li class="list-group-item text-center" ><p class="card-text ">3/5</p></li>
+                    <li class="list-group-item text-center"><span><b>Rank</b>: <%=list.rank%></span><br></li>
+                    <li class="list-group-item text-center"><p class="card-text"><b>Rental Price</b>: $<%=list.dailyRentalRate%></p></li>
+                    <br><a class="card-text" style="text-align:center" href="<%=list.links%>" target="_blank"><p>IMDB Page</p></a>
+                  </ul>
+                </div>
+            </div>
+            <br>
+        </div>
+        <%})%>
+      </div>
+  </div>
+
+  <%}else if(subject == "cart"){%>
+    <title>My Cart</title>
+    <h1 class="text-center">My Cart</h1>
+    <div class="container">
+        <div class="row">
+          <br>
+          <%cust.cart.forEach(list=>{%>
+            <div class="col-md-4 col-xs-6">
+                <div class="card" id="cardStyling">
+                  <div class="col-md-8 col-xs-4">
+                    <br>
+                   <a target="_blank" href="/api/movies/<%=list._id%>"><img class="card-img align-items-center" style="padding-right:20px; border-radius:10px; margin-right:30px;align-items: center;" src="<%=list.img%>" class="card-img" alt="..."></a> 
+                  </div>
+                    <div class="card-block" style="padding:4px;">
+                      <ul class="list-group" style="border-radius: 30px; border-color:white">
+                        <a href="/api/movies/<%=list._id%>" target="_blank"><h4 class="card-title" style="text-align: center;"><%=list.title%>(<%=list.year%>)</h4></a>
+                        <li class="list-group-item"><center><p class="card-text "><%=list.cast%></p></li>
+                        <li class="list-group-item text-center" ><p class="card-text ">3/5</p></li>
+                        <li class="list-group-item text-center"><span><b>Rank</b>: <%=list.rank%></span><br></li>
+                        <li class="list-group-item text-center"><p class="card-text"><b>Rental Price</b>: $<%=list.dailyRentalRate%></p></li>
+                        <br><a class="card-text" style="text-align:center" href="<%=list.links%>" target="_blank"><p>IMDB Page</p></a>
+                      </ul>
+                    </div>
+                </div>
+                <br>
+            </div>
+            <%})%>
+          </div>
+      </div>
+<%}%>

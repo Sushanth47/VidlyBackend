@@ -66,15 +66,20 @@
        <li class="nav-item ">
          <a class="nav-link" href="#">Rentals</a>
        </li>
-       <li class="nav-item ">
+       <%if(currentUser){%>
+        <%if(currentUser.subject == 'User'){%>
+        <li class="nav-item ">
          <a class="nav-link" href="/api/movies/createmoviespage" role="button" >
            AddMovie
          </a>
+        </li> 
+        <%}%>
+        <%}%>
         <li class="nav-item ">
           <a class="nav-link" href="/api/movies/requestMovie" role="button" >
             Request
           </a>
-        </li> 
+        
        </li>
        
      </ul>
@@ -115,18 +120,16 @@
                   <div class="dropdown">
                     <button class="dropbtn">My Account</button>
                     <div class="dropdown-content">
-                      <%console.log(currentUser)%>
                       <%if(currentUser){%>
-                        
                       <%if(currentUser.subject == 'Guest'){%>
                       <a href="/api/auth/loginCustomer">Log In</a>
                       <a href="/api/auth/signupPage">SignUp</a>
-                      <a href="/api/auth/login">Owner</a>
+                      <!-- <a href="/api/auth/login">Owner</a> -->
                       <%}else if(currentUser.subject == 'User'){%>
                         <a href="/api/auth/logoutuser">Logout</a>
-                      <%}else if(currentUser.subject == 'Customer'){%>
-                        <a href="#">My Wishlist</a>
-                        <a href="#">My Cart</a>
+                      <%}else{%>
+                        <a href="/api/customers/getWishlist">My Wishlist</a>
+                        <a href="/api/customers/getMyCart">My Cart</a>
                         <a href="/api/auth/logoutcustomer">Logout</a>
                         <%}%>
                      
