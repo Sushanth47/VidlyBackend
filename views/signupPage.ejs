@@ -1,72 +1,83 @@
 <%- include('./partials/header') %>
 
+<style>
+  #cardOutline {
+    border: 1px solid black;
+    border-radius: 15px;
+  }
+</style>
 
+<div>
+  <div class="container mt--8 pb-5" style="padding-top: 100px">
+    <h1 style="text-align: center; padding-bottom: 70px; position: relative">
+      Vidly
+    </h1>
+    <div class="row justify-content-center">
+      <div class="col-lg-5 col-md-7" style="color: blue">
+        <div
+          class="card border-0 mb-0"
+          style="color: red; border: 1px solid black"
+        >
+          <div class="card-body px-lg-5 py-lg-5" id="cardOutline">
+            <div class="text-center mb-4">
+              <small>SignIn with credentials</small>
+            </div>
+            <form role="form" action="/api/auth/customersignup" method="POST">
+              <div class="form-group mb-3">
+                <div
+                  class="input-group input-group-merge input-group-alternative"
+                >
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"
+                      ><i class="ni ni-email-83"></i
+                    ></span>
+                  </div>
+                  <input
+                    class="form-control"
+                    name="email"
+                    placeholder="username or email or phone"
+                  />
+                </div>
+              </div>
+              <div class="form-group">
+                <div
+                  class="input-group input-group-merge input-group-alternative"
+                >
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"
+                      ><i class="ni ni-lock-circle-open"></i
+                    ></span>
+                  </div>
+                  <input
+                    class="form-control"
+                    placeholder="Password"
+                    name="password"
+                    type="password"
+                  />
+                </div>
+              </div>
 
-<div style="background-image: url(https://c4.wallpaperflare.com/wallpaper/500/442/354/outrun-vaporwave-hd-wallpaper-preview.jpg);background-repeat: no-repeat;   background-size: cover;">
-  <div class="container mt--8 pb-5" style="padding-top:100px;">
-   <h1 style="text-align:center; padding-bottom:70px;position:relative;">Vidly</h1>
-   <div class="row justify-content-center">
-     <div class="col-lg-5 col-md-7" style="color:blue">
-       <div class="card border-0 mb-0" style="color:red">
-         
-         <div class="card-body px-lg-5 py-lg-5">
-           <div class="text-center mb-4">
-             <small>SignIn with credentials</small>
-           </div>
-           <%if(type=="customerLogin"){%>
-              <form role="form" action="/api/auth/customersignup" method="POST">
-                <div class="form-group mb-3">
-                  <div class="input-group input-group-merge input-group-alternative">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="ni ni-email-83"></i></span>
-                    </div>
-                    <input class="form-control" name="email" placeholder="username or email or phone">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <div class="input-group input-group-merge input-group-alternative">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
-                    </div>
-                    <input class="form-control" placeholder="Password" name="password" type="password">
-                  </div>
-                </div>
-                
-                <div class="text-center">
-                  <input type="submit" class="btn btn-primary my-4" value="Sign Up">
-                </div>
-              </form>
-              <%}else if(type=="userLogin"){%>
-               <form role="form" action="/api/auth/signup" method="POST">
-                  <div class="form-group mb-3">
-                    <div class="input-group input-group-merge input-group-alternative">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="ni ni-email-83"></i></span>
-                      </div>
-                      <input class="form-control" name="email" placeholder="username or email or phone">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <div class="input-group input-group-merge input-group-alternative">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
-                      </div>
-                      <input class="form-control" placeholder="Password" name="password" type="password">
-                    </div>
-                  </div>
-                  
-                  <div class="text-center">
-                    <input type="submit" class="btn btn-primary my-4" value="Sign Up">
-                  </div>
-                </form>
-                </div>
-               <%}%>
-         </div>
-       </div>
-       
-     </div>
-   </div>
- </div>
+              <div class="text-center">
+                <input
+                  type="submit"
+                  class="btn btn-primary my-4"
+                  value="Sign Up"
+                  style="padding-left: 30px; padding-right: 30px"
+                />
+              </div>
+
+              <div class="text-center">
+                <h7 style="margin: auto" class="text-center"
+                  >Already have an Account?</h7
+                ><br />
+                <button class="btn btn-primary">Log In</button>
+              </div>
+              <br />
+              <div></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-
-

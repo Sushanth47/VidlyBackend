@@ -20,7 +20,16 @@ const { userauth, checkauth } = require("./middleware/auth");
 const { User } = require("./models/user");
 const { Customer } = require("./models/customer");
 const { Genre } = require("./models/genre");
+// var express = require("express");
+// var cookieParser = require('cookie-parser');
+// var session      = require('express-session');
+// var flash = require("req-flash");
 
+// var app = express();
+
+// app.use(cookieParser());
+// app.use(session({ secret: "123" }));
+// app.use(flash());
 var db = require("./models/index");
 //MongoDB Connections
 const port = process.env.PORT || 3031;

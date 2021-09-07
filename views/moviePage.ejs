@@ -5,16 +5,36 @@
  </title>
 <style>
    h5, h4{
-      font-weight:lighter;
+      /* font-weight:lighter; */
+      font-family:'Work Sans', sans-serif;
    }
+   .card-text{
+      font-family:'Work Sans', sans-serif;
+      margin:5px;
+      color:rgb(97, 95, 95)
+   }
+   .img{
+      position: relative;
+      width:286px;
+      height:420px;
+      right:51px;
+      border-top-left-radius: 35px;
+   }
+   #otherMovies{
+      position:relative
+   }
+   span{
+      font-size:20px;
+   }
+   
 </style>
-<div class="row" style="margin-left:30px ">
-   <a target="_blank" href="<%=movie.img%>"><img style="height:500px; width:300px;margin-left: 25px; "  src="<%=movie.img%>" /></a>
-   <div class="container">
+<div class="row" >
+   <a target="_blank" href="<%=movie.img%>"><img style="height:500px; width:400px;margin-left: 25px; "  src="<%=movie.img%>" /></a>
+   <div style="position:relative; left:40px">
       <h1 ><%=movie.title%> (<%=movie.year%>)</h1>
       <h5 >Starring: <b><%=movie.cast%></b></h5><br>
       <h5 >Genre: <b><%=movie.genreId.name%></b></h5><br>
-      <h5 >Ratings: </h5><br>
+      <h5 >Ratings: 3/5</h5><br>
       <h5 >IMDB Page: <a target="_blank" href="<%=movie.links%>"><b>Click Here</b></a></h5><br>
       <h5 >Movie Rank: <b><%=movie.rank%></b></h5><br>
       <h5 >Rental Rate: <b style="color:red">$<%=movie.dailyRentalRate%></b><small><small style="margin-bottom: 2px;"> + charges for Home delivery</small></small></h4><br>
@@ -25,39 +45,42 @@
       <%}else{%>
          <span>Available in Stock: <%=movie.numberInStock%></span><br>
       <%}%>
-      <br><br>
+      <br>
     
-         <span><a href="/api/movies/addToCart/<%=movie._id%>"><button class="btn btn-outline-success" >Add to Cart</button></a></span>
+         <span><a href="/api/movies/addToCart/<%=movie._id%>"><button class="btn btn-success" >Add to Cart</button></a></span>
          
-         &nbsp;&nbsp;<a href="/api/movies/addtowishlist/<%=movie._id%>"><button class="btn btn-outline-success" >Wishlist</button></a>
+         &nbsp;&nbsp;<a href="/api/movies/addtowishlist/<%=movie._id%>"><button class="btn btn-success" >Wishlist</button></a>
      
    </div>
    <br><br>
-   <div class="container">
-      <br><h5 style="text-align:center;">Other Popular Movies you may like</h5><br>
-   </div>
-   <%otherMovies.forEach(list=>{%>
-   <div class="col-md-4 col-xs-7">
-
-      <div class="card" style="width: 18rem; align-items:center; justify-content:center; border-radius:35px">
-         <div class="col-md-9">
-            <img class="card-img-top" src="<%=list.img%>" alt="Card image cap">
-         </div>
-         <div class="card-body" style="width:18rem">
-            <a target="_blank" href="/api/movies/<%=list._id%>"><h5 class="card-title" ><%=list.title%> (<%=list.year%>)</h5></a>
-            <span class="card-text">Ratings: </span><br>
-            <span class="card-text">Starring: <%=list.cast%></span><br>
-            <span class="card-text">Movie Rank: <%=list.rank%></span><br><br>
-            <a href="#" class="btn btn-success">Add to Cart</a>
-         </div>
-      </div>
-      <br>
+   
   
-   </div>
-   <%})%> 
 
 </div>
-
+<div class="container">
+   <br><h4 style="text-align:center;">Other Popular Movies you may like</h4>
+</div>
+<br>
+<div class="container">
+   <div class="row">
+<%otherMovies.forEach(list=>{%>
+<div class="col-md-4 col-xs-9">
+   <div class="card" style="width: 18rem; align-items:center; justify-content:center; border-radius:35px">
+      <div class="col-md-9 col-xs-9">
+         <img class="img" src="<%=list.img%>" alt="Card image cap">
+      </div>
+      <div class="card-body" style="width:20rem">
+         <a target="_blank" href="/api/movies/<%=list._id%>"><h5 class="card-title text-center" ><%=list.title%> (<%=list.year%>)</h5></a>
+         
+         <!-- <a href="#" class="btn btn-success">Add to Cart</a> -->
+      </div>
+   </div>
+   <br>
+  
+</div>
+<%})%> 
+</div>
+</div>
 <script>
    function get(){
       alert("Login To Access this feature");

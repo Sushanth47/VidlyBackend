@@ -1,68 +1,167 @@
 <%- include('./partials/header') %>
+
 <style>
-  #submitButton{
-    background-color:#0fbd9c;
+  #submitButton {
+    background-color: #0fbd9c;
     border-radius: 25px;
-    border:1px solid;
-    display:block;
-    color:white;
-    margin-top:3px;
-    margin-left:3px;
-    box-shadow:0.5px 0.5px 5px #343d47;
+    border: 1px solid;
+    display: block;
+    color: white;
+    margin-top: 3px;
+    margin-left: 3px;
+    box-shadow: 0.5px 0.5px 5px #343d47;
   }
-  #cardStyling{
-    align-items:center;
-    justify-content:center;
-    border-left:5px solid #0fbd9c;
-    border-radius:10px;
-    filter:drop-shadow(2px 4px 8px #585858);
+  #cardStyling {
+    align-items: center;
+    justify-content: center;
+    /* border-left:5px solid #0fbd9c; */
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    /* box-shadow: 120px 80px 40px 20px #0ff; */
+    filter: drop-shadow(2px 4px 8px #3b3d3d);
+    transition: filter 500ms;
   }
-  
+  #cardStyling:hover {
+    filter: drop-shadow(2px 4px 18px #0fbd9c);
+  }
+  p {
+    font-family: "Work Sans", sans-serif;
+    color: rgb(97, 95, 95);
+  }
+  ul {
+    /* border:1px solid black; */
+    list-style: none;
+    border-radius: 5px;
+  }
+  .movieclass {
+    /* margin-bottom:5px; */
+    /* margin:auto */
+    margin: 10px;
+    cursor: default;
+    font-size: 20px;
+  }
+  .img {
+    height: 480px;
+    width: 350px;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    border-bottom-right-radius: 0;
+    border-bottom-right-radius: 0;
+    position: relative;
+    right: 132px;
+  }
+  b {
+    font-weight: bolder;
+    color: black;
+  }
 </style>
 <head>
-  <title>Vidly-Movies</title> 
+  <title>Vidly-Movies</title>
 </head>
-<link type="text/css" href="./styles/style.css"/>
-<div class="justify-content-right" style="margin-left:1200px">
-<form action="/api/movies/search/" method="GET">
-  <div class="container row">
-    <input type="search" id="searchmovie" class="form-control" style="width:210px;border:2px solid grey;margin-left: 10px;margin-top:3px;border-radius:25px;" name="title" placeholder=" Search Here" />
-    <button type="submit" id="submitButton">Search</button>
-  </div>
-</form> 
+<link type="text/css" href="./styles/style.css" />
+<div class="justify-content-right" style="margin-left: 1500px">
+  <form action="/api/movies/search/" method="GET">
+    <div class="container row">
+      <input
+        type="search"
+        id="searchmovie"
+        class="form-control"
+        style="
+          width: 210px;
+          border: 2px solid grey;
+          margin-left: 10px;
+          margin-top: 3px;
+          border-radius: 25px;
+        "
+        name="title"
+        placeholder=" Search Here"
+      />
+      <button type="submit" id="submitButton">Search</button>
+    </div>
+  </form>
 </div>
-<%console.log(currentUser, 'currentUser')%>
-<br>
-  <div class="container">
-    <div class="row">
-      <br>
-      <%movies.forEach(list=>{%>
-        <div class="col-md-4 col-xs-6">
-            <div class="card" id="cardStyling">
-              <div class="col-md-8 col-xs-4">
-                <br>
-               <a target="_blank" href="/api/movies/<%=list._id%>"><img class="card-img" style="padding-right:20px; border-radius:10px" src="<%=list.img%>" class="card-img" alt="..."></a> 
-              </div>
-                <div class="card-block" style="padding:4px;">
-                  <ul class="list-group" style="border-radius: 30px; border-color:white">
-                    <a href="/api/movies/<%=list._id%>" target="_blank"><h4 class="card-title" style="text-align: center;"><%=list.title%>(<%=list.year%>)</h4></a>
-                    <li class="list-group-item"><center><p class="card-text "><%=list.cast%></p></li>
-                    <li class="list-group-item text-center" ><p class="card-text ">3/5</p></li>
-                    <li class="list-group-item text-center"><p class="card-text "><%=list.genre.name%></p></center></li>
-                    <li class="list-group-item text-center"><span><b>Rank</b>: <%=list.rank%></span><br></li>
-                    <li class="list-group-item text-center"><p class="card-text"><b>Rental Price</b>: $<%=list.dailyRentalRate%></p></li>
-                    <br><a class="card-text" style="text-align:center" href="<%=list.links%>" target="_blank"><p>IMDB Page</p></a>
-                  </ul>
-                </div>
-            </div>
-            <br>
-        </div>
-        <%})%>
-      </div>
+<br />
+<div>
+  <div style="position: relative; left: 200px">
+    <button>Popular</button>
   </div>
-  
+  <form class="text-right" style="position: relative; right: 300px">
+    <span>Sort By &nbsp;</span
+    ><select name="sortBy">
+      <option>Name</option>
+      <option>Year</option>
+      <option>Popularity</option>
+    </select>
+  </form>
+</div>
 
-  
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<br />
+<br />
+<div class="container">
+  <div class="row">
+    <br />
+    <%movies.forEach(list=>{%>
+    <div class="col-md-4 col-xs-6">
+      <div class="card" id="cardStyling">
+        <div class="col-md-4 col-xs-4">
+          <a target="_blank" href="/api/movies/<%=list._id%>"
+            ><img class="img" src="<%=list.img%>" alt="..."
+          /></a>
+          <br />
+        </div>
+        <div class="card-block">
+          <br />
+          <ul>
+            <a href="/api/movies/<%=list._id%>" target="_blank"
+              ><h5 style="text-align: center; margin-right: 5px">
+                <%=list.title%>(<%=list.year%>)
+              </h5></a
+            >
+            <li class="movieclass">
+              <p class="card-text"><b>Cast</b>: <%=list.cast%></p>
+            </li>
+            <li class="movieclass">
+              <p class="card-text"><b>Rating</b>: 3/5</p>
+            </li>
+            <li class="movieclass">
+              <p class="card-text"><b>Genre</b>: <%=list.genre.name%></p>
+            </li>
+            <li class="movieclass">
+              <p class="card-text"><b>Rank</b>: <%=list.rank%></p>
+            </li>
+            <li class="movieclass">
+              <p class="card-text">
+                <b>Rental Price</b>: $<%=list.dailyRentalRate%>
+              </p>
+            </li>
+            <br /><a
+              class="card-text"
+              style="text-align: center"
+              href="<%=list.links%>"
+              target="_blank"
+              ><p>IMDB Page</p></a
+            >
+          </ul>
+        </div>
+      </div>
+      <br />
+    </div>
+    <%})%>
+  </div>
+</div>
+
+<script
+  src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+  integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+  crossorigin="anonymous"
+></script>
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+  integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+  crossorigin="anonymous"
+></script>
+<script
+  src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+  integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+  crossorigin="anonymous"
+></script>

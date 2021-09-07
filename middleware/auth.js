@@ -5,9 +5,9 @@ const { Customer } = require("../models/customer");
 // const db = require()
 
 exports.checkauth = async (req, res, next) => {
-  console.log(req.cookies);
+  // console.log(req.cookies);
   if (!req.cookies.token) {
-    console.log("hey");
+    // console.log("hey");
     req.user = { subject: "Guest" };
     res.locals.currentUser = req.user;
     next();
@@ -28,10 +28,10 @@ async function userauth(req, res, next) {
     if (!token) return res.status(409).render("./401");
     const decoded = jwt.verify(token, process.env.jwtPrivateKey);
     if (decoded.subject == "User") {
-      console.log(decoded, "decoded");
+      // console.log(decoded, "decoded");
       req.user = decoded;
       res.locals.currentUser = req.user;
-      console.log(req.user, "authcheck");
+      // console.log(req.user, "authcheck");
     } else {
       return res.status(409).render("./401");
     }
@@ -48,10 +48,10 @@ exports.userauth = async function (req, res, next) {
     if (!token) return res.status(409).render("./401");
     const decoded = jwt.verify(token, process.env.jwtPrivateKey);
     if (decoded.subject == "User") {
-      console.log(decoded, "decoded");
+      // console.log(decoded, "decoded");
       req.user = decoded;
       res.locals.currentUser = req.user;
-      console.log(req.user, "authcheck");
+      // console.log(req.user, "authcheck");
     } else {
       return res.status(409).render("./401");
     }

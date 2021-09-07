@@ -1,4 +1,4 @@
-require("dotenv").config();
+	truerequire("dotenv").config();
 const jwt = require("jsonwebtoken");
 // const bcrypt = require('bcrypt');
 const _ = require("lodash");
@@ -93,7 +93,6 @@ exports.logoutUser = async (req, res) => {
     console.log(req.user, "userhere");
     var userfind = await User.findOne({ _id: req.user._id });
     userfind.active = false;
-	userfind.phoneToken = "";
     userfind.save();
 
     res.clearCookie("token");
@@ -108,7 +107,6 @@ exports.logoutCustomer = async (req, res) => {
   try {
     var customerfind = await Customer.findOne({ _id: req.user._id });
     customerfind.active = false;
-   customerfind.phoneToken = "";
     customerfind.save();
     res.clearCookie("token");
     return res.status(200).redirect("/api/movies/movies");
