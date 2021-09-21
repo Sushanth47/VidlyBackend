@@ -28,6 +28,12 @@
     font-family: "Work Sans", sans-serif;
     color: rgb(97, 95, 95);
   }
+  .popbuttons {
+    background-color: rgb(74, 175, 74);
+    color: white;
+    border-radius: 12px;
+    border: 1px solid rgb(218, 217, 217);
+  }
   ul {
     /* border:1px solid black; */
     list-style: none;
@@ -69,7 +75,7 @@
         style="
           width: 210px;
           border: 2px solid grey;
-          margin-left: 10px;
+
           margin-top: 3px;
           border-radius: 25px;
         "
@@ -82,12 +88,18 @@
 </div>
 <br />
 <div>
-  <div style="position: relative; left: 200px">
-    <button>Popular</button>
+  <div style="margin-left: 200px">
+    <button class="popbuttons">Popular</button>
+    <button class="popbuttons">Relevent</button>
+    <button class="popbuttons">Recent Additions</button>
   </div>
   <form class="text-right" style="position: relative; right: 300px">
-    <span>Sort By &nbsp;</span
-    ><select name="sortBy">
+    <span>Sort By &nbsp;</span>
+    <select
+      name="sortBy"
+      class="form-select"
+      style="padding: 10px; width: 100px; border-radius: 2px"
+    >
       <option>Name</option>
       <option>Year</option>
       <option>Popularity</option>
@@ -95,7 +107,6 @@
   </form>
 </div>
 
-<br />
 <br />
 <div class="container">
   <div class="row">
@@ -149,6 +160,13 @@
     <%})%>
   </div>
 </div>
+
+<script>
+  fetch(url)
+  .then((response)=>{
+    console.log(response)
+  })
+</script>
 
 <script
   src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

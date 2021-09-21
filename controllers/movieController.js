@@ -36,8 +36,6 @@ exports.getMovies = async (req, res) => {
         ismovieCreated: 1,
         requestCount: 1,
         genre: 1,
-        //   "genre.img":1,
-        //   "genre.description":1
       },
     },
     {
@@ -45,7 +43,42 @@ exports.getMovies = async (req, res) => {
     },
   ]);
   //   console.log(movies[0])
-  return res.status(200).render("./movies", { movies: movies });
+  return res.status(200).render("./movies", { movies: movies, url:process.env.WEBURL });
+};
+
+exports.getMoviesFetch = async (req, res) => {
+  const movies = await Movie.aggregate([
+    {
+      $lookup: {
+        from: "genres",
+        localField: "genreId",
+        foreignField: "_id",
+        as: "genre",
+      },
+    },
+    {
+      $unwind: "$genre",
+    },
+    {
+      $project: {
+        _id: 1,
+        title: 1,
+        img: 1,
+        genreId: 1,
+        rank: 1,
+        cast: 1,
+        year: 1,
+        links: 1,
+        numberInStock: 1,
+        dailyRentalRate: 1,
+        rentedCustomers: 1,
+        ismovieCreated: 1,
+        requestCount: 1,
+        genre: 1,
+      },
+    },
+  ]);
+  return res.status(200).json({ movies: movies });
 };
 
 exports.getMoviesSort = async (req, res) => {
