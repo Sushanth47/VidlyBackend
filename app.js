@@ -20,28 +20,9 @@ const { userauth, checkauth } = require("./middleware/auth");
 const { User } = require("./models/user");
 const { Customer } = require("./models/customer");
 const { Genre } = require("./models/genre");
-// var express = require("express");
-// var cookieParser = require('cookie-parser');
-// var session      = require('express-session');
-// var flash = require("req-flash");
 
-// var app = express();
-
-// app.use(cookieParser());
-// app.use(session({ secret: "123" }));
-// app.use(flash());
 var db = require("./models/index");
-//MongoDB Connections
-const port = process.env.PORT || 3031;
-// const password = 'vidlybackend'
-// const dbURI = 'mongodb+srv://vidlybackend:'+password+'@cluster0.eyaim.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
-// mongoose.connect(dbURI, {
-//  useNewUrlParser: true,
-//  useUnifiedTopology: true,
-//  useCreateIndex:true
-// })
-//  .then(()=>app.listen(port, '0.0.0.0',() => console.log(`Hello to ${port}`)))
-//  .catch((err)=>console.error(err));
+const port = process.env.PORT;
 
 //Set and Use
 app.set("view engine", "ejs");

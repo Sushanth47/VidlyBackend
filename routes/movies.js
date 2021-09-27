@@ -10,6 +10,7 @@ const {
   updateMovies,
   addToCart,
   deleteMovies,
+  getMoviesSort,
   createMoviesPage,
   displayMovie,
   getSpecificMovie,
@@ -28,6 +29,8 @@ router.get("/requestMovie", customerauth, requestedMoviePage);
 
 router.get("/addtowishlist/:movieId", customerauth, addToWishlist);
 
+router.post("/movies/select", checkauth, getMoviesSort);
+
 router.get("/addToCart/:movieId", customerauth, addToCart);
 
 router.post("/requestmovie", customerauth, requestedMovie);
@@ -41,14 +44,5 @@ router.post("/createmovies", userauth, createMovies);
 router.get("/search", checkauth, displayMovie);
 
 router.get("/:mid", checkauth, getSpecificMovie);
-// router.get('/othermovies', othermovies);
-// router.get('/search/', displayMovieSearch);
-// router.put('/updatemovies/:id',isAdmin,updateMovies )
-
-//to delete a genre
-//  router.delete('/deletemovies/:id', isAdmin,deleteMovies)
-
-//to get by id
-//  router.post('/getspecificmovies', getSpecificMovie);
 
 (module.exports = router), Movie;

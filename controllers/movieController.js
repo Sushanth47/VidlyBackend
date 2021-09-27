@@ -43,7 +43,9 @@ exports.getMovies = async (req, res) => {
     },
   ]);
   //   console.log(movies[0])
-  return res.status(200).render("./movies", { movies: movies, url:process.env.WEBURL });
+  return res
+    .status(200)
+    .render("./movies", { movies: movies, url: process.env.WEBURL });
 };
 
 exports.getMoviesFetch = async (req, res) => {
@@ -85,233 +87,227 @@ exports.getMoviesSort = async (req, res) => {
   console.log(req.body);
 
   if (req.body.sortBy == "Name") {
-    if (req.body.sortType == "Asc") {
-      const movies = await Movie.aggregate([
-        {
-          $lookup: {
-            from: "genres",
-            localField: "genreId",
-            foreignField: "_id",
-            as: "genre",
-          },
+    var movies = await Movie.aggregate([
+      {
+        $lookup: {
+          from: "genres",
+          localField: "genreId",
+          foreignField: "_id",
+          as: "genre",
         },
-        {
-          $unwind: "$genre",
+      },
+      {
+        $unwind: "$genre",
+      },
+      {
+        $project: {
+          _id: 1,
+          title: 1,
+          img: 1,
+          genreId: 1,
+          rank: 1,
+          cast: 1,
+          year: 1,
+          links: 1,
+          numberInStock: 1,
+          dailyRentalRate: 1,
+          rentedCustomers: 1,
+          ismovieCreated: 1,
+          requestCount: 1,
+          genre: 1,
+          //   "genre.img":1,
+          //   "genre.description":1
         },
-        {
-          $project: {
-            _id: 1,
-            title: 1,
-            img: 1,
-            genreId: 1,
-            rank: 1,
-            cast: 1,
-            year: 1,
-            links: 1,
-            numberInStock: 1,
-            dailyRentalRate: 1,
-            rentedCustomers: 1,
-            ismovieCreated: 1,
-            requestCount: 1,
-            genre: 1,
-            //   "genre.img":1,
-            //   "genre.description":1
-          },
+      },
+      {
+        $sort: { title: 1 },
+      },
+    ]);
+
+    movies = await Movie.aggregate([
+      {
+        $lookup: {
+          from: "genres",
+          localField: "genreId",
+          foreignField: "_id",
+          as: "genre",
         },
-        {
-          $sort: { title: 1 },
+      },
+      {
+        $unwind: "$genre",
+      },
+      {
+        $project: {
+          _id: 1,
+          title: 1,
+          img: 1,
+          genreId: 1,
+          rank: 1,
+          cast: 1,
+          year: 1,
+          links: 1,
+          numberInStock: 1,
+          dailyRentalRate: 1,
+          rentedCustomers: 1,
+          ismovieCreated: 1,
+          requestCount: 1,
+          genre: 1,
+          //   "genre.img":1,
+          //   "genre.description":1
         },
-      ]);
-    } else if (req.body.sortType == "Des") {
-      const movies = await Movie.aggregate([
-        {
-          $lookup: {
-            from: "genres",
-            localField: "genreId",
-            foreignField: "_id",
-            as: "genre",
-          },
-        },
-        {
-          $unwind: "$genre",
-        },
-        {
-          $project: {
-            _id: 1,
-            title: 1,
-            img: 1,
-            genreId: 1,
-            rank: 1,
-            cast: 1,
-            year: 1,
-            links: 1,
-            numberInStock: 1,
-            dailyRentalRate: 1,
-            rentedCustomers: 1,
-            ismovieCreated: 1,
-            requestCount: 1,
-            genre: 1,
-            //   "genre.img":1,
-            //   "genre.description":1
-          },
-        },
-        {
-          $sort: { title: -1 },
-        },
-      ]);
-    }
+      },
+      {
+        $sort: { title: -1 },
+      },
+    ]);
   } else if (req.body.sortBy == "Year") {
-    if (req.body.sortType == "Asc") {
-      const movies = await Movie.aggregate([
-        {
-          $lookup: {
-            from: "genres",
-            localField: "genreId",
-            foreignField: "_id",
-            as: "genre",
-          },
+    var movies = await Movie.aggregate([
+      {
+        $lookup: {
+          from: "genres",
+          localField: "genreId",
+          foreignField: "_id",
+          as: "genre",
         },
-        {
-          $unwind: "$genre",
+      },
+      {
+        $unwind: "$genre",
+      },
+      {
+        $project: {
+          _id: 1,
+          title: 1,
+          img: 1,
+          genreId: 1,
+          rank: 1,
+          cast: 1,
+          year: 1,
+          links: 1,
+          numberInStock: 1,
+          dailyRentalRate: 1,
+          rentedCustomers: 1,
+          ismovieCreated: 1,
+          requestCount: 1,
+          genre: 1,
+          //   "genre.img":1,
+          //   "genre.description":1
         },
-        {
-          $project: {
-            _id: 1,
-            title: 1,
-            img: 1,
-            genreId: 1,
-            rank: 1,
-            cast: 1,
-            year: 1,
-            links: 1,
-            numberInStock: 1,
-            dailyRentalRate: 1,
-            rentedCustomers: 1,
-            ismovieCreated: 1,
-            requestCount: 1,
-            genre: 1,
-            //   "genre.img":1,
-            //   "genre.description":1
-          },
+      },
+      {
+        $sort: { year: 1 },
+      },
+    ]);
+
+    movies = await Movie.aggregate([
+      {
+        $lookup: {
+          from: "genres",
+          localField: "genreId",
+          foreignField: "_id",
+          as: "genre",
         },
-        {
-          $sort: { year: 1 },
+      },
+      {
+        $unwind: "$genre",
+      },
+      {
+        $project: {
+          _id: 1,
+          title: 1,
+          img: 1,
+          genreId: 1,
+          rank: 1,
+          cast: 1,
+          year: 1,
+          links: 1,
+          numberInStock: 1,
+          dailyRentalRate: 1,
+          rentedCustomers: 1,
+          ismovieCreated: 1,
+          requestCount: 1,
+          genre: 1,
+          //   "genre.img":1,
+          //   "genre.description":1
         },
-      ]);
-    } else if (req.body.sortType == "Des") {
-      const movies = await Movie.aggregate([
-        {
-          $lookup: {
-            from: "genres",
-            localField: "genreId",
-            foreignField: "_id",
-            as: "genre",
-          },
-        },
-        {
-          $unwind: "$genre",
-        },
-        {
-          $project: {
-            _id: 1,
-            title: 1,
-            img: 1,
-            genreId: 1,
-            rank: 1,
-            cast: 1,
-            year: 1,
-            links: 1,
-            numberInStock: 1,
-            dailyRentalRate: 1,
-            rentedCustomers: 1,
-            ismovieCreated: 1,
-            requestCount: 1,
-            genre: 1,
-            //   "genre.img":1,
-            //   "genre.description":1
-          },
-        },
-        {
-          $sort: { year: -1 },
-        },
-      ]);
-    }
+      },
+      {
+        $sort: { year: -1 },
+      },
+    ]);
   } else if (req.body.sortType == "Rank") {
-    if (req.body.sortType == "Asc") {
-      const movies = await Movie.aggregate([
-        {
-          $lookup: {
-            from: "genres",
-            localField: "genreId",
-            foreignField: "_id",
-            as: "genre",
-          },
+    var movies = await Movie.aggregate([
+      {
+        $lookup: {
+          from: "genres",
+          localField: "genreId",
+          foreignField: "_id",
+          as: "genre",
         },
-        {
-          $unwind: "$genre",
+      },
+      {
+        $unwind: "$genre",
+      },
+      {
+        $project: {
+          _id: 1,
+          title: 1,
+          img: 1,
+          genreId: 1,
+          rank: 1,
+          cast: 1,
+          year: 1,
+          links: 1,
+          numberInStock: 1,
+          dailyRentalRate: 1,
+          rentedCustomers: 1,
+          ismovieCreated: 1,
+          requestCount: 1,
+          genre: 1,
+          //   "genre.img":1,
+          //   "genre.description":1
         },
-        {
-          $project: {
-            _id: 1,
-            title: 1,
-            img: 1,
-            genreId: 1,
-            rank: 1,
-            cast: 1,
-            year: 1,
-            links: 1,
-            numberInStock: 1,
-            dailyRentalRate: 1,
-            rentedCustomers: 1,
-            ismovieCreated: 1,
-            requestCount: 1,
-            genre: 1,
-            //   "genre.img":1,
-            //   "genre.description":1
-          },
+      },
+      {
+        $sort: { rank: 1 },
+      },
+    ]);
+
+    movies = await Movie.aggregate([
+      {
+        $lookup: {
+          from: "genres",
+          localField: "genreId",
+          foreignField: "_id",
+          as: "genre",
         },
-        {
-          $sort: { rank: 1 },
+      },
+      {
+        $unwind: "$genre",
+      },
+      {
+        $project: {
+          _id: 1,
+          title: 1,
+          img: 1,
+          genreId: 1,
+          rank: 1,
+          cast: 1,
+          year: 1,
+          links: 1,
+          numberInStock: 1,
+          dailyRentalRate: 1,
+          rentedCustomers: 1,
+          ismovieCreated: 1,
+          requestCount: 1,
+          genre: 1,
+          //   "genre.img":1,
+          //   "genre.description":1
         },
-      ]);
-    } else if (req.body.sortType == "Des") {
-      const movies = await Movie.aggregate([
-        {
-          $lookup: {
-            from: "genres",
-            localField: "genreId",
-            foreignField: "_id",
-            as: "genre",
-          },
-        },
-        {
-          $unwind: "$genre",
-        },
-        {
-          $project: {
-            _id: 1,
-            title: 1,
-            img: 1,
-            genreId: 1,
-            rank: 1,
-            cast: 1,
-            year: 1,
-            links: 1,
-            numberInStock: 1,
-            dailyRentalRate: 1,
-            rentedCustomers: 1,
-            ismovieCreated: 1,
-            requestCount: 1,
-            genre: 1,
-            //   "genre.img":1,
-            //   "genre.description":1
-          },
-        },
-        {
-          $sort: { rank: -1 },
-        },
-      ]);
-    }
+      },
+      {
+        $sort: { rank: -1 },
+      },
+    ]);
   }
 
   //   console.log(movies[0])
@@ -371,7 +367,6 @@ exports.createMovies = async (req, res) => {
       { title: { $regex: req.body.title, $options: "$i" } },
       { ismovieCreated: true }
     );
-
     var options = {
       method: "GET",
       url: "https://imdb8.p.rapidapi.com/auto-complete",
@@ -401,7 +396,6 @@ exports.createMovies = async (req, res) => {
         });
         movie.ismovieCreated = true;
         movie.save();
-        // console.log(movie.rank);
         res.status(200).redirect(`/api/movies/createmoviespage`);
         // })
       })
@@ -494,7 +488,14 @@ exports.requestedMovie = async (req, res) => {
 exports.createMoviesPage = async (req, res) => {
   // console.log(res.locals, 'locals')
   let movie = await Movie.find({}).populate("genreId");
-  const allGenres = await Genre.find({}, "name");
+  // const allGenres = await Genre.find({}, "name");
+  const allGenres = await Genre.aggregate([
+    {
+      $project: {
+        name: 1,
+      },
+    },
+  ]);
   return res
     .status(200)
     .render(`./createmovies`, { movie: movie, allGenres: allGenres });
@@ -513,5 +514,3 @@ exports.displayMovie = async (req, res) => {
     title: req.query.title,
   });
 };
-
-// what

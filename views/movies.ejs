@@ -1,5 +1,10 @@
 <%- include('./partials/header') %>
-
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Yaldevi:wght@300&display=swap"
+  rel="stylesheet"
+/>
 <style>
   #submitButton {
     background-color: #0fbd9c;
@@ -13,20 +18,27 @@
   }
   #cardStyling {
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
     /* border-left:5px solid #0fbd9c; */
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     /* box-shadow: 120px 80px 40px 20px #0ff; */
     filter: drop-shadow(2px 4px 8px #3b3d3d);
+    /* filter: blur(5px); */
     transition: filter 500ms;
+  }
+  .card-text {
+    color: #000;
   }
   #cardStyling:hover {
     filter: drop-shadow(2px 4px 18px #0fbd9c);
   }
   p {
-    font-family: "Work Sans", sans-serif;
+    /* font-family: "Work Sans", sans-serif; */
+    font-family: "Yaldevi", sans-serif;
     color: rgb(97, 95, 95);
+    font-weight: 700;
+    /* padding-left: -20; */
   }
   .popbuttons {
     background-color: rgb(74, 175, 74);
@@ -39,133 +51,163 @@
     list-style: none;
     border-radius: 5px;
   }
-  .movieclass {
-    /* margin-bottom:5px; */
-    /* margin:auto */
-    margin: 10px;
-    cursor: default;
-    font-size: 20px;
+  .selectStyle {
+    padding: 10px;
+    width: 100px;
+    /* background-color: rgb(110, 240, 131); */
+    /* border-radius: 30px; */
+  }
+  .selectStyle.open {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
   }
   .img {
     height: 480px;
     width: 350px;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
-    border-bottom-right-radius: 0;
-    border-bottom-right-radius: 0;
+    bottom: 1;
     position: relative;
     right: 132px;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-transition: 0.3s ease-in-out;
+    transition: 0.3s ease-in-out;
+    /* opacity:  0.2; */
+  }
+
+  .img:hover {
+    -webkit-transform: scale(1);
+    transform: scale(1.1);
+  }
+  .main-card {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-transition: 0.3s ease-in-out;
+    transition: 0.3s ease-in-out;
+  }
+  .main-card:hover {
+    -webkit-transform: scale(1);
+    transform: scale(1.1);
   }
   b {
     font-weight: bolder;
     color: black;
   }
 </style>
-<head>
-  <title>Vidly-Movies</title>
-</head>
-<link type="text/css" href="./styles/style.css" />
-<div class="justify-content-right" style="margin-left: 1500px">
-  <form action="/api/movies/search/" method="GET">
-    <div class="container row">
-      <input
-        type="search"
-        id="searchmovie"
-        class="form-control"
-        style="
-          width: 210px;
-          border: 2px solid grey;
+<body style="background-color: rgb(255, 249, 242)">
+  <head>
+    <title>Vidly-Movies</title>
+  </head>
+  <link type="text/css" href="./styles/style.css" />
+  <div class="justify-content-right" style="margin-left: 1500px">
+    <form action="/api/movies/search/" method="GET">
+      <div class="container row">
+        <input
+          type="search"
+          id="searchmovie"
+          class="form-control"
+          style="
+            width: 210px;
+            border: 2px solid grey;
 
-          margin-top: 3px;
-          border-radius: 25px;
-        "
-        name="title"
-        placeholder=" Search Here"
-      />
-      <button type="submit" id="submitButton">Search</button>
-    </div>
-  </form>
-</div>
-<br />
-<div>
-  <div style="margin-left: 200px">
-    <button class="popbuttons">Popular</button>
-    <button class="popbuttons">Relevent</button>
-    <button class="popbuttons">Recent Additions</button>
-  </div>
-  <form class="text-right" style="position: relative; right: 300px">
-    <span>Sort By &nbsp;</span>
-    <select
-      name="sortBy"
-      class="form-select"
-      style="padding: 10px; width: 100px; border-radius: 2px"
-    >
-      <option>Name</option>
-      <option>Year</option>
-      <option>Popularity</option>
-    </select>
-  </form>
-</div>
-
-<br />
-<div class="container">
-  <div class="row">
-    <br />
-    <%movies.forEach(list=>{%>
-    <div class="col-md-4 col-xs-6">
-      <div class="card" id="cardStyling">
-        <div class="col-md-4 col-xs-4">
-          <a target="_blank" href="/api/movies/<%=list._id%>"
-            ><img class="img" src="<%=list.img%>" alt="..."
-          /></a>
-          <br />
-        </div>
-        <div class="card-block">
-          <br />
-          <ul>
-            <a href="/api/movies/<%=list._id%>" target="_blank"
-              ><h5 style="text-align: center; margin-right: 5px">
-                <%=list.title%>(<%=list.year%>)
-              </h5></a
-            >
-            <li class="movieclass">
-              <p class="card-text"><b>Cast</b>: <%=list.cast%></p>
-            </li>
-            <li class="movieclass">
-              <p class="card-text"><b>Rating</b>: 3/5</p>
-            </li>
-            <li class="movieclass">
-              <p class="card-text"><b>Genre</b>: <%=list.genre.name%></p>
-            </li>
-            <li class="movieclass">
-              <p class="card-text"><b>Rank</b>: <%=list.rank%></p>
-            </li>
-            <li class="movieclass">
-              <p class="card-text">
-                <b>Rental Price</b>: $<%=list.dailyRentalRate%>
-              </p>
-            </li>
-            <br /><a
-              class="card-text"
-              style="text-align: center"
-              href="<%=list.links%>"
-              target="_blank"
-              ><p>IMDB Page</p></a
-            >
-          </ul>
-        </div>
+            margin-top: 3px;
+            border-radius: 25px;
+          "
+          name="title"
+          placeholder=" Search Here"
+        />
+        <button type="submit" id="submitButton">Search</button>
       </div>
-      <br />
-    </div>
-    <%})%>
+    </form>
   </div>
-</div>
+  <br />
+  <div>
+    <div style="margin-left: 200px">
+      <button class="popbuttons">Popular</button>
+      <button class="popbuttons">Relevent</button>
+      <button class="popbuttons">Recent Additions</button>
+    </div>
+    <form
+      class="text-right"
+      action="/api/movies/movies/select"
+      method="POST"
+      id="myForm"
+      style="position: relative; right: 300px"
+      onchange="get()"
+    >
+      <span>Sort By &nbsp;</span>
+      <select name="sortBy" class="form-select selectStyle">
+        <option>Name</option>
+        <option>Year</option>
+        <option>Popularity</option>
+      </select>
+    </form>
+  </div>
 
+  <br />
+  <div class="container">
+    <div class="row">
+      <br />
+      <%movies.forEach(list=>{%> <%console.log(list)%>
+      <div class="col-md-4 col-xs-6" style="justify-content: space-around">
+        <div class="card" id="cardStyling">
+          <div class="col-md-4 col-xs-4">
+            <a target="_blank" href="/api/movies/<%=list._id%>"
+              ><div class="img-hover">
+                <img class="img" src="<%=list.img%>" alt="..." /></div
+            ></a>
+            <br />
+          </div>
+          <div class="card-block">
+            <br />
+            <ul class="main-card">
+              <a href="/api/movies/<%=list._id%>" target="_blank"
+                ><h5 style="text-align: center; margin-right: 5px">
+                  <%=list.title%>(<%=list.year%>)
+                </h5></a
+              >
+              <li class="movieclass">
+                <p class="card-text"><b>Cast</b>: <%=list.cast%></p>
+              </li>
+              <li class="movieclass">
+                <p class="card-text"><b>Rating</b>: 3/5</p>
+              </li>
+              <li class="movieclass">
+                <p class="card-text"><b>Genre</b>: <%=list.genre.name%></p>
+              </li>
+              <li class="movieclass">
+                <p class="card-text">
+                  <b style="font-weight: bolder">Rank</b>: <%=list.rank%>
+                </p>
+              </li>
+              <li class="movieclass">
+                <p class="card-text">
+                  <b>Rental Price</b>: $<%=list.dailyRentalRate%>
+                </p>
+              </li>
+              <br />
+              <a
+                class="card-text movieclass"
+                style="text-align: center; position: relative; right: 30"
+                href="<%=list.links%>"
+                target="_blank"
+                ><p style="color: rgb(49, 128, 197)">IMDB Page</p></a
+              >
+            </ul>
+          </div>
+        </div>
+        <br />
+      </div>
+      <%})%>
+    </div>
+  </div>
+</body>
 <script>
-  fetch(url)
-  .then((response)=>{
-    console.log(response)
-  })
+  fetch().then((response) => {
+    console.log(response);
+  });
 </script>
 
 <script
@@ -183,3 +225,9 @@
   integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
   crossorigin="anonymous"
 ></script>
+
+<script>
+  function get() {
+    document.getElementById("myForm").submit();
+  }
+</script>
