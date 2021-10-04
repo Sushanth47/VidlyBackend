@@ -2,11 +2,7 @@ require("dotenv").config();
 var express = require("express");
 var app = express();
 const cookieParser = require("cookie-parser");
-// var session = require('express-session')
-var flash = require("req-flash");
 const cors = require("cors");
-const mongoose = require("mongoose");
-// const {mongoClient} = require
 const morgan = require("morgan");
 
 const genres = require("./routes/genres");
@@ -69,13 +65,6 @@ app.get("/getallmoviestest", async (req, res) => {
   return res.json(mov);
 });
 
-app.get("/guestdetails", async (req, res) => {
-  // const loc = navigator.geolocation;
-  console.log(req.headers["user-agent"]);
-
-  console.log(req.connection.remoteAddress);
-  return res.status(200).json("done");
-});
 
 app.post("/addgenre", async (req, res) => {
   console.log(req.body);

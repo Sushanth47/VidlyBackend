@@ -6,6 +6,9 @@
   rel="stylesheet"
 />
 <style>
+  .moviesBox {
+    padding: 100px;
+  }
   #submitButton {
     background-color: #0fbd9c;
     border-radius: 25px;
@@ -17,29 +20,24 @@
     box-shadow: 0.5px 0.5px 5px #343d47;
   }
   #cardStyling {
-    align-items: center;
-    justify-content: space-around;
-    /* border-left:5px solid #0fbd9c; */
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    /* box-shadow: 120px 80px 40px 20px #0ff; */
+    margin-right: 100px;
+    margin-bottom: 30px;
+    width: 399px;
+    border: 25px;
+    overflow: hidden;
     filter: drop-shadow(2px 4px 8px #3b3d3d);
-    /* filter: blur(5px); */
     transition: filter 500ms;
   }
+
   .card-text {
     color: #000;
+    font-family: "Yaldevi", sans-serif;
+    font-weight: bold;
   }
   #cardStyling:hover {
     filter: drop-shadow(2px 4px 18px #0fbd9c);
   }
-  p {
-    /* font-family: "Work Sans", sans-serif; */
-    font-family: "Yaldevi", sans-serif;
-    color: rgb(97, 95, 95);
-    font-weight: 700;
-    /* padding-left: -20; */
-  }
+
   .popbuttons {
     background-color: rgb(74, 175, 74);
     color: white;
@@ -63,13 +61,12 @@
     transform: translateY(0);
   }
   .img {
-    height: 480px;
-    width: 350px;
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
+    height: 500px;
+    width: 399px;
+    overflow: hidden;
     bottom: 1;
     position: relative;
-    right: 132px;
+    /* right: 132px; */
     -webkit-transform: scale(1);
     transform: scale(1);
     -webkit-transition: 0.3s ease-in-out;
@@ -95,111 +92,107 @@
     font-weight: bolder;
     color: black;
   }
+  strong {
+    font-weight: lighter;
+  }
+  p {
+    font-weight: 900;
+  }
 </style>
 <body style="background-color: rgb(255, 249, 242)">
   <head>
     <title>Vidly-Movies</title>
   </head>
   <link type="text/css" href="./styles/style.css" />
-  <div class="justify-content-right" style="margin-left: 1500px">
+  <h1 class="text-center">Vidly</h1>
+  <h3 class="text-center">All of the World Cinema At One Place</h3>
+
+  <div style="padding-left: 1400px">
     <form action="/api/movies/search/" method="GET">
       <div class="container row">
         <input
           type="search"
-          id="searchmovie"
           class="form-control"
           style="
             width: 210px;
             border: 2px solid grey;
-
             margin-top: 3px;
             border-radius: 25px;
           "
           name="title"
-          placeholder=" Search Here"
+          placeholder="Search Here"
         />
         <button type="submit" id="submitButton">Search</button>
       </div>
     </form>
   </div>
-  <br />
-  <div>
-    <div style="margin-left: 200px">
-      <button class="popbuttons">Popular</button>
-      <button class="popbuttons">Relevent</button>
-      <button class="popbuttons">Recent Additions</button>
-    </div>
-    <form
-      class="text-right"
-      action="/api/movies/movies/select"
-      method="POST"
-      id="myForm"
-      style="position: relative; right: 300px"
-      onchange="get()"
-    >
-      <span>Sort By &nbsp;</span>
-      <select name="sortBy" class="form-select selectStyle">
-        <option>Name</option>
-        <option>Year</option>
-        <option>Popularity</option>
-      </select>
-    </form>
-  </div>
 
-  <br />
-  <div class="container">
+  <form
+    class="text-right"
+    action="/api/movies/movies/select"
+    method="GET"
+    id="myForm"
+    style="padding-right: 300px; flex-direction: row"
+    onchange="get()"
+  >
+    <span>Sort By &nbsp;</span>
+    <select name="sortBy" class="form-select selectStyle">
+      <option>-Select-</option>
+      <option value="Name">Name</option>
+      <option value="Year">Year</option>
+      <option value="Rank">Popularity</option>
+    </select>
+  </form>
+
+  <div class="moviesBox">
     <div class="row">
-      <br />
-      <%movies.forEach(list=>{%> <%console.log(list)%>
-      <div class="col-md-4 col-xs-6" style="justify-content: space-around">
-        <div class="card" id="cardStyling">
-          <div class="col-md-4 col-xs-4">
-            <a target="_blank" href="/api/movies/<%=list._id%>"
-              ><div class="img-hover">
-                <img class="img" src="<%=list.img%>" alt="..." /></div
-            ></a>
-            <br />
-          </div>
-          <div class="card-block">
-            <br />
-            <ul class="main-card">
-              <a href="/api/movies/<%=list._id%>" target="_blank"
-                ><h5 style="text-align: center; margin-right: 5px">
-                  <%=list.title%>(<%=list.year%>)
-                </h5></a
-              >
-              <li class="movieclass">
-                <p class="card-text"><b>Cast</b>: <%=list.cast%></p>
-              </li>
-              <li class="movieclass">
-                <p class="card-text"><b>Rating</b>: 3/5</p>
-              </li>
-              <li class="movieclass">
-                <p class="card-text"><b>Genre</b>: <%=list.genre.name%></p>
-              </li>
-              <li class="movieclass">
-                <p class="card-text">
-                  <b style="font-weight: bolder">Rank</b>: <%=list.rank%>
-                </p>
-              </li>
-              <li class="movieclass">
-                <p class="card-text">
-                  <b>Rental Price</b>: $<%=list.dailyRentalRate%>
-                </p>
-              </li>
-              <br />
-              <a
-                class="card-text movieclass"
-                style="text-align: center; position: relative; right: 30"
-                href="<%=list.links%>"
-                target="_blank"
-                ><p style="color: rgb(49, 128, 197)">IMDB Page</p></a
-              >
-            </ul>
-          </div>
-        </div>
+      <%movies.forEach(list=>{%>
+      <div class="card" id="cardStyling">
+        <a target="_blank" href="/api/movies/<%=list._id%>"
+          ><div class="img-hover">
+            <img class="img" src="<%=list.img%>" alt="..." /></div
+        ></a>
         <br />
+
+        <div class="card-block">
+          <br />
+          <ul class="main-card">
+            <a href="/api/movies/<%=list._id%>" target="_blank"
+              ><h5 style="text-align: center; margin-right: 5px">
+                <%=list.title%>(<%=list.year%>)
+              </h5></a
+            >
+            <li class="movieclass">
+              <p class="card-text"><strong>Cast</strong>: <%=list.cast%></p>
+            </li>
+            <li class="movieclass">
+              <p class="card-text"><strong>Rating</strong>: 3/5</p>
+            </li>
+            <li class="movieclass">
+              <p class="card-text">
+                <strong>Genre</strong>: <%=list.genre.name%>
+              </p>
+            </li>
+            <li class="movieclass">
+              <p class="card-text"><strong>Rank</strong>: <%=list.rank%></p>
+            </li>
+            <li class="movieclass">
+              <p class="card-text">
+                <strong>Rental Price</strong>: $<%=list.dailyRentalRate%>
+              </p>
+            </li>
+            <br />
+            <a
+              class="card-text movieclass"
+              style="text-align: center; position: relative; right: 30"
+              href="<%=list.links%>"
+              target="_blank"
+              ><p style="color: rgb(49, 128, 197)">IMDB Page</p></a
+            >
+          </ul>
+        </div>
       </div>
+      <br />
       <%})%>
     </div>
   </div>
