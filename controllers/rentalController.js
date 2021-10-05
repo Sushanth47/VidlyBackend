@@ -1,93 +1,40 @@
-const { Movie } = require('../models/movie');
-const { Customer } = require('../models/customer');
-const mongoose = require('mongoose');
-const { Rental, validate } = require('../models/rental');
-const Fawn = require('fawn');
+const { Movie } = require("../models/movie");
+const { Customer } = require("../models/customer");
+const mongoose = require("mongoose");
+const { Rental } = require("../models/rental");
 
+exports.rentalPage = async (req, res) => {
+  var customer = await Customer.findOne({ _id: req.user._id }, "cart").populate(
+    "cart"
+  );
+  var subject = "rentals";
+  return res.render("rentalpage.ejs", { customer: customer, subject: subject });
+};
 
-exports.getRentals= async (req, res) =>{
-   const rentals = await Rental.find().sort('-dateOut');
-   console.log(rentals)
-   res.send(rentals);
-}
+exports.checkout = async (req, res) => {
+  var customer = await Customer.findOne({ _id: req.user._id }).populate("cart");
+  var ans = 0;
+  var arr = [];
+  const date = new Date();
+  customer.cart.forEach((list) => {
+    arr.push(list._id);
+    ans += req.query.days * list.dailyRentalRate;
+  });
+  const rentId = `MOV-${customer.createdAt
+    .getTime()
+    .toString()}-${date.getTime()}`;
 
-
-
-exports.createRentals = async(req, res) => {
-   if(!mongoose.Types.ObjectId.isValid(req.body.customerId)){
-      return res.status(400).send('Invalid ID');
-   }
-
-   const customer = await Customer.findById(req.user._id);
-   if (!customer) return res.status(400).send('Invalid customer.');
-
-   if(!mongoose.Types.ObjectId.isValid(req.body.movieId)){
-      return res.status(400).send('Invalid ID');
-   }
-
-   const movie = await Movie.findById(req.body.movieId);
-   if(!movie) return res.status(400).send('Invalid movie');
-
-   if (movie.numberInStock === 0) return res.status(400).send('Movie not in Stock')
-
-//    let rental = new Rental({
-//        customer: {
-//            _id: customer._id,
-//            name: customer.name,
-//            phone: customer.phone
-//        },
-//         movie: {
-//             _id: movie._id,
-//             title: movie.title,
-//             dailyRentalRate: movie.dailyRentalRate,
-//             link: movie.link,
-//             img: movie.img
-//         }
-//    });
-    var obj = {
-        customer:req.user._id,
-        movie:req.body.movieId,
-        rentalFee: movie.dailyRentalRate,
-        checkOut:false
-    }
-    await Rental.create(obj);
-   
-   try {
-      new Fawn.Task()
-          .update('movies', { _id:movie._id}, {
-              $inc: { numberInStock: -1 }
-          })
-          .run();
-   }
-   catch(ex){
-       res.status(500).send('Something Failed');
-   }
-   
-   res.redirect(`/api/movies/${req.body.movieId}`);
-}
-
-exports.updateRentals = async(req, res) =>{
-   const { error } = validate(req.body);
-    if(error) return res.status(400).send(error.details[0].message);
-   
-    const rental = await Rental.findByIdAndUpdate(req.params.id, { name: req.body.name}, {
-       new :true
-   })
-    if(!rental) return res.status(404).send('Rental not found');
-
-    res.send(rental);
-}
-
-exports.deleteRentals = async (req, res) => {
-   const rental =await Rental.findByIdAndRemove(req.params.id);
-
-     if(!rental) return res.status(404).send('Rental not found');
- 
-     res.send(rental);
- }
-
- exports.getSpecificRentals = async(req, res) => {
-   let rental =  await Rental.findById(req.params.id);
-     if(!rental) return res.status(404).send('Rental not found');
-     res.send(rental);
- }
+  var rental = Rental.create({
+    customer: req.user._id,
+    movie: arr,
+    dateOut: date,
+    dateReturned: Date.now() + req.query.days * 86400000,
+    rentalFee: ans,
+    checkOut: rentId,
+  });
+  customer.cart = [];
+  customer.save();
+  rental.checkOut = rentId;
+  // rental.save();
+  return res.redirect("/api/customers/getrentals");
+};

@@ -1,14 +1,11 @@
-const { Customer, validate } = require("../models/customer");
-// const express = require("express");
-// const router = express.Router();
-// const { Customer } = require("../models/customer");
+const { Customer } = require("../models/customer");
+
 
 exports.getWishlist = async (req, res) => {
   try {
     var cust = await Customer.findOne({ _id: req.user._id }).populate(
       "wishList"
     );
-    //   console.log(cust);
     var subject = "wishList";
     return res
       .status(200)
@@ -21,7 +18,6 @@ exports.getWishlist = async (req, res) => {
 exports.getMyCart = async (req, res) => {
   try {
     var cust = await Customer.findOne({ _id: req.user._id }).populate("cart");
-    //   console.log(cust);
     var subject = "cart";
     return res
       .status(200)
@@ -31,9 +27,19 @@ exports.getMyCart = async (req, res) => {
   }
 };
 
+exports.getRentals = async (req, res) => {
+  try {
+    var cust = await Customer.findOne({ _id: req.user._id }).populate(
+      "rentedMovies"
+    );
+    var subject = "rental";
+    return res.render("./myWatchlist.ejs", { cust, subject });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 exports.updateCustomers = async (req, res) => {
-  //   const { error } = validate(req.body);
-  //    if(error) return res.status(400).send(error.details[0].message);
 
   const customer = await Customer.findByIdAndUpdate(
     req.params.id,
@@ -59,4 +65,30 @@ exports.getSpecificCustomer = async (req, res) => {
   let customer = await Customer.findById(req.params.id);
   if (!customer) return res.status(404).send("Customer not found");
   res.send(customer);
+};
+
+exports.goldCustomerPage = async (req, res) => {
+  return res.render("goldPage.ejs");
+};
+
+exports.ApplyGold = async (req, res) => {
+  const { phone, email } = req.body;
+  await Customer.updateOne({ phone: phone }, { $set: { email: email } });
+  return res.status(200).redirect("/api/movies/movies");
+};
+
+exports.pullFromCart = async (req, res) => {
+  await Customer.updateOne(
+    { _id: req.user._id },
+    { $pull: { cart: req.params.movieId } }
+  );
+  return res.status(200).redirect("/api/customers/getMyCart");
+};
+
+exports.pullFromList = async (req, res) => {
+  await Customer.updateOne(
+    { _id: req.user._id },
+    { $pull: { myWishlist: req.params.movieId } }
+  );
+  return res.status(200).redirect("/api/customers/getWishlist");
 };

@@ -1,7 +1,7 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  
+  <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" data-auto-replace-svg="nest"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -9,6 +9,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital@1&display=swap" rel="stylesheet"> 
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet"> 
+<link
+  href="https://fonts.googleapis.com/css2?family=Yaldevi:wght@300&display=swap"
+  rel="stylesheet"
+/>
 </head>
 <style>
   /* Style The Dropdown Button */
@@ -68,7 +72,7 @@
          <a class="nav-link" href="/api/movies/movies">Movies <span class="sr-only">(current)</span></a>
        </li>
        <li class="nav-item ">
-         <a class="nav-link" href="#">Rentals</a>
+         <a class="nav-link" href="/api/customers/getrentals">Rentals</a>
        </li>
        <%if(currentUser){%>
         <%if(currentUser.subject == 'User'){%>
@@ -128,7 +132,7 @@
                       <%if(currentUser.subject == 'Guest'){%>
                       <a href="/api/auth/loginCustomer">Log In</a>
                       <a href="/api/auth/signupPage">SignUp</a>
-                      <a href="/api/auth/login">Owner</a>
+                      <!-- <a href="/api/auth/login">Owner</a> -->
                       <%}else if(currentUser.subject == 'User'){%>
                         <a href="/api/auth/logoutuser">Logout</a>
                       <%}else{%>

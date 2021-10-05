@@ -2,9 +2,9 @@
 const express = require("express");
 const router = express.Router();
 const {
-  updateCustomers,
-  deleteCustomer,
-  getSpecificCustomer,
+  getRentals,
+  pullFromCart,
+  pullFromList,
   getWishlist,
   getMyCart,
 } = require("../controllers/customerController");
@@ -14,6 +14,12 @@ const { customerauth, checkauth } = require("../middleware/auth");
 router.get("/getWishlist", customerauth, getWishlist);
 
 router.get("/getMyCart", customerauth, getMyCart);
+
+router.get("/pullfromcart/:movieId", customerauth, pullFromCart);
+
+router.get("/pullfromlist/:movieId", customerauth, pullFromList);
+
+router.get("/getrentals", customerauth, getRentals);
 
 module.exports = router;
 

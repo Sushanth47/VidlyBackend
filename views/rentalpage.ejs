@@ -1,0 +1,63 @@
+<%- include('./partials/header') %>
+<link
+  href="https://fonts.googleapis.com/css2?family=Yaldevi:wght@300&display=swap"
+  rel="stylesheet"
+/>
+<style>
+     h1{
+    font-family: 'Yaldevi', sans-serif;
+  }
+  img{
+    margin:10px 10px 10px 0px;
+    border-radius:10px; 
+  }
+  .iconStyling{
+    position: relative;
+    left:290px;
+    margin-top:20px;
+    top:10px;
+    color:red
+  }
+  .form{
+      align-items: center;
+      margin-top:50px;
+      padding-left: 700px;
+  }
+</style>
+
+
+<body>
+    <h1 class="text-center">Checkout Page</h1>
+    <form action="/api/rentals/checkout" class="form" method="GET">
+        <label>Select Days for Rental&nbsp;&nbsp;&nbsp;</label>
+        <input class="form-input" type="number" name="days"  />
+        <button type="submit" class="btn btn-success">Rent</button>
+    </form>
+
+    <div class="container">
+        <div class="row">
+          <%customer.cart.forEach(list=>{%>
+            <div class="col-md-4 col-xs-6">
+                <div class="card" id="cardStyling">
+                  <div class="col-md-8 col-xs-4">
+                    <a class="text-right iconStyling" href="/api/customers/pullfromcart/<%=list._id%>"><i class="fas fa-trash fa-2x"></i></a>
+                   <a target="_blank" href="/api/movies/<%=list._id%>"><img class="card-img align-items-center" style="border-radius:10px; position: relative; left:50px;" src="<%=list.img%>" class="card-img" alt="..."></a> 
+                  </div>
+                    <div class="card-block" style="padding:4px;">
+                      <ul class="list-group" style="border-radius: 30px; border-color:white">
+                        <a href="/api/movies/<%=list._id%>" target="_blank"><h4 class="card-title" style="text-align: center;"><%=list.title%>(<%=list.year%>)</h4></a>
+                        <li class="list-group-item"><center><p class="card-text "><%=list.cast%></p></li>
+                        <li class="list-group-item text-center" ><p class="card-text ">3/5</p></li>
+                        <li class="list-group-item text-center"><span><b>Rank</b>: <%=list.rank%></span><br></li>
+                        <li class="list-group-item text-center"><p class="card-text"><b>Rental Price</b>: $<%=list.dailyRentalRate%></p></li>
+                        <br><a class="card-text" style="text-align:center" href="<%=list.links%>" target="_blank"><p>IMDB Page</p></a>
+                      </ul>
+                    </div>
+                </div>
+                <br>
+            </div>
+            <%})%>
+          </div>
+      </div>
+      
+</body>
