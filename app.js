@@ -16,7 +16,7 @@ const { userauth, checkauth } = require("./middleware/auth");
 const { User } = require("./models/user");
 const { Customer } = require("./models/customer");
 const { Genre } = require("./models/genre");
-
+const { Movie } = require("./models/movie");
 var db = require("./models/index");
 const port = process.env.PORT;
 
@@ -24,7 +24,7 @@ const port = process.env.PORT;
 app.set("view engine", "ejs");
 app.set("views", "./views");
 app.use(express.json());
-app.use(cors());
+// app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
 
@@ -65,7 +65,6 @@ app.get("/getallmoviestest", async (req, res) => {
   return res.json(mov);
 });
 
-
 app.post("/addgenre", async (req, res) => {
   console.log(req.body);
   var obj = {
@@ -95,11 +94,14 @@ app.get("/genremodel", async (req, res) => {
 });
 
 app.get("/cookie", checkauth, function (req, res) {
-  // Cookies that have not been signed
   console.log("Cookies: ", req.cookies);
   res.clearCookie();
-  // Cookies that have been signed
   console.log("Signed Cookies: ");
+});
+
+app.get("/rentedcustomers", async (req, res) => {
+  await Movie.updateMany({}, { $set: { rentedCustomer: [] } });
+  return res.json("done");
 });
 
 //404 Page

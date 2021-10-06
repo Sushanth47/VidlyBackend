@@ -16,10 +16,18 @@ exports.checkout = async (req, res) => {
   var ans = 0;
   var arr = [];
   const date = new Date();
-  customer.cart.forEach((list) => {
+  for (var i = 0; i < customer.cart.length; i++) {
+    var movie = await Movie.findOne({ _id: customer.cart[i]._id });
+    movie.rentedCustomers.push(customer._id);
+    await movie.save();
+  }
+  customer.cart.forEach(async (list) => {
     arr.push(list._id);
     ans += req.query.days * list.dailyRentalRate;
   });
+  for (var i = 0; i < arr.length; i++) {
+    customer.rentedMovies.push(arr[i]);
+  }
   const rentId = `MOV-${customer.createdAt
     .getTime()
     .toString()}-${date.getTime()}`;

@@ -1,5 +1,9 @@
 <%- include('./partials/header') %>
-
+<title>Sign Up</title>
+<script
+  src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"
+  data-auto-replace-svg="nest"
+></script>
 <style>
   #cardOutline {
     border: 1px solid black;
@@ -20,7 +24,7 @@
         >
           <div class="card-body px-lg-5 py-lg-5" id="cardOutline">
             <div class="text-center mb-4">
-              <small>SignIn with credentials</small>
+              <small>Sign Up!</small>
             </div>
             <form role="form" action="/api/auth/customersignup" method="POST">
               <div class="form-group mb-3">
@@ -29,13 +33,13 @@
                 >
                   <div class="input-group-prepend">
                     <span class="input-group-text"
-                      ><i class="ni ni-email-83"></i
+                      ><i class="fas fa-phone"></i
                     ></span>
                   </div>
                   <input
                     class="form-control"
-                    name="email"
-                    placeholder="username or email or phone"
+                    name="phone"
+                    placeholder="phone"
                   />
                 </div>
               </div>
@@ -45,7 +49,24 @@
                 >
                   <div class="input-group-prepend">
                     <span class="input-group-text"
-                      ><i class="ni ni-lock-circle-open"></i
+                      ><i class="fas fa-user"></i
+                    ></span>
+                  </div>
+                  <input
+                    class="form-control"
+                    placeholder="Name"
+                    name="name"
+                    type="text"
+                  />
+                </div>
+              </div>
+              <div class="form-group">
+                <div
+                  class="input-group input-group-merge input-group-alternative"
+                >
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"
+                      ><i class="fas fa-lock"></i
                     ></span>
                   </div>
                   <input

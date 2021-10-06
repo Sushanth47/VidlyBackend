@@ -1,6 +1,5 @@
 const { Customer } = require("../models/customer");
 
-
 exports.getWishlist = async (req, res) => {
   try {
     var cust = await Customer.findOne({ _id: req.user._id }).populate(
@@ -33,14 +32,14 @@ exports.getRentals = async (req, res) => {
       "rentedMovies"
     );
     var subject = "rental";
-    return res.render("./myWatchlist.ejs", { cust, subject });
+    console.log(cust);
+    return res.render("./myWatchlist.ejs", { cust: cust, subject: subject });
   } catch (err) {
     console.log(err);
   }
 };
 
 exports.updateCustomers = async (req, res) => {
-
   const customer = await Customer.findByIdAndUpdate(
     req.params.id,
     { name: req.body.name },

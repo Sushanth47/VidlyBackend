@@ -93,7 +93,7 @@ exports.logoutUser = async (req, res) => {
     console.log(req.user, "userhere");
     var userfind = await User.findOne({ _id: req.user._id });
     userfind.active = false;
-	userfind.phoneToken = "";
+    userfind.phoneToken = "";
     userfind.save();
 
     res.clearCookie("token");
@@ -108,7 +108,7 @@ exports.logoutCustomer = async (req, res) => {
   try {
     var customerfind = await Customer.findOne({ _id: req.user._id });
     customerfind.active = false;
-   customerfind.phoneToken = "";
+    customerfind.phoneToken = "";
     customerfind.save();
     res.clearCookie("token");
     return res.status(200).redirect("/api/movies/movies");
@@ -148,13 +148,15 @@ exports.getCustomerfromData = async (req, res) => {
 exports.getCustomer = async (req, res) => {
   try {
     res.locals = {};
-    let customer = await Customer.findOne({ phone: req.body.phone });
+    var customer = await Customer.findOne({ phone: req.body.phone });
     if (customer) {
       return res.status(400).send("User already Exists");
     }
-    customer = new Customer(
-      _.pick(req.body, ["name", "email", "password", "phone"])
-    );
+    customer = await Customer.create({
+      name: req.body.name,
+      password: req.body.password,
+      phone: req.body.phone,
+    });
     const token = await generateAuthToken(
       res,
       customer._id,

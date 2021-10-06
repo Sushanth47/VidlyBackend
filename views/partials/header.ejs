@@ -126,7 +126,14 @@
                 <div class="container nav justify-content-end">
                   
                   <div class="dropdown">
+                    <%if(currentUser){%>
+                      <%if(currentUser.subject == 'Customer'){%>
+                        <span style="color:rgb(101, 197, 241);"><i class="fas fa-user"></i
+                          ></span>&nbsp;&nbsp;<button class="dropbtn"><%=currentUser.name%></button>
+                        <%}%>
+                      <%}else{%>
                     <button class="dropbtn">My Account</button>
+                    <%}%>
                     <div class="dropdown-content">
                       <%if(currentUser){%>
                       <%if(currentUser.subject == 'Guest'){%>
