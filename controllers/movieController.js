@@ -216,7 +216,7 @@ exports.getSpecificMovie = async (req, res) => {
       _id: { $nin: [req.params.mid] },
       genreId: movie.genreId._id,
     },
-    "_id title rank cast year img links"
+    "_id title rank cast year img links dailyRentalRate"
   );
   return res.status(200).render("./moviePage.ejs", { movie, otherMovies });
 };
@@ -274,6 +274,7 @@ exports.createMovies = async (req, res) => {
           links: "https://www.imdb.com/title/" + apidata.d[0].id + "/",
           cast: apidata.d[0].s,
           rank: apidata.d[0].rank,
+          genre: genre.name,
           numberInStock: req.body.numberInStock,
           dailyRentalRate: req.body.dailyRentalRate,
         });
@@ -386,14 +387,12 @@ exports.createMoviesPage = async (req, res) => {
 
 exports.displayMovie = async (req, res) => {
   var movie = await Movie.find(
-    {
-      $or: [
-        { title: { $regex: req.query.title, $options: "$i" } },
-        { "genreId.name": { $regex: req.query.title, $options: "$i" } },
-      ],
-    },
-    "title img year cast links"
+    { title: { $regex: req.query.title, $options: "$i" } },
+    "title img year cast links rank dailyRentalRate"
   ).populate("genreId");
+  var genresearch = await Movie.find({
+    genre: { $regex: req.query.title, $options: "$i" },
+  });
   let genre = await Genre.find({
     name: { $regex: req.query.title, $options: "$i" },
   });
@@ -401,5 +400,6 @@ exports.displayMovie = async (req, res) => {
     movie: movie,
     genre: genre,
     title: req.query.title,
+    genresearch: genresearch,
   });
 };

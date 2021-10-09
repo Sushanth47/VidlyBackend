@@ -99,6 +99,15 @@ app.get("/cookie", checkauth, function (req, res) {
   console.log("Signed Cookies: ");
 });
 
+app.get("/setrent", async (req, res) => {
+  var movie = await Movie.find({});
+  movie.forEach((list) => {
+    list.dailyRentalRate = list.dailyRentalRate / 10;
+    list.save();
+  });
+  return res.json("done ");
+});
+
 app.get("/rentedcustomers", async (req, res) => {
   await Movie.updateMany({}, { $set: { rentedCustomer: [] } });
   return res.json("done");

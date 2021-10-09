@@ -1,118 +1,189 @@
 <%- include('./partials/header') %>
-<style>
-  h1 {
-    text-align: center;
-  }
-  .mainbox {
-    padding: 30px;
-    margin-right: -60px;
-  }
-  #submitButton {
-    background-color: #0fbd9c;
-    border-radius: 25px;
-    border: 1px solid;
-    display: block;
-    color: white;
-    margin-top: 3px;
-    margin-left: 3px;
-    box-shadow: 0.5px 0.5px 5px #343d47;
-  }
-  #searchResults {
-    width: 25rem;
-    height: 25rem;
-    overflow: hidden;
-    border: 1px solid rgb(240, 240, 240);
-    box-shadow: 5px 5px 5px lightgrey;
-    border-radius: 10px;
-    margin-right: 30px;
-  }
-  #searchResultsGenre {
-    width: 25rem;
-    height: 25rem;
-    overflow: hidden;
-    border: 1px solid rgb(240, 240, 240);
-    box-shadow: 5px 5px 5px lightgrey;
-    border-radius: 10px;
-    margin-right: 30px;
-  }
-</style>
-<title>Search Results for "<%=title%>"</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap"
+  rel="stylesheet"
+/>
+<body>
+  <style>
+    body {
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+    h1 {
+      text-align: center;
+    }
+    .mainbox {
+      padding-left: 60px;
+      margin-right: -60px;
+      flex-direction: row;
+    }
 
-<h1 class="text-center">Search Results for "<%=title%>"</h1>
-<br />
+    #submitButton {
+      background-color: #0fbd9c;
+      border-radius: 25px;
+      border: 1px solid;
+      display: block;
+      color: white;
+      margin-top: 3px;
+      margin-left: 3px;
+      box-shadow: 0.5px 0.5px 5px #343d47;
+    }
+    #imdb {
+      border-color: 1px solid transparent;
+      font-weight: bolder;
+      font-family: "Roboto", sans-serif;
+      color: black;
+      background-color: yellow;
+      padding: 8px;
+      border-radius: 10px;
+      text-decoration: none;
+      -webkit-transform: scale(1);
+      transform: scale(1);
+      -webkit-transition: 0.3s ease-in-out;
+      transition: 0.3s ease-in-out;
+    }
+    #imdb:hover {
+      -webkit-transform: scale(1);
+      transform: scale(1.1);
+    }
+    #searchResults {
+      width: 28rem;
+      height: 22rem;
+      overflow: hidden;
+      border: 1px solid rgb(240, 240, 240);
+      box-shadow: 5px 5px 5px lightgrey;
+      border-radius: 10px;
+      margin-right: 30px;
+      -webkit-transform: scale(1);
+      transform: scale(1);
+      -webkit-transition: 0.3s ease-in-out;
+      transition: 0.3s ease-in-out;
+    }
+    #seachResults:hover {
+      -webkit-transform: scale(1);
+      transform: scale(1.1);
+    }
+    #searchResultsGenre {
+      width: 35rem;
+      height: 12rem;
+      overflow: hidden;
+      border-radius: 10px;
+      margin-right: 0px;
+    }
+    .mainbox1 {
+      padding-left: 650px;
+      margin-bottom: 40px;
+    }
+  </style>
+  <title>Search Results for "<%=title%>"</title>
 
-<div style="padding-left: 1400px">
-  <form action="/api/movies/search/" method="GET">
-    <div class="container row">
-      <input
-        type="search"
-        class="form-control"
-        style="
-          width: 210px;
-          border: 2px solid grey;
-          margin-top: 3px;
-          border-radius: 25px;
-        "
-        name="title"
-        placeholder="Search Here"
-      />
-      <button type="submit" id="submitButton">Search</button>
-    </div>
-  </form>
-</div>
+  <h1 class="text-center">Search Results for "<%=title%>"</h1>
+  <br />
 
-<%if(movie.length == 0){%>
-<h1>No Movies Found</h1>
-<%}%>
-<div class="mainbox">
-  <div class="row">
-    <%movie.forEach(list=>{%>
-    <div class="media" id="searchResults">
-      <img
-        class="rounded float-left"
-        src="<%=list.img%>"
-        height="290"
-        width="150"
-        alt="Generic placeholder image"
-      />
-      <div class="media-body" style="margin: 20">
-        <h5 class="mt-0" style="font-weight: bold">
-          <%=list.title%> (<%=list.year%>)
-        </h5>
-        <br />
-        <h6 class="mt-0"><%=list.cast%></h6>
-        <h6 class="mt-0"><%=list.genreId.name%></h6>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
-          class="mt-0"
-          href="<%=list.links%>"
-          style="color: black"
-          ><i class="fab fa-imdb fa-5x"></i
-        ></a>
+  <div style="padding-left: 1400px">
+    <form action="/api/movies/search/" method="GET">
+      <div class="container row">
+        <input
+          type="search"
+          class="form-control"
+          style="
+            width: 210px;
+            border: 2px solid grey;
+            margin-top: 3px;
+            border-radius: 25px;
+          "
+          name="title"
+          placeholder="Search Here"
+        />
+        <button type="submit" id="submitButton">Search</button>
       </div>
-    </div>
-    <%})%> <%genre.forEach(list=>{%>
+    </form>
+  </div>
+
+  <div class="mainbox1">
+    <%genre.forEach(list=>{%>
     <div class="media" id="searchResultsGenre">
       <img
         class="rounded float-left"
         src="<%=list.img%>"
-        height="auto"
-        width="150"
+        height="180"
+        width="180"
         alt="Generic placeholder image"
       />
       <div class="media-body" style="margin: 20">
         <h5 class="mt-0" style="font-weight: bold"><%=list.name%></h5>
         <h6 class="mt-0"><%=list.description%></h6>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
-          class="mt-0"
-          href="<%=list.links%>"
-          style="color: black"
-          ><i class="fab fa-imdb fa-5x"></i
-        ></a>
       </div>
     </div>
     <%})%>
   </div>
-</div>
+  <h1 class="text-center" style="margin-bottom: 20px">Movies</h1>
+  <div class="mainbox">
+    <div class="row">
+      <%movie.forEach(list=>{%>
+      <div class="media" id="searchResults">
+        <img
+          class="rounded float-left"
+          src="<%=list.img%>"
+          height="350"
+          width="220"
+          alt="Generic placeholder image"
+        />
+        <div class="media-body" style="margin: 20">
+          <h5 class="mt-0" style="font-weight: bold">
+            <%=list.title%> (<%=list.year%>)
+          </h5>
+          <br />
+          <h6 class="mt-0"><strong>Cast</strong>: <%=list.cast%></h6>
+          <h6 class="mt-0"><strong>Genre</strong>: <%=list.genreId.name%></h6>
+          <h6 class="mt-0"><strong>Rank</strong>: <%=list.rank%></h6>
+          <h6 class="mt-0">
+            <strong>Rent</strong>: $<%=list.dailyRentalRate%>
+          </h6>
+          <br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+            class="mt-0"
+            href="<%=list.links%>"
+            id="imdb"
+            >IMDb</a
+          >
+        </div>
+      </div>
+      <%})%> <%genresearch.forEach(list=>{%>
+      <div class="media" id="searchResults">
+        <img
+          class="rounded float-left"
+          src="<%=list.img%>"
+          height="350"
+          width="220"
+          alt="Generic placeholder image"
+        />
+        <div class="media-body" style="margin: 20">
+          <h5 class="mt-0" style="font-weight: bold">
+            <%=list.title%> (<%=list.year%>)
+          </h5>
+          <br />
+          <h6 class="mt-0"><strong>Cast</strong>: <%=list.cast%></h6>
+          <h6 class="mt-0"><strong>Genre</strong>: <%=list.genreId.name%></h6>
+          <h6 class="mt-0"><strong>Rank</strong>: <%=list.rank%></h6>
+          <h6 class="mt-0">
+            <strong>Rent</strong>: $<%=list.dailyRentalRate%>
+          </h6>
+          <br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+            class="mt-0"
+            href="<%=list.links%>"
+            id="imdb"
+            >IMDb</a
+          >
+        </div>
+      </div>
+      <%})%>
+    </div>
+  </div>
+</body>
 <script
   src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"
   data-auto-replace-svg="nest"

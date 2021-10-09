@@ -14,6 +14,9 @@ const movieSchema = new mongoose.Schema(
       ref: "Genre",
       required: true,
     },
+    genre:{
+      type:String
+    },
     rank: { type: Number },
     cast: { type: String },
     year: { type: String },
