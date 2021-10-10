@@ -87,7 +87,6 @@
     border: 1px solid rgb(218, 217, 217);
   }
   ul {
-    /* border:1px solid black; */
     list-style: none;
     border-radius: 5px;
   }
@@ -142,7 +141,7 @@
   </head>
   <link type="text/css" href="./styles/style.css" />
   <h1 class="text-center" style="font-size:80px;font-family:'Yaldevi', sans-serif">Vidly</h1>
-  <h7 class="text-center" style="padding-left:600px;">All of the World Cinema At One Place</h3>
+  <h7 class="text-center" style="padding-left:625px;">All of the World Cinema At One Place</h3>
 
   <div style="padding-left: 1170px">
     <form action="/api/movies/search/" method="GET">
@@ -204,7 +203,7 @@
               <p class="card-text"><strong>Cast</strong>: <%=list.cast%></p>
             </li>
             <li class="movieclass">
-              <p class="card-text"><strong>Rating</strong>: 3/5</p>
+              <p class="card-text"><strong>CBFC</strong>: <%=list.mpAARating%></p>
             </li>
             <li class="movieclass">
               <p class="card-text">
@@ -212,7 +211,7 @@
               </p>
             </li>
             <li class="movieclass">
-              <p class="card-text"><strong>Rating</strong>: <%=list.rank%></p>
+              <p class="card-text"><strong>RunTime</strong>: <%=list.runtime%></p>
             </li>
             <li class="movieclass">
               <p class="card-text">

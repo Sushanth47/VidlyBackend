@@ -34,6 +34,8 @@ exports.getMovies = async (req, res) => {
         requestCount: 1,
         genre: 1,
         imdbRating: 1,
+        runtime: 1,
+        mpAARating: 1,
       },
     },
     {
@@ -279,6 +281,11 @@ exports.createMovies = async (req, res) => {
           ismovieCreated: true,
         });
         var newrat = "";
+        var direcTor = "";
+        var mpAA = "";
+        var runTime = "";
+        var ratio = "";
+        var worldwide = "";
         axios(movie.links).then((response) => {
           const html = response.data;
           const $ = cheerio.load(html);
@@ -290,10 +297,42 @@ exports.createMovies = async (req, res) => {
               if (!movie.imdbRating) newrat = rat;
             }
           });
+          $(".ipc-metadata-list__item", html).each(function () {
+            const title = $(this).text();
+            if (title) {
+              if (title.startsWith("Director")) {
+                const director = title.substr(8, 25);
+                direcTor = director;
+              }
+
+              if (title.startsWith("Runtime")) {
+                const runtime = title.substr(7, title.length);
+                runTime = runtime;
+              }
+              if (title.startsWith("Certificate")) {
+                const certificate = title.substr(11, title.length);
+                mpAA = certificate;
+              }
+
+              if (title.startsWith("Gross worldwide")) {
+                const i = title.indexOf("$");
+                const gross = title.substr(i, title.length);
+                worldwide = gross;
+              }
+              if (title.startsWith("Aspect ratio")) {
+                const gross = title.substr(12, title.length);
+                ratio = gross;
+              }
+            }
+          });
         });
         setTimeout(function () {
           console.log(newrat, "newrat");
           movie.imdbRating = newrat;
+          movie.director = direcTor;
+          movie.runtime = runTime;
+          movie.mpAARating = mpAA;
+          movie.worldwide = worldwide;
           movie.save();
           res.status(200).redirect(`/api/movies/createmoviespage`);
         }, 5000);

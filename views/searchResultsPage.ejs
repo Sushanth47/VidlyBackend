@@ -82,7 +82,7 @@
   <h1 class="text-center">Search Results for "<%=title%>"</h1>
   <br />
 
-  <div style="padding-left: 1400px">
+  <div style="padding-left: 1200px">
     <form action="/api/movies/search/" method="GET">
       <div class="container row">
         <input
@@ -119,7 +119,11 @@
     </div>
     <%})%>
   </div>
+  <%if(!movie && !genresearch){%>
+  <h1 class="text-center" style="margin-bottom: 20px">No Movies Found</h1>
+  <%}else{%>
   <h1 class="text-center" style="margin-bottom: 20px">Movies</h1>
+  <%}%>
   <div class="mainbox">
     <div class="row">
       <%movie.forEach(list=>{%>

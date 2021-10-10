@@ -140,8 +140,77 @@ app.get("/webscrap", async (req, res) => {
   return res.json(rating);
 });
 
+app.get("/webscrapmoviedata", async (req, res) => {
+  const movie = await Movie.find({});
+  const rating = [];
+  var unqiuevals = [];
+  movie.forEach((list) => {
+    axios(list.links)
+      .then((response) => {
+        const html = response.data;
+        const $ = cheerio.load(html);
+        $(".ipc-metadata-list__item", html).each(function () {
+          const title = $(this).text();
+          if (title) {
+            // if (title.startsWith("Director")) {
+            //   const director = title.substr(8, 25);
+            //   list.director = director;
+
+            //   //  uniquevals
+            // }
+
+            // if (title.startsWith("Runtime")) {
+            //   const runtime = title.substr(7, title.length);
+            //   list.runtime = runtime;
+            // }
+            // if (title.startsWith("Certificate")) {
+            //   const certificate = title.substr(11, title.length);
+            //   list.mpAARating = certificate;
+            // }
+            // if (title.startsWith("Release date")) {
+            //   const releasedate = title.substr(12, title.length);
+            //   list.releaseDate = releasedate;
+            //   console.log(releasedate);
+            // }
+            if (title.startsWith("Gross worldwide")) {
+              const i = title.indexOf("$");
+              const gross = title.substr(i, title.length);
+              list.worldwide = gross;
+            }
+            // if (title.startsWith("Aspect ratio")) {
+            //   const gross = title.substr(12, title.length);
+            //   list.aspectRatio = gross;
+            //   // unqiuevals = [...new Set(rating)];
+            // }
+          }
+        });
+      })
+      .catch((err) => console.log(err));
+    setTimeout(function () {
+      // unqiuevals = [...new Set(rating)];
+      // console.log(unqiuevals);
+      list.save();
+    }, 5000);
+  });
+
+  return res.json(rating);
+});
+
 app.get("/rentedcustomers", async (req, res) => {
-  await Movie.updateMany({}, { $set: { imdbRating: "" } });
+  await Movie.updateMany(
+    {},
+    {
+      $set: {
+        // director: "",
+        // mpAARating: "",
+        // awards: "",
+        // runtime: "",
+        // aspectRatio: "",
+        // releaseDate: "",
+        worldwide: "",
+      },
+    }
+  );
   return res.json("done");
 });
 
