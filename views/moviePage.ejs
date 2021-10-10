@@ -51,7 +51,7 @@
       <h1 ><%=movie.title%> (<%=movie.year%>)</h1>
       <h5 >Starring: <b><%=movie.cast%></b></h5><br>
       <h5 >Genre: <b><%=movie.genreId.name%></b></h5><br>
-      <h5 >Ratings: 3/5</h5><br>
+      <h5 >CBFC Rating: <%=list.mpAARating%></h5><br>
       <h5 >IMDB Page: <a target="_blank" href="<%=movie.links%>" style="text-decoration:none"><b>Click Here</b></a></h5><br>
       <h5 >Movie Rank: <b><%=movie.rank%></b></h5><br>
       <h5 >Rental Rate (per day): <b style="color:red">$<%=movie.dailyRentalRate.toFixed(2)%></b><small><small style="margin-bottom: 2px;"> </small></small></h4><br>
