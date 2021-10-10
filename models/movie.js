@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
-// const Joi = require('Joi');
-const { genreSchema } = require("./genre");
+
 
 const movieSchema = new mongoose.Schema(
   {
@@ -49,7 +48,6 @@ const movieSchema = new mongoose.Schema(
     mpAARating: { type: String, default: "" },
     awards: { type: String, default: "" },
     runtime: { type: String, default: "" },
-    releaseDate: { type: String, default: "" },
     aspectRatio: { type: String, default: "" },
     worldwide: { type: String, default: "" },
     ismovieCreated: { type: Boolean, default: false },

@@ -1,106 +1,178 @@
 <%- include('./partials/header') %>
 <head>
-   <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Yaldevi:wght@300&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Yaldevi:wght@300&display=swap"
+    rel="stylesheet"
+  />
 </head>
- <title>
-   <%=movie.title%>(<%=movie.year%>)
- </title>
- <body>
-<style>
-   body{
-      max-width:100%;
+<title><%=movie.title%>(<%=movie.year%>)</title>
+<body>
+  <style>
+    body {
+      max-width: 100%;
       overflow-x: hidden;
-   }
-   h5, h4, p,span{
-      /* font-weight:lighter; */
-      font-family: 'Yaldevi', sans-serif;
-      }
-   .card-text{
-      font-family:'Work Sans', sans-serif;
-      margin:5px;
-      color:rgb(20, 20, 20)
-   }
-   .img{
+    }
+    h5,
+    h4,
+    p,
+    span {
+      font-family: "Yaldevi", sans-serif;
+    }
+    h5 {
+      margin-top: 25px;
+    }
+    .card-text {
+      font-family: "Work Sans", sans-serif;
+      margin: 5px;
+      color: rgb(20, 20, 20);
+    }
+    .img {
       position: relative;
-      width:287px;
-      height:420px;
-      right:51px;
-      left:0
-   }
-   span{
-      font-size:20px;
-   }
-   .otherContainer{
-      margin-left:120px;
+      width: 287px;
+      height: 420px;
+      right: 51px;
+      left: 0;
+    }
+    span {
+      font-size: 20px;
+    }
+    .otherContainer {
+      margin-left: 120px;
       flex-direction: row;
       -webkit-transform: scale(1);
       transform: scale(1);
       -webkit-transition: 0.3s ease-in-out;
       transition: 0.3s ease-in-out;
-   }
-   .otherContainer:hover{
+    }
+    .otherContainer:hover {
       -webkit-transform: scale(1);
       transform: scale(1.1);
-   }
-</style>
-<div class="row" >
-   <a target="_blank" href="<%=movie.img%>"><img style="height:500px; width:400px;margin-left: 25px; "  src="<%=movie.img%>" /></a>
-   <div style="position:relative; left:40px">
-      <h1 ><%=movie.title%> (<%=movie.year%>)</h1>
-      <h5 >Starring: <b><%=movie.cast%></b></h5><br>
-      <h5 >Genre: <b><%=movie.genreId.name%></b></h5><br>
-      <h5 >CBFC Rating: <%=list.mpAARating%></h5><br>
-      <h5 >IMDB Page: <a target="_blank" href="<%=movie.links%>" style="text-decoration:none"><b>Click Here</b></a></h5><br>
-      <h5 >Movie Rank: <b><%=movie.rank%></b></h5><br>
-      <h5 >Rental Rate (per day): <b style="color:red">$<%=movie.dailyRentalRate.toFixed(2)%></b><small><small style="margin-bottom: 2px;"> </small></small></h4><br>
-      <h5 >Gold Customer Rental Rate: <b style="color:red">$<%=(movie.dailyRentalRate - 0.5).toFixed(2)%></b>&nbsp;<span style="font-size:xx-small;"><a href="#" style="text-decoration: none;">Apply here</a></span></h4><br>
+    }
+    #imdb {
+      margin-top: 10px;
+      margin-left: 5px;
+      border-color: 1px solid transparent;
+      font-weight: bolder;
+      font-family: "Roboto", sans-serif;
+      color: black;
+      width: 90px;
+      background-color: #dba506;
+      padding: 5px;
+      border-radius: 10px;
+      text-decoration: none;
+      -webkit-transform: scale(1);
+      transform: scale(1);
+      -webkit-transition: 0.3s ease-in-out;
+      transition: 0.3s ease-in-out;
+    }
+    #imdb:hover {
+      -webkit-transform: scale(1);
+      transform: scale(1.1);
+    }
+  </style>
+  <div class="row">
+    <a target="_blank" href="<%=movie.img%>"
+      ><img
+        style="height: 500px; width: 400px; margin-left: 25px"
+        src="<%=movie.img%>"
+    /></a>
+    <div style="position: relative; left: 40px">
+      <h1><%=movie.title%> (<%=movie.year%>)</h1>
+      <h5>Starring: <b><%=movie.cast%></b></h5>
+      <h5>Director: <b><%=movie.director%></b></h5>
+      <h5>Genre: <b><%=movie.genreId.name%></b></h5>
+      <h5>CBFC Rating: <b><%=movie.mpAARating%></b></h5>
+      <h5>Box Office: <b><%=movie.worldwide%></b></h5>
+      <h5>
+        IMDB Page:&nbsp;
+        <a
+          class="card-text movieclass"
+          style="text-align: center; position: relative; right: 10"
+          href="<%=movie.links%>"
+          target="_blank"
+          id="imdb"
+          >IMDb: <%=movie.imdbRating%>/10</a
+        >
+      </h5>
+      <h5>RunTime: <b><%=movie.runtime%></b></h5>
+      <%if(movie.aspectRatio!=""){%>
+      <h5>Aspect Ratio: <b><%=movie.aspectRatio%></b></h5>
+      <%} else {}%>
+      <h5>
+        Rental Rate (per day):
+        <b style="color: red">$<%=movie.dailyRentalRate.toFixed(2)%></b
+        ><small><small style="margin-bottom: 2px"> </small></small>
+      </h5>
+      <h5 style="margin-bottom: 20px">
+        Gold Customer Rental Rate:
+        <b style="color: red">$<%=(movie.dailyRentalRate - 0.5).toFixed(2)%></b
+        >&nbsp;<span style="font-size: xx-small"
+          ><a
+            href="#"
+            style="text-decoration: none; position: relative; bottom: 3px"
+            ><strong>Apply here</strong></a
+          ></span
+        >
+      </h5>
       <%if(movie.numberInStock <=10){%>
-      <h5 style="color:red">Available in Stock: <%=movie.numberInStock%></h5><br>
-         <span style="color:red; font-size:small;">This item is quickly running out of stock</span>
-      <%}else{%>
-         <span>Available in Stock: <%=movie.numberInStock%></span><br>
+      <h5 style="color: red">Available in Stock: <%=movie.numberInStock%></h5>
+      <span style="color: red; font-size: small"
+        >This item is quickly running out of stock</span
+      >
       <%}%>
-      <br>
-    
-         <span><a href="/api/movies/addToCart/<%=movie._id%>"><button class="btn btn-success" >Add to Cart</button></a></span>
-         
-         &nbsp;&nbsp;<a href="/api/movies/addtowishlist/<%=movie._id%>"><button class="btn btn-success" >Wishlist</button></a>
-     
-   </div>
-   <br><br>
-   
-  
+      <span
+        ><a href="/api/movies/addToCart/<%=movie._id%>"
+          ><button class="btn btn-success">Add to Cart</button></a
+        ></span
+      >
 
-</div>
-<div class="container">
-   <br><h4 style="text-align:center;">Other Popular Movies you may like</h4>
-</div>
-<br>
+      &nbsp;&nbsp;<a href="/api/movies/addtowishlist/<%=movie._id%>"
+        ><button class="btn btn-success">Wishlist</button></a
+      >
+    </div>
+    <br /><br />
+  </div>
+  <div class="container">
+    <br />
+    <h4 style="text-align: center">Other Popular Movies you may like</h4>
+  </div>
+  <br />
 
-   <div class="row">
-      <%otherMovies.forEach(list=>{%>
-         <a href="/api/movies/<%=list._id%>">
-         <div class="otherContainer">
-      <div class="col-md-4 col-xs-9">
-         <div class="card" style="width: 18rem; align-items:center; justify-content:center; ">
+  <div class="row">
+    <%otherMovies.forEach(list=>{%>
+    <a href="/api/movies/<%=list._id%>">
+      <div class="otherContainer">
+        <div class="col-md-4 col-xs-9">
+          <div
+            class="card"
+            style="width: 18rem; align-items: center; justify-content: center"
+          >
             <div class="col-md-9 col-xs-9">
-               <img class="img" src="<%=list.img%>" alt="Card image cap">
+              <img class="img" src="<%=list.img%>" alt="Card image cap" />
             </div>
-            <div class="card-body" style="width:20rem">
-               <a target="_blank" href="/api/movies/<%=list._id%>" style="text-decoration:none"><h5 class="card-title text-center" ><%=list.title%> (<%=list.year%>)</h5></a>
-               <p class="card-text" style="margin-left:30px;"><strong>Cast</strong>: <%=list.cast%></p>
-               <p class="card-text" style="margin-left:30px;"><strong>Rate</strong>: $<%=list.dailyRentalRate.toFixed(2)%></p>
-               <!-- <a href="#" class="btn btn-success">Add to Cart</a> -->
+            <div class="card-body" style="width: 20rem">
+              <a
+                target="_blank"
+                href="/api/movies/<%=list._id%>"
+                style="text-decoration: none"
+                ><h5 class="card-title text-center">
+                  <%=list.title%> (<%=list.year%>)
+                </h5></a
+              >
+              <p class="card-text" style="margin-left: 30px">
+                <strong>Cast</strong>: <%=list.cast%>
+              </p>
+              <p class="card-text" style="margin-left: 30px">
+                <strong>Rate</strong>: $<%=list.dailyRentalRate.toFixed(2)%>
+              </p>
+              <!-- <a href="#" class="btn btn-success">Add to Cart</a> -->
             </div>
-         </div>
+          </div>
+        </div>
       </div>
-   </div>
-</a>
-      <%})%> 
-   </div>
-
-
+    </a>
+    <%})%>
+  </div>
 </body>
-
