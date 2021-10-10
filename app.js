@@ -3,6 +3,8 @@ var express = require("express");
 var app = express();
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+const axios = require("axios");
+const cheerio = require("cheerio");
 const morgan = require("morgan");
 
 const genres = require("./routes/genres");
@@ -108,8 +110,38 @@ app.get("/setrent", async (req, res) => {
   return res.json("done ");
 });
 
+app.get("/webscrap", async (req, res) => {
+  const movie = await Movie.find({}, "links");
+  const rating = [];
+  movie.forEach((list) => {
+    axios(list.links)
+      .then((response) => {
+        const html = response.data;
+        const $ = cheerio.load(html);
+        $(".ipc-button__text", html).each(function () {
+          const title = $(this).text();
+          if (title && title.startsWith(".", 1)) {
+            const i = title.indexOf("/");
+            var rat = title.substr(0, i);
+            list.imdbRating = rat;
+            rating.push(rat);
+          }
+        });
+      })
+      .catch((err) => console.log(err));
+    list.save();
+  });
+
+  setTimeout(function () {
+    var unqiuevals = [...new Set(rating)];
+    console.log(unqiuevals);
+    // return res.json(rating);
+  }, 5000);
+  return res.json(rating);
+});
+
 app.get("/rentedcustomers", async (req, res) => {
-  await Movie.updateMany({}, { $set: { rentedCustomer: [] } });
+  await Movie.updateMany({}, { $set: { imdbRating: "" } });
   return res.json("done");
 });
 

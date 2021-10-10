@@ -190,10 +190,10 @@
           ><div class="img-hover">
             <img class="img" src="<%=list.img%>" /></div
         ></a>
-        <br />
-
+   
+            <br>
         <div class="card-block">
-          <br />
+  
           <ul class="main-card">
             <a href="/api/movies/<%=list._id%>" style="text-decoration: none;" target="_blank"
               ><h5 style="text-align: center; margin-right: 5px">
@@ -212,7 +212,7 @@
               </p>
             </li>
             <li class="movieclass">
-              <p class="card-text"><strong>Rank</strong>: <%=list.rank%></p>
+              <p class="card-text"><strong>Rating</strong>: <%=list.rank%></p>
             </li>
             <li class="movieclass">
               <p class="card-text">
@@ -226,7 +226,7 @@
               href="<%=list.links%>"
               target="_blank"
               id="imdb"
-              >IMDb</a
+              >IMDb: <%=list.imdbRating%>/10</a
             >
           </ul>
         </div>

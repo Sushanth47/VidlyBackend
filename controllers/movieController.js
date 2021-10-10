@@ -1,9 +1,9 @@
 require("dotenv").config();
-const { Movie, validate } = require("../models/movie");
+const { Movie } = require("../models/movie");
 const { Requested } = require("../models/requestedModel");
 const { Genre } = require("../models/genre");
 const { Customer } = require("../models/customer");
-
+const cheerio = require("cheerio");
 exports.getMovies = async (req, res) => {
   const movies = await Movie.aggregate([
     {
@@ -33,6 +33,7 @@ exports.getMovies = async (req, res) => {
         ismovieCreated: 1,
         requestCount: 1,
         genre: 1,
+        imdbRating: 1,
       },
     },
     {
@@ -259,13 +260,11 @@ exports.createMovies = async (req, res) => {
         "x-rapidapi-host": process.env.API_HOST,
       },
     };
-
     axios
       .request(options)
       .then(function (response) {
-        //    console.log(response.data);
         var apidata = response.data;
-        // response.data.d.forEach(list=>{
+
         let movie = new Movie({
           title: apidata.d[0].l,
           genreId: genre._id,
@@ -277,11 +276,27 @@ exports.createMovies = async (req, res) => {
           genre: genre.name,
           numberInStock: req.body.numberInStock,
           dailyRentalRate: req.body.dailyRentalRate,
+          ismovieCreated: true,
         });
-        movie.ismovieCreated = true;
-        movie.save();
-        res.status(200).redirect(`/api/movies/createmoviespage`);
-        // })
+        var newrat = "";
+        axios(movie.links).then((response) => {
+          const html = response.data;
+          const $ = cheerio.load(html);
+          $(".ipc-button__text", html).each(function () {
+            const title = $(this).text();
+            if (title && title.startsWith(".", 1)) {
+              const i = title.indexOf("/");
+              var rat = title.substr(0, i);
+              if (!movie.imdbRating) newrat = rat;
+            }
+          });
+        });
+        setTimeout(function () {
+          console.log(newrat, "newrat");
+          movie.imdbRating = newrat;
+          movie.save();
+          res.status(200).redirect(`/api/movies/createmoviespage`);
+        }, 5000);
       })
       .catch(function (error) {
         console.error(error);

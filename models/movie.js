@@ -14,8 +14,8 @@ const movieSchema = new mongoose.Schema(
       ref: "Genre",
       required: true,
     },
-    genre:{
-      type:String
+    genre: {
+      type: String,
     },
     rank: { type: Number },
     cast: { type: String },
@@ -44,6 +44,7 @@ const movieSchema = new mongoose.Schema(
         ref: "Customer",
       },
     ],
+    imdbRating: { type: String, default: "" },
     ismovieCreated: { type: Boolean, default: false },
     requestCount: { type: Number, default: 0 },
   },
