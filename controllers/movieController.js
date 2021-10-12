@@ -3,7 +3,6 @@ const { Movie } = require("../models/movie");
 const { Requested } = require("../models/requestedModel");
 const { Genre } = require("../models/genre");
 const { Customer } = require("../models/customer");
-const cheerio = require("cheerio");
 
 exports.getMovies = async (req, res) => {
   const movies = await Movie.aggregate([
@@ -46,7 +45,6 @@ exports.getMovies = async (req, res) => {
       $limit: 20,
     },
   ]);
-  //   console.log(movies[0])
   return res
     .status(200)
     .render("./movies", { movies: movies, url: process.env.WEBURL });
@@ -118,8 +116,10 @@ exports.getMoviesSort = async (req, res) => {
             ismovieCreated: 1,
             requestCount: 1,
             genre: 1,
-            //   "genre.img":1,
-            //   "genre.description":1
+            director: 1,
+            imdbRating: 1,
+            mpAARating: 1,
+            runTime: 1,
           },
         },
         {
@@ -155,6 +155,10 @@ exports.getMoviesSort = async (req, res) => {
             ismovieCreated: 1,
             requestCount: 1,
             genre: 1,
+            director: 1,
+            imdbRating: 1,
+            mpAARating: 1,
+            runTime: 1,
           },
         },
         {
@@ -190,8 +194,10 @@ exports.getMoviesSort = async (req, res) => {
             ismovieCreated: 1,
             requestCount: 1,
             genre: 1,
-            //   "genre.img":1,
-            //   "genre.description":1
+            director: 1,
+            imdbRating: 1,
+            mpAARating: 1,
+            runTime: 1,
           },
         },
         {
@@ -227,12 +233,14 @@ exports.getMoviesSort = async (req, res) => {
             ismovieCreated: 1,
             requestCount: 1,
             genre: 1,
-            //   "genre.img":1,
-            //   "genre.description":1
+            director: 1,
+            imdbRating: 1,
+            mpAARating: 1,
+            runTime: 1,
           },
         },
         {
-          $sort: { imdbRating: 1 },
+          $sort: { imdbRating: -1 },
         },
       ]);
     } else if (req.query.sortBy == "Price") {
@@ -264,6 +272,10 @@ exports.getMoviesSort = async (req, res) => {
             ismovieCreated: 1,
             requestCount: 1,
             genre: 1,
+            director: 1,
+            imdbRating: 1,
+            mpAARating: 1,
+            runTime: 1,
           },
         },
         {
@@ -299,8 +311,10 @@ exports.getMoviesSort = async (req, res) => {
             ismovieCreated: 1,
             requestCount: 1,
             genre: 1,
-            //   "genre.img":1,
-            //   "genre.description":1
+            director: 1,
+            imdbRating: 1,
+            mpAARating: 1,
+            runTime: 1,
           },
         },
         {
@@ -336,8 +350,10 @@ exports.getMoviesSort = async (req, res) => {
             ismovieCreated: 1,
             requestCount: 1,
             genre: 1,
-            //   "genre.img":1,
-            //   "genre.description":1
+            director: 1,
+            imdbRating: 1,
+            mpAARating: 1,
+            runTime: 1,
           },
         },
         {
@@ -377,13 +393,10 @@ exports.getSpecificMovie = async (req, res) => {
 
 exports.addToWishlist = async (req, res) => {
   try {
-    console.log(req.params, "params");
-    console.log(req.user._id);
     var cust = await Customer.updateOne(
       { _id: req.user._id },
       { $addToSet: { wishList: req.params.movieId } }
     );
-    //  console.log(cust)
     return res.status(200).redirect("/api/movies/" + req.params.movieId + "/");
   } catch (err) {
     console.log(err);
@@ -400,6 +413,7 @@ exports.createMovies = async (req, res) => {
     });
     if (checkmovie) return res.status(409).send("Movie already exists");
     var axios = require("axios").default;
+    const cheerio = require("cheerio");
     await Requested.findOneAndUpdate(
       { title: { $regex: req.body.title, $options: "$i" } },
       { ismovieCreated: true }
@@ -464,24 +478,23 @@ exports.createMovies = async (req, res) => {
                 const certificate = title.substr(11, title.length);
                 mpAA = certificate;
               }
-
               if (title.startsWith("Gross worldwide")) {
                 const i = title.indexOf("$");
                 const gross = title.substr(i, title.length);
                 worldwide = gross;
               }
               if (title.startsWith("Aspect ratio")) {
-                const gross = title.substr(12, title.length);
-                ratio = gross;
+                const rattio = title.substr(12, title.length);
+                ratio = rattio;
               }
             }
           });
         });
         setTimeout(function () {
-          console.log(newrat, "newrat");
           movie.imdbRating = newrat;
           movie.director = direcTor;
           movie.runtime = runTime;
+          movie.aspectRatio = ratio;
           movie.mpAARating = mpAA;
           movie.worldwide = worldwide;
           movie.save();
@@ -574,14 +587,12 @@ exports.requestedMovie = async (req, res) => {
     }
   } catch (err) {
     console.log(err);
-    return res.status(200).json(err);
+    // return res.status(200).json(err);
   }
 };
 
 exports.createMoviesPage = async (req, res) => {
-  // console.log(res.locals, 'locals')
   let movie = await Movie.find({}).populate("genreId");
-  // const allGenres = await Genre.find({}, "name");
   const allGenres = await Genre.aggregate([
     {
       $project: {

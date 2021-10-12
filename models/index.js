@@ -1,8 +1,8 @@
+require("dotenv").config();
 const mongoose = require('mongoose');
 
-const password = 'vidlybackend'
 
-const dbURI = 'mongodb+srv://vidlybackend:vidlybackend@cluster0.eyaim.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+const dbURI = process.env.DBURI
 
 mongoose.set('debug', true);
 mongoose.Promise = Promise

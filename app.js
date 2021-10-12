@@ -71,6 +71,8 @@ app.post("/addgenre", async (req, res) => {
   console.log(req.body);
   var obj = {
     name: req.body.genre,
+    description: req.body.details,
+    img: req.body.img,
   };
   await Genre.create(obj);
   return res.status(200).json({ message: `Genre Added ${req.body.genre}` });

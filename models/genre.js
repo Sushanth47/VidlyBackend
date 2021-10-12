@@ -1,21 +1,20 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 // const Joi = require('Joi')
 
-var genreSchema = new mongoose.Schema({
+var genreSchema = new mongoose.Schema(
+  {
     name: {
-        type: String,
-        required: true,
-        minlength: 4,
-        maxlength: 50
+      type: String,
+      required: true,
+      minlength: 4,
+      maxlength: 50,
     },
-    img:{type:String},
-    description:{type:String}
-},
-{timestamps:true});
+    img: { type: String },
+    description: { type: String },
+  },
+  { timestamps: true }
+);
 
-var Genre = mongoose.model('Genre', genreSchema)
-
-
-
+var Genre = mongoose.model("Genre", genreSchema);
 
 exports.Genre = Genre;

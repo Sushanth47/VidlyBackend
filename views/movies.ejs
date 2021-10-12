@@ -26,9 +26,9 @@
 </head>
 <style>
   body {
-      max-width: 100%;
-      overflow-x: hidden;
-    }
+    max-width: 100%;
+    overflow-x: hidden;
+  }
   .moviesBox {
     padding-left: 200px;
   }
@@ -107,12 +107,12 @@
     overflow: hidden;
     bottom: 1;
     position: relative;
-    /* right: 132px; */
+ 
     -webkit-transform: scale(1);
     transform: scale(1);
     -webkit-transition: 0.3s ease-in-out;
     transition: 0.3s ease-in-out;
-    /* opacity:  0.2; */
+    
   }
 
   .img:hover {
@@ -177,6 +177,9 @@
       <option style="font-weight:lighter">Select</option>
       <option value="Name">Name</option>
       <option value="Year">Year</option>
+      <option value="Price">Price</option>
+      <option value="IMDb">IMDb Rating</option>
+      <option value="Availability">Availability</option>
       <option value="Rank">Popularity</option>
       <option value="Genre">Genre</option>
     </select>
@@ -251,3 +254,4 @@
     document.getElementById("myForm").submit();
   }
 </script>
+<%- include('./partials/footer') %>

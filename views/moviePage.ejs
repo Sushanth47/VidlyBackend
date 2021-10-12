@@ -75,7 +75,7 @@
   <div class="row">
     <a target="_blank" href="<%=movie.img%>"
       ><img
-        style="height: 500px; width: 400px; margin-left: 25px"
+        style="height: 560px; width: 400px; margin-left: 25px"
         src="<%=movie.img%>"
     /></a>
     <div style="position: relative; left: 40px">
@@ -84,7 +84,9 @@
       <h5>Director: <b><%=movie.director%></b></h5>
       <h5>Genre: <b><%=movie.genreId.name%></b></h5>
       <h5>CBFC Rating: <b><%=movie.mpAARating%></b></h5>
+      <%if(movie.worldwide!=""){%>
       <h5>Box Office: <b><%=movie.worldwide%></b></h5>
+      <%} else {}%>
       <h5>
         IMDB Page:&nbsp;
         <a
@@ -167,7 +169,15 @@
               <p class="card-text" style="margin-left: 30px">
                 <strong>Rate</strong>: $<%=list.dailyRentalRate.toFixed(2)%>
               </p>
-              <!-- <a href="#" class="btn btn-success">Add to Cart</a> -->
+              <br />
+              <a
+                class="card-text movieclass"
+                style="text-align: center; position: relative; left: 60px"
+                href="<%=movie.links%>"
+                target="_blank"
+                id="imdb"
+                >IMDb: <%=movie.imdbRating%>/10</a
+              >
             </div>
           </div>
         </div>
@@ -176,3 +186,5 @@
     <%})%>
   </div>
 </body>
+
+<%- include('./partials/footer') %>

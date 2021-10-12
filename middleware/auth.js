@@ -1,13 +1,9 @@
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
-const { User } = require("../models/user");
 const { Customer } = require("../models/customer");
-// const db = require()
 
 exports.checkauth = async (req, res, next) => {
-  // console.log(req.cookies);
   if (!req.cookies.token) {
-    // console.log("hey");
     req.user = { subject: "Guest" };
     res.locals.currentUser = req.user;
     next();

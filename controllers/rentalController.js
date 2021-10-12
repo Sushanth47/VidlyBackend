@@ -1,6 +1,5 @@
 const { Movie } = require("../models/movie");
 const { Customer } = require("../models/customer");
-const mongoose = require("mongoose");
 const { Rental } = require("../models/rental");
 
 exports.rentalPage = async (req, res) => {
@@ -43,6 +42,5 @@ exports.checkout = async (req, res) => {
   customer.cart = [];
   customer.save();
   rental.checkOut = rentId;
-  // rental.save();
   return res.redirect("/api/customers/getrentals");
 };
