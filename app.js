@@ -62,7 +62,7 @@ app.get("/phonetoken", async (req, res) => {
 });
 
 app.get("/getallmoviestest", async (req, res) => {
-  var mov = await db.Customer.find({});
+  var mov = await Customer.find({}, "cart wishList active isGold name phone ");
   // console.log(v);
   return res.json(mov);
 });

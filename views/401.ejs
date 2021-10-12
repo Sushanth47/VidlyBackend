@@ -1,1 +1,57 @@
-<h1 class="justify-content-center text-danger" >Invalid User Details!</h1>
+<%- include('./partials/header') %>
+<body>
+  <style>
+    .centerBox {
+      border: 1px solid rgb(247, 244, 244);
+      border-radius: 15px;
+      width: 800px;
+      height: 400px;
+      margin: auto;
+      padding: 10px;
+    }
+    .centerBox:hover {
+      box-shadow: 0 0 10px 2px rgb(236, 50, 50);
+      transition: 0.3s ease-in-out;
+    }
+    h1 {
+      margin-top: 10px;
+      font-family: "Spartan", sans-serif;
+    }
+    button {
+      padding: 50px;
+    }
+    .buttonBox {
+      margin-top: 30px;
+      padding-left: 30px;
+      width: 600px;
+      margin: auto;
+    }
+  </style>
+  <div class="centerBox">
+    <h1 class="text-center">You have to login to access this feature</h1>
+    <br /><br />
+    <div class="buttonBox">
+      <a
+        style="margin-right: 350px"
+        class="btn btn-outline-success btn-lg"
+        href="/api/auth/loginCustomer"
+      >
+        Login
+      </a>
+      <a href="/api/auth/signupPage" class="btn btn-outline-primary btn-lg">
+        Signup
+      </a>
+    </div>
+    <br />
+    <div style="margin-left: 320px">
+      <button
+        onclick="history.back()"
+        class="btn btn-primary btn-lg"
+        style="margin: auto"
+      >
+        Go Back
+      </button>
+    </div>
+  </div>
+</body>
+<%- include('./partials/footer') %>

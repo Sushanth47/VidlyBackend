@@ -5,6 +5,9 @@ const { Genre } = require("../models/genre");
 const { Customer } = require("../models/customer");
 
 exports.getMovies = async (req, res) => {
+  const perPage = 9;
+  const page = req.query.pageNo;
+  const movieCount = await Movie.countDocuments();
   const movies = await Movie.aggregate([
     {
       $lookup: {
@@ -42,12 +45,17 @@ exports.getMovies = async (req, res) => {
       $sort: { _id: -1 },
     },
     {
-      $limit: 20,
+      $skip: perPage * (page - 1),
+    },
+    {
+      $limit: perPage,
     },
   ]);
-  return res
-    .status(200)
-    .render("./movies", { movies: movies, url: process.env.WEBURL });
+  return res.status(200).render("./movies", {
+    movies: movies,
+    url: process.env.WEBURL,
+    movieCount: movieCount,
+  });
 };
 
 exports.getMoviesFetch = async (req, res) => {
@@ -386,7 +394,7 @@ exports.getSpecificMovie = async (req, res) => {
       _id: { $nin: [req.params.mid] },
       genreId: movie.genreId._id,
     },
-    "_id title rank cast year img links dailyRentalRate"
+    "_id title rank cast year img links dailyRentalRate director"
   );
   return res.status(200).render("./moviePage.ejs", { movie, otherMovies });
 };
@@ -511,6 +519,28 @@ exports.createMovies = async (req, res) => {
 
 exports.requestedMoviePage = async (req, res) => {
   try {
+    var customer = await Customer.findOne(
+      { _id: req.user._id },
+      "rentedMovies wishList cart"
+    )
+      .populate("rentedMovies", "genre")
+      .populate("wishList", "genre")
+      .populate("cart", "genre");
+
+    var genresCustomer = [];
+
+    for (var i = 0; i < customer.rentedMovies.length; i++) {
+      genresCustomer.push(customer.rentedMovies[i].genre);
+    }
+    for (var i = 0; i < customer.cart.length; i++) {
+      genresCustomer.push(customer.cart[i].genre);
+    }
+    for (var i = 0; i < customer.wishList.length; i++) {
+      genresCustomer.push(customer.wishList[i].genre);
+    }
+    // console.log(genresCustomer);
+    const uniquegenres = [...new Set(genresCustomer)];
+    console.log(uniquegenres);
     var movies = await Movie.aggregate([
       {
         $lookup: {
@@ -522,6 +552,9 @@ exports.requestedMoviePage = async (req, res) => {
       },
       {
         $unwind: "$genre",
+      },
+      {
+        $match: { genre: { $in: uniquegenres } },
       },
       {
         $project: {
@@ -539,9 +572,12 @@ exports.requestedMoviePage = async (req, res) => {
           ismovieCreated: 1,
           requestCount: 1,
           genre: 1,
+          imdbRating: 1,
+          director: 1,
         },
       },
     ]);
+    console.log(movies, "movies");
     return res.status(200).render("./requestMovie", { movies });
   } catch (err) {
     console.log(err);

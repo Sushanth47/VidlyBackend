@@ -88,7 +88,7 @@ async function customerauth(req, res, next) {
       // console.log(req.user);
       // next();
     } else {
-      return res.status(409).json("access denied. No token Provided");
+      return res.render(401);
     }
   } catch (ex) {
     console.log(ex);
@@ -106,11 +106,8 @@ exports.customerauth = async function (req, res, next) {
     if (decoded.subject == "Customer") {
       var fromUserModel = await Customer.findOne({ _id: decoded._id });
       req.user = decoded;
-      // res.locals.subject = 'Customer'
       res.locals.currentUser = req.user;
-      // req.user.isGold =
       fromUserModel.save();
-      // console.log(req.user);
       next();
     } else {
       return res.status(409).json("access denied. No token Provided");

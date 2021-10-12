@@ -29,6 +29,9 @@
     max-width: 100%;
     overflow-x: hidden;
   }
+  .pagination{
+    font-size:20px;
+  }
   .moviesBox {
     padding-left: 200px;
   }
@@ -141,7 +144,7 @@
     <title>Vidly</title>
   </head>
   <link type="text/css" href="./styles/style.css" />
-  <h1 class="text-center" style="font-size:80px;font-family:'Yaldevi', sans-serif">Vidly</h1>
+  <h1 class="text-center" style="font-size:80px;font-family:'Yaldevi', sans-serif; cursor:default">Vidly</h1>
   <h7 class="text-center" style="padding-left:625px;">All of the World Cinema At One Place</h3>
 
   <div style="padding-left: 1170px">
@@ -240,7 +243,13 @@
     </div>
   </div>
 </body>
-
+<%var i =0%>
+<form action = "/api/movies/movies" method="GET">
+  
+  <%for(i=0; i< movieCount/9; i++){%>
+  <input type="submit" name="pageNo" style="border:none; margin-right:10px; font-size:30px; background-color:white" value="<%=i+1%>" />
+  <%}%>
+</form>
 <script>
   fetch().then((response) => {
     console.log(response);
