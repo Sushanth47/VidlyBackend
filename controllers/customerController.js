@@ -1,4 +1,6 @@
 const { Customer } = require("../models/customer");
+const { Movie } = require("../models/movie");
+const { Review } = require("../models/reviews");
 
 exports.getWishlist = async (req, res) => {
   try {
@@ -68,6 +70,21 @@ exports.getSpecificCustomer = async (req, res) => {
 
 exports.goldCustomerPage = async (req, res) => {
   return res.render("goldPage.ejs");
+};
+
+exports.giveReview = async (req, res) => {
+  var customer = await Customer.findOne({ _id: req.user._id }, "rentedMovies");
+  if (customer.rentedMovies.includes(req.params.mid)) {
+    await Review.create({
+      movieId: req.params.mid,
+      rating: req.body.rating,
+      reviews: req.body.reviews,
+    });
+  } else {
+    return res.status(200).json("You have already reviewed this movie");
+  }
+
+  return res.status(200).redirect(`/api/movies/${req.params.mid}`);
 };
 
 exports.ApplyGold = async (req, res) => {

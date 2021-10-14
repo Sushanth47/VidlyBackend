@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 
-
 const movieSchema = new mongoose.Schema(
   {
     title: {
@@ -8,6 +7,12 @@ const movieSchema = new mongoose.Schema(
       required: true,
       trime: true,
     },
+    reviews: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Review",
+      },
+    ],
     genreId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Genre",

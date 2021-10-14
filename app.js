@@ -114,11 +114,8 @@ app.get("/cookie", checkauth, function (req, res) {
 });
 
 app.get("/setrent", async (req, res) => {
-  var movie = await Movie.find({});
-  movie.forEach((list) => {
-    list.dailyRentalRate = list.dailyRentalRate / 10;
-    list.save();
-  });
+  await Customer.updateMany({}, {$set:{reviewedMovied:[]}});
+  
   return res.json("done ");
 });
 
