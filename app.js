@@ -6,7 +6,7 @@ const cors = require("cors");
 const axios = require("axios");
 const cheerio = require("cheerio");
 const morgan = require("morgan");
-
+const si = require("systeminformation");
 const genres = require("./routes/genres");
 const customers = require("./routes/customers");
 const rentals = require("./routes/rentals");
@@ -59,6 +59,16 @@ app.get("/phonetoken", async (req, res) => {
     list.save();
   });
   return res.status(200).json("done");
+});
+
+app.get("/sysinfo", async (req, res) => {
+  valueObject = {
+    cpu: "*",
+    osInfo: "platform, release",
+    system: "model, manufacturer",
+  };
+  si.get(valueObject).then((data) => console.log(data));
+  return res.json("true");
 });
 
 app.get("/getallmoviestest", async (req, res) => {

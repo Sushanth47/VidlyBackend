@@ -1,6 +1,5 @@
 require("dotenv").config();
 const { Movie } = require("../models/movie");
-// const {Requested} = require('../models/requestedModel');
 const express = require("express");
 const {
   getMovies,

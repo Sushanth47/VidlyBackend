@@ -4,7 +4,7 @@ const { Customer } = require("../models/customer");
 
 exports.checkauth = async (req, res, next) => {
   if (!req.cookies.token) {
-    req.user = { subject: "Guest" };
+    req.user = { subject: "Guest", genres: [] };
     res.locals.currentUser = req.user;
     next();
   } else {
@@ -74,10 +74,10 @@ exports.newauth = async (req, res, next) => {
 async function customerauth(req, res, next) {
   const token = req.cookies.token.token;
   try {
-    // console.log(token, 'token')
     if (!token)
       return res.status(409).render("access denied. No token Provided");
     const decoded = jwt.verify(token, process.env.jwtPrivateKey);
+    console.log(decoded);
     if (decoded.subject == "Customer") {
       var fromUserModel = await Customer.findOne({ _id: decoded._id });
       req.user = decoded;
@@ -92,7 +92,8 @@ async function customerauth(req, res, next) {
     }
   } catch (ex) {
     console.log(ex);
-    res.status(400).render("401");
+    res.clearCookie("token");
+    // res.status(400).render("401");
   }
 }
 

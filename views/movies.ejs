@@ -1,36 +1,39 @@
 <%- include('./partials/header') %>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link
-  href="https://fonts.googleapis.com/css2?family=Yaldevi:wght@300&display=swap"
-  rel="stylesheet"
-/>
-<script
-  src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-  integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-  crossorigin="anonymous"
-></script>
-<script
-  src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-  integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-  crossorigin="anonymous"
-></script>
-<script
-  src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
-  integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-  crossorigin="anonymous"
-></script>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Yaldevi:wght@300&display=swap"
+    rel="stylesheet"
+  />
+  <script
+    src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"
+  ></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap"
+    rel="stylesheet"
+  />
 </head>
 <style>
   body {
-    max-width: 100%;
+    max-width: 105%;
     overflow-x: hidden;
   }
-  .pagination{
-    font-size:20px;
+  .pagination {
+    font-size: 20px;
   }
   .moviesBox {
     padding-left: 200px;
@@ -46,9 +49,9 @@
     box-shadow: 0.5px 0.5px 5px #cecfcf;
   }
   #cardStyling {
-    margin:0 100px 30px 0;
+    margin: 0 100px 30px 0;
     width: 320px;
-    height:710px;
+    height: 710px;
     border: 25px;
     overflow: hidden;
     filter: drop-shadow(2px 4px 8px #3b3d3d);
@@ -64,13 +67,13 @@
     filter: drop-shadow(2px 4px 18px #0fbd9c);
   }
   #imdb {
-    margin-top:10px;
+    margin-top: 10px;
     border-color: 1px solid transparent;
     font-weight: bolder;
     font-family: "Roboto", sans-serif;
     color: black;
-    width:90px;
-    background-color: #DBA506;
+    width: 90px;
+    background-color: #dba506;
     padding: 5px;
     border-radius: 10px;
     text-decoration: none;
@@ -80,8 +83,8 @@
     transition: 0.3s ease-in-out;
   }
   #imdb:hover {
-      -webkit-transform: scale(1);
-      transform: scale(1.1);
+    -webkit-transform: scale(1);
+    transform: scale(1.1);
   }
   .popbuttons {
     background-color: rgb(74, 175, 74);
@@ -110,19 +113,18 @@
     overflow: hidden;
     bottom: 1;
     position: relative;
- 
+
     -webkit-transform: scale(1);
     transform: scale(1);
     -webkit-transition: 0.3s ease-in-out;
     transition: 0.3s ease-in-out;
-    
   }
 
   .img:hover {
     -webkit-transform: scale(1);
     transform: scale(1.1);
   }
-  
+
   b {
     font-weight: bolder;
     color: black;
@@ -132,11 +134,17 @@
   }
   p {
     font-weight: 900;
-    margin-right:50;
+    margin-right: 50;
   }
-  .movieclass{
-    margin-left:0;
+  .movieclass {
+    margin-left: 10;
+    align-items: center;
     margin-top: 5px;
+  }
+  h1,
+  h6 {
+    font-family: "Yaldevi", sans-serif;
+    cursor: default;
   }
 </style>
 <body style="background-color: rgb(255, 249, 242)">
@@ -144,10 +152,13 @@
     <title>Vidly</title>
   </head>
   <link type="text/css" href="./styles/style.css" />
-  <h1 class="text-center" style="font-size:80px;font-family:'Yaldevi', sans-serif; cursor:default">Vidly</h1>
-  <h7 class="text-center" style="padding-left:625px;">All of the World Cinema At One Place</h3>
+  <h1 class="text-center" style="font-size: 80px">Vidly</h1>
+  <h6 class="text-center" style="font-weight: 400">
+    All of the World Cinema At One Place
+  </h6>
+  <h3 style="padding-left: 200px"></h3>
 
-  <div style="padding-left: 1170px">
+  <div style="padding-left: 1180px">
     <form action="/api/movies/search/" method="GET">
       <div class="container row">
         <input
@@ -157,7 +168,7 @@
             width: 180px;
             border: 2px solid grey;
             margin-top: 3px;
-            border-radius:25px;
+            border-radius: 25px;
           "
           name="title"
           placeholder="Search Here"
@@ -172,12 +183,12 @@
     action="/api/movies/movies/select"
     method="GET"
     id="myForm"
-    style="padding-right: 120px; flex-direction: row;"
+    style="padding-right: 120px; flex-direction: row"
     onchange="get()"
   >
     <span>Sort By &nbsp;</span>
-    <select name="sortBy" class="form-select selectStyle" >
-      <option style="font-weight:lighter">Select</option>
+    <select name="sortBy" class="form-select selectStyle">
+      <option style="font-weight: lighter">Select</option>
       <option value="Name">Name</option>
       <option value="Year">Year</option>
       <option value="Price">Price</option>
@@ -196,12 +207,14 @@
           ><div class="img-hover">
             <img class="img" src="<%=list.img%>" /></div
         ></a>
-   
-            <br>
+
+        <br />
         <div class="card-block">
-  
           <ul class="main-card">
-            <a href="/api/movies/<%=list._id%>" style="text-decoration: none;" target="_blank"
+            <a
+              href="/api/movies/<%=list._id%>"
+              style="text-decoration: none"
+              target="_blank"
               ><h5 style="text-align: center; margin-right: 5px">
                 <%=list.title%>(<%=list.year%>)
               </h5></a
@@ -209,32 +222,33 @@
             <li class="movieclass">
               <p class="card-text"><strong>Cast</strong>: <%=list.cast%></p>
             </li>
-            
+
             <li class="movieclass">
-              <p class="card-text"><strong>CBFC</strong>: <%=list.mpAARating%></p>
+              <p class="card-text">
+                <strong>CBFC</strong>: <%=list.mpAARating%>
+              </p>
+            </li>
+            <li class="movieclass">
+              <p class="card-text">
+                <strong>IMDb</strong>: <%=list.imdbRating%>/10
+              </p>
             </li>
             <li class="movieclass">
               <p class="card-text">
                 <strong>Genre</strong>: <%=list.genre.name%>
               </p>
             </li>
-            <li  class="movieclass">
-              <p class="card-text"><strong>RunTime</strong>: <%=list.runtime%></p>
+            <li class="movieclass">
+              <p class="card-text">
+                <strong>RunTime</strong>: <%=list.runtime%>
+              </p>
             </li>
             <li class="movieclass">
               <p class="card-text">
-                <strong>Rental Price</strong>: $<%=list.dailyRentalRate.toFixed(2)%>
+                <strong>Rental Price</strong>:
+                $<%=list.dailyRentalRate.toFixed(2)%>
               </p>
             </li>
-            <br>
-            <a
-              class="card-text movieclass"
-              style="text-align: center; position: relative; right: 10"
-              href="<%=list.links%>"
-              target="_blank"
-              id="imdb"
-              >IMDb: <%=list.imdbRating%>/10</a
-            >
           </ul>
         </div>
       </div>
@@ -244,10 +258,20 @@
   </div>
 </body>
 <%var i =0%>
-<form action = "/api/movies/movies" method="GET">
-  
+<form action="/api/movies/movies" method="GET" class="text-center">
   <%for(i=0; i< movieCount/9; i++){%>
-  <input type="submit" name="pageNo" style="border:none; margin-right:10px; font-size:30px; background-color:white" value="<%=i+1%>" />
+  <input
+    type="submit"
+    name="pageNo"
+    style="
+      border: 1px solid black;
+      background-color: rgb(115, 235, 115);
+      margin-right: 10px;
+      font-size: 30px;
+      background-color: white;
+    "
+    value="<%=i+1%>"
+  />
   <%}%>
 </form>
 <script>
@@ -255,8 +279,6 @@
     console.log(response);
   });
 </script>
-
-
 
 <script>
   function get() {

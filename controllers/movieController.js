@@ -5,57 +5,62 @@ const { Genre } = require("../models/genre");
 const { Customer } = require("../models/customer");
 
 exports.getMovies = async (req, res) => {
-  const perPage = 9;
-  const page = req.query.pageNo;
-  const movieCount = await Movie.countDocuments();
-  const movies = await Movie.aggregate([
-    {
-      $lookup: {
-        from: "genres",
-        localField: "genreId",
-        foreignField: "_id",
-        as: "genre",
+  try {
+    // console.log(req.user);
+    const perPage = 9;
+    const page = req.query.pageNo;
+    const movieCount = await Movie.countDocuments();
+    const movies = await Movie.aggregate([
+      {
+        $lookup: {
+          from: "genres",
+          localField: "genreId",
+          foreignField: "_id",
+          as: "genre",
+        },
       },
-    },
-    {
-      $unwind: "$genre",
-    },
-    {
-      $project: {
-        _id: 1,
-        title: 1,
-        img: 1,
-        genreId: 1,
-        rank: 1,
-        cast: 1,
-        year: 1,
-        links: 1,
-        numberInStock: 1,
-        dailyRentalRate: 1,
-        rentedCustomers: 1,
-        ismovieCreated: 1,
-        requestCount: 1,
-        genre: 1,
-        imdbRating: 1,
-        runtime: 1,
-        mpAARating: 1,
+      {
+        $unwind: "$genre",
       },
-    },
-    {
-      $sort: { _id: -1 },
-    },
-    {
-      $skip: perPage * (page - 1),
-    },
-    {
-      $limit: perPage,
-    },
-  ]);
-  return res.status(200).render("./movies", {
-    movies: movies,
-    url: process.env.WEBURL,
-    movieCount: movieCount,
-  });
+      {
+        $project: {
+          _id: 1,
+          title: 1,
+          img: 1,
+          genreId: 1,
+          rank: 1,
+          cast: 1,
+          year: 1,
+          links: 1,
+          numberInStock: 1,
+          dailyRentalRate: 1,
+          rentedCustomers: 1,
+          ismovieCreated: 1,
+          requestCount: 1,
+          genre: 1,
+          imdbRating: 1,
+          runtime: 1,
+          mpAARating: 1,
+        },
+      },
+      {
+        $sort: { _id: -1 },
+      },
+      {
+        $skip: perPage * (page - 1),
+      },
+      {
+        $limit: perPage,
+      },
+    ]);
+    return res.status(200).render("./movies", {
+      movies: movies,
+      url: process.env.WEBURL,
+      movieCount: movieCount,
+    });
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 exports.getMoviesFetch = async (req, res) => {

@@ -36,6 +36,7 @@
     "pug": "^3.0.2",
     "regex": "^0.1.1",
     "req-flash": "0.0.3",
+    "systeminformation": "^5.9.7",
     "video.js": "^7.13.3"
   },
   "devDependencies": {
