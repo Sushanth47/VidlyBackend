@@ -4,11 +4,11 @@ const express = require("express");
 const {
   getMovies,
   createMovies,
-  othermovies,
+
   requestedMovie,
-  updateMovies,
+
   addToCart,
-  deleteMovies,
+
   getMoviesSort,
   createMoviesPage,
   displayMovie,

@@ -82,13 +82,13 @@
       <h1><%=movie.title%> (<%=movie.year%>)</h1>
       <h5>Starring: <b><%=movie.cast%></b></h5>
       <h5>Director: <b><%=movie.director%></b></h5>
-      <h5>Genre: <b><%=movie.genreId.name%></b></h5>
+      <h5>Genre: <b><%=movie.genre%></b></h5>
       <h5>CBFC Rating: <b><%=movie.mpAARating%></b></h5>
       <%if(movie.worldwide!=""){%>
       <h5>Box Office: <b><%=movie.worldwide%></b></h5>
       <%} else {}%>
       <h5>
-        IMDB Page:&nbsp;
+        IMDB:&nbsp;
         <a
           class="card-text movieclass"
           style="text-align: center; position: relative; right: 10"

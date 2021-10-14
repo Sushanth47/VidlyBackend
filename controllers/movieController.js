@@ -1,4 +1,6 @@
 require("dotenv").config();
+const mongoose = require("mongoose");
+const ObjectId = mongoose.Types.ObjectId;
 const { Movie } = require("../models/movie");
 const { Requested } = require("../models/requestedModel");
 const { Genre } = require("../models/genre");
@@ -32,9 +34,7 @@ exports.getMovies = async (req, res) => {
           cast: 1,
           year: 1,
           links: 1,
-          numberInStock: 1,
           dailyRentalRate: 1,
-          rentedCustomers: 1,
           ismovieCreated: 1,
           requestCount: 1,
           genre: 1,
@@ -393,15 +393,56 @@ exports.addToCart = async (req, res) => {
 };
 
 exports.getSpecificMovie = async (req, res) => {
-  var movie = await Movie.findOne({ _id: req.params.mid }).populate("genreId");
+  var movie = await Movie.aggregate([
+    {
+      $match: { _id: ObjectId(req.params.mid) },
+    },
+    {
+      $lookup: {
+        from: "genres",
+        localField: "genreId",
+        foreignField: "_id",
+        as: "genreId",
+      },
+    },
+    {
+      $unwind: "$genreId",
+    },
+    {
+      $project: {
+        _id: 1,
+        title: 1,
+        img: 1,
+        genreId: 1,
+        rank: 1,
+        cast: 1,
+        year: 1,
+        links: 1,
+        numberInStock: 1,
+        dailyRentalRate: 1,
+        rentedCustomers: 1,
+        ismovieCreated: 1,
+        director: 1,
+        aspectRatio: 1,
+        requestCount: 1,
+        genre: 1,
+        worldwide: 1,
+        imdbRating: 1,
+        runtime: 1,
+        mpAARating: 1,
+      },
+    },
+  ]);
   var otherMovies = await Movie.find(
     {
       _id: { $nin: [req.params.mid] },
-      genreId: movie.genreId._id,
+      genreId: movie[0].genreId._id,
     },
     "_id title rank cast year img links dailyRentalRate director"
   );
-  return res.status(200).render("./moviePage.ejs", { movie, otherMovies });
+  return res
+    .status(200)
+    .render("./moviePage.ejs", { movie: movie[0], otherMovies });
 };
 
 exports.addToWishlist = async (req, res) => {
@@ -543,7 +584,7 @@ exports.requestedMoviePage = async (req, res) => {
     for (var i = 0; i < customer.wishList.length; i++) {
       genresCustomer.push(customer.wishList[i].genre);
     }
-    // console.log(genresCustomer);
+    console.log(genresCustomer);
     const uniquegenres = [...new Set(genresCustomer)];
     console.log(uniquegenres);
     var movies = await Movie.aggregate([

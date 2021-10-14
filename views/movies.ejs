@@ -31,6 +31,7 @@
   body {
     max-width: 105%;
     overflow-x: hidden;
+    scroll-behavior: smooth;
   }
   .pagination {
     font-size: 20px;
@@ -222,12 +223,6 @@
             <li class="movieclass">
               <p class="card-text"><strong>Cast</strong>: <%=list.cast%></p>
             </li>
-
-            <li class="movieclass">
-              <p class="card-text">
-                <strong>CBFC</strong>: <%=list.mpAARating%>
-              </p>
-            </li>
             <li class="movieclass">
               <p class="card-text">
                 <strong>IMDb</strong>: <%=list.imdbRating%>/10
@@ -235,7 +230,18 @@
             </li>
             <li class="movieclass">
               <p class="card-text">
-                <strong>Genre</strong>: <%=list.genre.name%>
+                <strong>CBFC</strong>: <%=list.mpAARating%>
+              </p>
+            </li>
+
+            <li class="movieclass">
+              <p class="card-text">
+                <strong>Genre</strong>:
+                <a
+                  style="text-decoration: none"
+                  href="/api/movies/search/?title=<%=list.genre.name%>"
+                  ><%=list.genre.name%></a
+                >
               </p>
             </li>
             <li class="movieclass">
