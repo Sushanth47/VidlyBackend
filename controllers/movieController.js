@@ -374,6 +374,51 @@ exports.getMoviesSort = async (req, res) => {
           $limit: perPage,
         },
       ]);
+    } else if (req.query.sortBy == "Genre") {
+      var movies = await Movie.aggregate([
+        {
+          $lookup: {
+            from: "genres",
+            localField: "genreId",
+            foreignField: "_id",
+            as: "genre",
+          },
+        },
+        {
+          $unwind: "$genre",
+        },
+        {
+          $project: {
+            _id: 1,
+            title: 1,
+            img: 1,
+            genreId: 1,
+            rank: 1,
+            cast: 1,
+            year: 1,
+            links: 1,
+            numberInStock: 1,
+            dailyRentalRate: 1,
+            rentedCustomers: 1,
+            ismovieCreated: 1,
+            requestCount: 1,
+            genre: 1,
+            director: 1,
+            imdbRating: 1,
+            mpAARating: 1,
+            runTime: 1,
+          },
+        },
+        {
+          $sort: { genre: 1 },
+        },
+        {
+          $skip: perPage * (page - 1),
+        },
+        {
+          $limit: perPage,
+        },
+      ]);
     }
     return res.status(200).render("./movies", {
       movies: movies,
