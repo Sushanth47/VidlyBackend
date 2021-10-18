@@ -32,6 +32,8 @@
     max-width: 105%;
     overflow-x: hidden;
     scroll-behavior: smooth;
+    background-color: rgb(39, 39, 39);
+    color: white;
   }
   .pagination {
     font-size: 20px;
@@ -47,13 +49,16 @@
     color: white;
     margin-top: 3px;
     margin-left: 3px;
-    box-shadow: 0.5px 0.5px 5px #cecfcf;
+    /* box-shadow: 0.5px 0.5px 5px #cecfcf; */
   }
   #cardStyling {
-    margin: 0 100px 30px 0;
-    width: 320px;
-    height: 710px;
+    margin: 0 40px 30px 0;
+    width: 200px;
+    height: 335px;
     border: 25px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    background-color: rgba(63, 63, 63, 0.1);
     overflow: hidden;
     filter: drop-shadow(2px 4px 8px #3b3d3d);
     transition: filter 500ms;
@@ -65,27 +70,7 @@
     font-weight: bold;
   }
   #cardStyling:hover {
-    filter: drop-shadow(2px 4px 18px #0fbd9c);
-  }
-  #imdb {
-    margin-top: 10px;
-    border-color: 1px solid transparent;
-    font-weight: bolder;
-    font-family: "Roboto", sans-serif;
-    color: black;
-    width: 90px;
-    background-color: #dba506;
-    padding: 5px;
-    border-radius: 10px;
-    text-decoration: none;
-    -webkit-transform: scale(1);
-    transform: scale(1);
-    -webkit-transition: 0.3s ease-in-out;
-    transition: 0.3s ease-in-out;
-  }
-  #imdb:hover {
-    -webkit-transform: scale(1);
-    transform: scale(1.1);
+    filter: drop-shadow(2px 4px 18px #9bf7f7);
   }
   .popbuttons {
     background-color: rgb(74, 175, 74);
@@ -100,7 +85,7 @@
   .selectStyle {
     padding: 5px;
     width: 100px;
-    box-shadow: 1px 1px 5px lightgrey;
+    /* box-shadow: 1px 1px 5px lightgrey; */
     border-radius: 5px;
   }
   .selectStyle:open {
@@ -109,12 +94,11 @@
     transform: translateY(0);
   }
   .img {
-    height: 420px;
-    width: 320px;
+    height: 270px;
+    width: 200px;
     overflow: hidden;
     bottom: 1;
     position: relative;
-
     -webkit-transform: scale(1);
     transform: scale(1);
     -webkit-transition: 0.3s ease-in-out;
@@ -148,7 +132,7 @@
     cursor: default;
   }
 </style>
-<body style="background-color: rgb(255, 249, 242)">
+<body>
   <head>
     <title>Vidly</title>
   </head>
@@ -210,17 +194,17 @@
         ></a>
 
         <br />
-        <div class="card-block">
+        <div class="card-body">
+          <a
+            href="/api/movies/<%=list._id%>"
+            style="text-decoration: none"
+            target="_blank"
+            ><h7 style="position: relative; bottom: 28px; color: white">
+              <%=list.title%> (<%=list.year%>)
+            </h7></a
+          >
           <ul class="main-card">
-            <a
-              href="/api/movies/<%=list._id%>"
-              style="text-decoration: none"
-              target="_blank"
-              ><h5 style="text-align: center; margin-right: 5px">
-                <%=list.title%>(<%=list.year%>)
-              </h5></a
-            >
-            <li class="movieclass">
+            <!-- <li class="movieclass">
               <p class="card-text"><strong>Cast</strong>: <%=list.cast%></p>
             </li>
             <li class="movieclass">
@@ -254,10 +238,11 @@
                 <strong>Rental Price</strong>:
                 $<%=list.dailyRentalRate.toFixed(2)%>
               </p>
-            </li>
+            </li> -->
           </ul>
         </div>
       </div>
+      <br />
       <br />
       <%})%>
     </div>
@@ -265,19 +250,8 @@
 </body>
 <%var i =0%>
 <form action="/api/movies/movies" method="GET" class="text-center">
-  <%for(i=0; i< movieCount/9; i++){%>
-  <input
-    type="submit"
-    name="pageNo"
-    style="
-      border: 1px solid black;
-      background-color: rgb(115, 235, 115);
-      margin-right: 10px;
-      font-size: 30px;
-      background-color: white;
-    "
-    value="<%=i+1%>"
-  />
+  <%for(i=0; i< movieCount/perPage; i++){%>
+  <input type="submit" name="pageNo" class="btn btn-info" value="<%=i+1%>" />
   <%}%>
 </form>
 <script>

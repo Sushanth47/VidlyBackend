@@ -1,14 +1,9 @@
-require("dotenv").config();
-const { Movie } = require("../models/movie");
 const express = require("express");
 const {
   getMovies,
   createMovies,
-
   requestedMovie,
-
   addToCart,
-
   getMoviesSort,
   createMoviesPage,
   displayMovie,
@@ -17,12 +12,7 @@ const {
   addToWishlist,
 } = require("../controllers/movieController");
 const router = express.Router();
-const {
-  checkauth,
-  customerauth,
-  newauth,
-  userauth,
-} = require("../middleware/auth");
+const { checkauth, customerauth, userauth } = require("../middleware/auth");
 
 router.get("/requestMovie", customerauth, requestedMoviePage);
 
@@ -44,4 +34,4 @@ router.get("/search", checkauth, displayMovie);
 
 router.get("/:mid", checkauth, getSpecificMovie);
 
-(module.exports = router), Movie;
+module.exports = router;

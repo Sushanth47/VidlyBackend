@@ -77,7 +77,7 @@ async function customerauth(req, res, next) {
     if (!token)
       return res.status(409).render("access denied. No token Provided");
     const decoded = jwt.verify(token, process.env.jwtPrivateKey);
-    console.log(decoded);
+    // console.log(decoded);
     if (decoded.subject == "Customer") {
       var fromUserModel = await Customer.findOne({ _id: decoded._id });
       req.user = decoded;

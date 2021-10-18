@@ -7,72 +7,79 @@
     rel="stylesheet"
   />
 </head>
-<title><%=movie.title%>(<%=movie.year%>)</title>
+<title><%=movie.title%> (<%=movie.year%>)</title>
+<style>
+  body {
+    max-width: 100%;
+    overflow-x: hidden;
+    background-color: rgb(39, 39, 39);
+    color: white;
+  }
+  h5,
+  h4,
+  p,
+  span {
+    font-family: "Yaldevi", sans-serif;
+  }
+  h5 {
+    margin-top: 25px;
+  }
+  #imdb {
+    margin-top: 10px;
+    margin-left: 5px;
+    border-color: 1px solid transparent;
+    font-weight: bolder;
+    font-family: "Roboto", sans-serif;
+    color: black;
+    width: 90px;
+    background-color: #dba506;
+    padding: 5px;
+    border-radius: 10px;
+    text-decoration: none;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-transition: 0.3s ease-in-out;
+    transition: 0.3s ease-in-out;
+  }
+  #imdb:hover {
+    -webkit-transform: scale(1);
+    transform: scale(1.1);
+  }
+  .card-text {
+    font-family: "Work Sans", sans-serif;
+    margin: 5px;
+    color: rgb(20, 20, 20);
+  }
+  .img {
+    position: relative;
+    width: 220px;
+    height: 330px;
+    right: 51px;
+    top:5px;
+    left: 0;
+    overflow-x:hidden;
+  }
+  span {
+    font-size: 20px;
+  }
+  .otherContainer {
+    margin-top:40px;
+    margin-left: 8vh;
+    margin-bottom:90px;
+    flex-direction: row;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-transition: 0.3s ease-in-out;
+    transition: 0.3s ease-in-out;
+  }
+  .otherContainer:hover {
+    -webkit-transform: scale(1);
+    transform: scale(1.1);
+  }
+  
+</style>
 <body>
-  <style>
-    body {
-      max-width: 100%;
-      overflow-x: hidden;
-    }
-    h5,
-    h4,
-    p,
-    span {
-      font-family: "Yaldevi", sans-serif;
-    }
-    h5 {
-      margin-top: 25px;
-    }
-    .card-text {
-      font-family: "Work Sans", sans-serif;
-      margin: 5px;
-      color: rgb(20, 20, 20);
-    }
-    .img {
-      position: relative;
-      width: 287px;
-      height: 420px;
-      right: 51px;
-      left: 0;
-    }
-    span {
-      font-size: 20px;
-    }
-    .otherContainer {
-      margin-top:40px;
-      margin-left: 120px;
-      flex-direction: row;
-      -webkit-transform: scale(1);
-      transform: scale(1);
-      -webkit-transition: 0.3s ease-in-out;
-      transition: 0.3s ease-in-out;
-    }
-    .otherContainer:hover {
-      -webkit-transform: scale(1);
-      transform: scale(1.1);
-    }
-    #imdb {
-      margin-top: 10px;
-      margin-left: 5px;
-      border-color: 1px solid transparent;
-      font-weight: bolder;
-      font-family: "Roboto", sans-serif;
-      color: black;
-      width: 90px;
-      background-color: #dba506;
-      padding: 5px;
-      border-radius: 10px;
-      text-decoration: none;
-      -webkit-transform: scale(1);
-      transform: scale(1);
-      -webkit-transition: 0.3s ease-in-out;
-      transition: 0.3s ease-in-out;
-    }
-    #imdb:hover {
-      -webkit-transform: scale(1);
-      transform: scale(1.1);
-    }
-  </style>
+  
   <div class="row">
     <a target="_blank" href="<%=movie.img%>"
       ><img
@@ -124,15 +131,22 @@
         >This item is quickly running out of stock</span
       >
       <%}%>
-      <span
+      <%if(movie.iReviewed){%>
+        
+        <span><a href="#"
+          ><button class="btn btn-success">Review</button></a
+        ></span>
+        <%}%>
+        &nbsp;&nbsp;<span
         ><a href="/api/movies/addToCart/<%=movie._id%>"
           ><button class="btn btn-success">Add to Cart</button></a
         ></span
       >
 
-      &nbsp;&nbsp;<a href="/api/movies/addtowishlist/<%=movie._id%>"
+      &nbsp;&nbsp;<span><a href="/api/movies/addtowishlist/<%=movie._id%>"
         ><button class="btn btn-success">Wishlist</button></a
-      >
+      ></span>
+      
     </div>
     <br /><br />
   </div>
@@ -149,7 +163,7 @@
         <div class="col-md-4 col-xs-9">
           <div
             class="card"
-            style="width: 18rem; align-items: center; justify-content: center"
+            style="width: 220px; height:300px;align-items: center; justify-content: center"
           >
             <div class="col-md-9 col-xs-9">
               <img class="img" src="<%=list.img%>" alt="Card image cap" />
@@ -158,12 +172,12 @@
               <a
                 target="_blank"
                 href="/api/movies/<%=list._id%>"
-                style="text-decoration: none"
-                ><h5 class="card-title text-center">
+                style="text-decoration: none; color:white"
+                ><h5 class="card-title text-center" style="position: relative; bottom:25px;">
                   <%=list.title%> (<%=list.year%>)
                 </h5></a
               >
-              <p class="card-text" style="margin-left: 30px">
+              <!-- <p class="card-text" style="margin-left: 30px">
                 <strong>Cast</strong>: <%=list.cast%>
               </p>
               <p class="card-text" style="margin-left: 30px">
@@ -171,21 +185,24 @@
               </p>
               <p class="card-text" style="margin-left: 30px">
                 <strong>Rate</strong>: $<%=list.dailyRentalRate.toFixed(2)%>
-              </p>
-              <br />
-              <a
+              </p> -->
+              <!-- <br /> -->
+              <!-- <a
                 class="card-text movieclass"
                 style="text-align: center; position: relative; left: 60px"
                 href="<%=movie.links%>"
                 target="_blank"
                 id="imdb"
                 >IMDb: <%=movie.imdbRating%>/10</a
-              >
+              > -->
             </div>
           </div>
         </div>
       </div>
+      <br>
+      <br>
     </a>
+    
     <%})%>
   </div>
 </body>

@@ -5,61 +5,65 @@
   href="https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap"
   rel="stylesheet"
 />
+<style>
+  body {
+    max-width: 100%;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    background-color: rgb(39, 39, 39);
+    color: white;
+  }
+  h1 {
+    text-align: center;
+  }
+  .mainbox {
+    padding-left: 50px;
+
+    flex-direction: row;
+  }
+
+  #submitButton {
+    background-color: #0fbd9c;
+    border-radius: 25px;
+    border: 1px solid;
+    display: block;
+    color: white;
+    margin-top: 3px;
+    margin-left: 3px;
+    box-shadow: 0.5px 0.5px 5px #343d47;
+  }
+  .searchResults {
+    width: 26rem;
+    height: 22rem;
+    overflow: hidden;
+    margin-bottom: 40px;
+    border: 1px solid transparent;
+    box-shadow: 5px 5px 5px rgb(10, 10, 10);
+    border-radius: 10px;
+    margin-right: 50px;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-transition: 0.3s ease-in-out;
+    transition: 0.3s ease-in-out;
+  }
+  .seachResults:hover {
+    -webkit-transform: scale(1);
+    transform: scale(1.1);
+  }
+  #searchResultsGenre {
+    width: 35rem;
+    height: 12rem;
+    overflow: hidden;
+    /* border-radius: 10px; */
+    margin-right: 0px;
+  }
+  .mainbox1 {
+    padding-left: 66vh;
+    margin-bottom: 40px;
+  }
+</style>
 <body>
-  <style>
-    body {
-      max-width: 100%;
-      overflow-x: hidden;
-    }
-    h1 {
-      text-align: center;
-    }
-    .mainbox {
-      padding-left: 70px;
-
-      flex-direction: row;
-    }
-
-    #submitButton {
-      background-color: #0fbd9c;
-      border-radius: 25px;
-      border: 1px solid;
-      display: block;
-      color: white;
-      margin-top: 3px;
-      margin-left: 3px;
-      box-shadow: 0.5px 0.5px 5px #343d47;
-    }
-    .searchResults {
-      width: 26rem;
-      height: 22rem;
-      overflow: hidden;
-      margin-bottom: 10px;
-      border: 1px solid rgb(247, 246, 246);
-      box-shadow: 5px 5px 5px lightgrey;
-      border-radius: 10px;
-      margin-right: 30px;
-      -webkit-transform: scale(1);
-      transform: scale(1);
-      -webkit-transition: 0.3s ease-in-out;
-      transition: 0.3s ease-in-out;
-    }
-    .seachResults:hover {
-      -webkit-transform: scale(1);
-      transform: scale(1.1);
-    }
-    #searchResultsGenre {
-      width: 35rem;
-      height: 12rem;
-      overflow: hidden;
-      /* border-radius: 10px; */
-      margin-right: 0px;
-    }
-    .mainbox1 {
-      padding-left: 66vh;
-      margin-bottom: 40px;
-    }
-  </style>
+  
   <title>Search Results for "<%=title%>"</title>
 
   <h1 class="text-center">Search Results for "<%=title%>"</h1>
@@ -144,19 +148,19 @@
     <div class="mainbox">
       <div class="row">
         <%genresearch.forEach(list=>{%>
-          <a href="/api/movies/<%=list._id%>">
+        
           <div class="media searchResults">
-            <img
+            <a href="/api/movies/<%=list._id%>"><img
               class="rounded float-left"
               src="<%=list.img%>"
               height="350"
               width="220"
               alt="Generic placeholder image"
-            />
+            /></a>
             <div class="media-body" style="margin: 20">
-              <h5 class="mt-0" style="font-weight: bold">
+              <a style="text-decoration:none; color:white" href="/api/movies/<%=list._id%>"><h5 class="mt-0" >
                 <%=list.title%> (<%=list.year%>)
-              </h5>
+              </h5></a>
               <br />
               <h6 class="mt-0"><strong>Cast</strong>: <%=list.cast%></h6>
               <h6 class="mt-0">
@@ -171,7 +175,7 @@
               <h6 class="mt-0"><strong>Rent</strong>: $<%=list.dailyRentalRate%></h6>
             </div>
           </div>
-        </a>
+  
           <%})%>
     </div>
     

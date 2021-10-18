@@ -8,98 +8,57 @@ const { Customer } = require("../models/customer");
 
 exports.getMovies = async (req, res) => {
   try {
-    // console.log(req.user);
-      const perPage = 9;
-      const page = req.query.pageNo;
-      const movieCount = await Movie.countDocuments();
-      const movies = await Movie.aggregate([
-        {
-          $lookup: {
-            from: "genres",
-            localField: "genreId",
-            foreignField: "_id",
-            as: "genre",
-          },
+    const perPage = 15;
+    const page = req.query.pageNo;
+    const movieCount = await Movie.countDocuments();
+    const movies = await Movie.aggregate([
+      {
+        $lookup: {
+          from: "genres",
+          localField: "genreId",
+          foreignField: "_id",
+          as: "genre",
         },
-        {
-          $unwind: "$genre",
+      },
+      {
+        $unwind: "$genre",
+      },
+      {
+        $project: {
+          title: 1,
+          year: 1,
+          img: 1,
+          genreId: 1,
+          dailyRentalRate: 1,
+          genre: 1,
         },
-        {
-          $project: {
-            _id: 1,
-            title: 1,
-            img: 1,
-            genreId: 1,
-            rank: 1,
-            cast: 1,
-            year: 1,
-            links: 1,
-            dailyRentalRate: 1,
-            ismovieCreated: 1,
-            requestCount: 1,
-            genre: 1,
-            imdbRating: 1,
-            runtime: 1,
-            mpAARating: 1,
-          },
-        },
-        {
-          $sort: { _id: -1 },
-        },
-        {
-          $skip: perPage * (page - 1),
-        },
-        {
-          $limit: perPage,
-        },
-      ]);
+      },
+      {
+        $sort: { _id: -1 },
+      },
+      {
+        $skip: perPage * (page - 1),
+      },
+      {
+        $limit: perPage,
+      },
+    ]);
     return res.status(200).render("./movies", {
       movies: movies,
       url: process.env.WEBURL,
       movieCount: movieCount,
+      perPage: perPage,
     });
   } catch (err) {
     console.log(err);
   }
 };
 
-exports.getMoviesFetch = async (req, res) => {
-  const movies = await Movie.aggregate([
-    {
-      $lookup: {
-        from: "genres",
-        localField: "genreId",
-        foreignField: "_id",
-        as: "genre",
-      },
-    },
-    {
-      $unwind: "$genre",
-    },
-    {
-      $project: {
-        _id: 1,
-        title: 1,
-        img: 1,
-        genreId: 1,
-        rank: 1,
-        cast: 1,
-        year: 1,
-        links: 1,
-        numberInStock: 1,
-        dailyRentalRate: 1,
-        rentedCustomers: 1,
-        ismovieCreated: 1,
-        requestCount: 1,
-        genre: 1,
-      },
-    },
-  ]);
-  return res.status(200).json({ movies: movies });
-};
-
 exports.getMoviesSort = async (req, res) => {
   try {
+    const perPage = 15;
+    const page = req.query.pageNo;
+    const movieCount = await Movie.countDocuments();
     if (req.query.sortBy == "Name") {
       var movies = await Movie.aggregate([
         {
@@ -137,6 +96,12 @@ exports.getMoviesSort = async (req, res) => {
         },
         {
           $sort: { title: 1 },
+        },
+        {
+          $skip: perPage * (page - 1),
+        },
+        {
+          $limit: perPage,
         },
       ]);
     } else if (req.query.sortBy == "Year") {
@@ -177,6 +142,12 @@ exports.getMoviesSort = async (req, res) => {
         {
           $sort: { year: 1 },
         },
+        {
+          $skip: perPage * (page - 1),
+        },
+        {
+          $limit: perPage,
+        },
       ]);
     } else if (req.query.sortBy == "Rank") {
       var movies = await Movie.aggregate([
@@ -215,6 +186,12 @@ exports.getMoviesSort = async (req, res) => {
         },
         {
           $sort: { rank: 1 },
+        },
+        {
+          $skip: perPage * (page - 1),
+        },
+        {
+          $limit: perPage,
         },
       ]);
     } else if (req.query.sortBy == "IMDb") {
@@ -255,6 +232,12 @@ exports.getMoviesSort = async (req, res) => {
         {
           $sort: { imdbRating: -1 },
         },
+        {
+          $skip: perPage * (page - 1),
+        },
+        {
+          $limit: perPage,
+        },
       ]);
     } else if (req.query.sortBy == "Price") {
       var movies = await Movie.aggregate([
@@ -293,6 +276,12 @@ exports.getMoviesSort = async (req, res) => {
         },
         {
           $sort: { dailyRentalRate: 1 },
+        },
+        {
+          $skip: perPage * (page - 1),
+        },
+        {
+          $limit: perPage,
         },
       ]);
     } else if (req.query.sortBy == "Availability") {
@@ -333,6 +322,12 @@ exports.getMoviesSort = async (req, res) => {
         {
           $sort: { numberInStock: 1 },
         },
+        {
+          $skip: perPage * (page - 1),
+        },
+        {
+          $limit: perPage,
+        },
       ]);
     } else if (req.query.sortBy == "Popularity") {
       var movies = await Movie.aggregate([
@@ -372,9 +367,19 @@ exports.getMoviesSort = async (req, res) => {
         {
           $sort: { rentedCustomers: 1 },
         },
+        {
+          $skip: perPage * (page - 1),
+        },
+        {
+          $limit: perPage,
+        },
       ]);
     }
-    return res.status(200).render("./movies", { movies: movies });
+    return res.status(200).render("./movies", {
+      movies: movies,
+      movieCount: movieCount,
+      perPage: perPage,
+    });
   } catch (err) {
     console.log(err);
   }
@@ -393,6 +398,10 @@ exports.addToCart = async (req, res) => {
 };
 
 exports.getSpecificMovie = async (req, res) => {
+  let customerId = "";
+  let customer = {};
+  if (req.cookies.token) customerId = req.cookies.token._id;
+  customer = await Customer.findOne({ _id: customerId }, "rentedMovies");
   var movie = await Movie.aggregate([
     {
       $match: { _id: ObjectId(req.params.mid) },
@@ -420,7 +429,7 @@ exports.getSpecificMovie = async (req, res) => {
         links: 1,
         numberInStock: 1,
         dailyRentalRate: 1,
-        rentedCustomers: 1,
+        iReviewed: { $in: ["$_id", customer.rentedMovies] },
         ismovieCreated: 1,
         director: 1,
         aspectRatio: 1,
@@ -433,6 +442,7 @@ exports.getSpecificMovie = async (req, res) => {
       },
     },
   ]);
+  console.log(movie);
   var otherMovies = await Movie.find(
     {
       _id: { $nin: [req.params.mid] },
