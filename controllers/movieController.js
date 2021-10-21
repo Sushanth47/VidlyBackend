@@ -446,7 +446,12 @@ exports.getSpecificMovie = async (req, res) => {
   let customerId = "";
   let customer = {};
   if (req.cookies.token) customerId = req.cookies.token._id;
-  customer = await Customer.findOne({ _id: customerId }, "rentedMovies");
+  if (customerId.length != 0) {
+    customer = await Customer.findOne({ _id: customerId }, "rentedMovies");
+  } else {
+    customer.rentedMovies = [];
+  }
+
   var movie = await Movie.aggregate([
     {
       $match: { _id: ObjectId(req.params.mid) },
@@ -487,7 +492,7 @@ exports.getSpecificMovie = async (req, res) => {
       },
     },
   ]);
-  console.log(movie);
+  // console.log(movie);
   var otherMovies = await Movie.find(
     {
       _id: { $nin: [req.params.mid] },
