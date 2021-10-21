@@ -1,65 +1,74 @@
 <%- include('./partials/header') %>
-
-<div style="text-align: center">
-  <h1 style="text-size-adjust: 30px">Add Movies</h1>
-  <h6>Please add the details to add a movie to the collection</h6>
-  <h7>(**Make sure to add the right title for the movie**)</h7><br />
-  <br />
-</div>
-<div class="container">
-  <%console.log(currentUser, 'inaddmoviespage')%>
-  <div class="col d-flex justify-content-center" style="margin-left: 400px">
-    <form
-      style="text-align: center"
-      action="/api/movies/createmovies"
-      method="POST"
-    >
-      <input
-        type="text"
-        class="form-control"
-        name="genreName"
-        placeholder="Enter Genre"
-      /><br />
-      <input
-        type="text"
-        class="form-control"
-        name="title"
-        placeholder="Title"
-      /><br />
-      <input
-        type="text"
-        class="form-control"
-        name="numberInStock"
-        placeholder="Number in Stock"
-      /><br />
-      <input
-        type="text"
-        class="form-control"
-        name="dailyRentalRate"
-        placeholder="Rent Rate"
-      /><br />
-      <button
-        type="submit"
-        class="btn btn-outline-success"
-        style="border-radius: 10px"
+<style>
+  body {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+</style>
+<body>
+  <div style="text-align: center">
+    <h1 style="text-size-adjust: 30px">Add Movies</h1>
+    <h6>Please add the details to add a movie to the collection</h6>
+    <h7>(**Make sure to add the right title for the movie**)</h7><br />
+    <br />
+  </div>
+  <div class="container">
+    <%console.log(currentUser, 'inaddmoviespage')%>
+    <div class="col d-flex justify-content-center" style="margin-left: 400px">
+      <form
+        style="text-align: center"
+        action="/api/movies/createmovies"
+        method="POST"
       >
-        Submit
-      </button>
-    </form>
-    <div class="col text-right pull-right" style="margin-left: 400px">
-      <ul
-        style="width: 200px; border: 1px solid; border-radius: 5px"
-        class="list-group pull-right"
-      >
-        <li class="list-group-item active text-center">All Available Genres</li>
-        <%allGenres.forEach(list=>{%>
-        <li class="list-group-item text-center"><%=list.name%></li>
-        <%})%>
-      </ul>
+        <input
+          type="text"
+          class="form-control"
+          name="genreName"
+          placeholder="Enter Genre"
+        /><br />
+        <input
+          type="text"
+          class="form-control"
+          name="title"
+          placeholder="Title"
+        /><br />
+        <input
+          type="text"
+          class="form-control"
+          name="numberInStock"
+          placeholder="Number in Stock"
+        /><br />
+        <input
+          type="text"
+          class="form-control"
+          name="dailyRentalRate"
+          placeholder="Rent Rate"
+        /><br />
+        <button
+          type="submit"
+          class="btn btn-outline-success"
+          style="border-radius: 10px"
+        >
+          Submit
+        </button>
+      </form>
+      <div class="col text-right pull-right" style="margin-left: 400px">
+        <ul
+          style="width: 200px; border: 1px solid; border-radius: 5px"
+          class="list-group pull-right"
+        >
+          <li class="list-group-item active text-center">
+            All Available Genres
+          </li>
+          <%allGenres.forEach(list=>{%>
+          <li class="list-group-item text-center"><%=list.name%></li>
+          <%})%>
+        </ul>
+      </div>
     </div>
   </div>
-</div>
 
-<%if(movie.ismovieCreated){%>
-<span>Movie Added to the Store!</span>
-<%}%> <%- include('./partials/footer') %>
+  <%if(movie.ismovieCreated){%>
+  <span>Movie Added to the Store!</span>
+  <%}%> <%- include('./partials/footer') %>
+</body>
