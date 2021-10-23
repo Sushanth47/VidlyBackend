@@ -8,7 +8,7 @@ const { Customer } = require("../models/customer");
 
 exports.getMovies = async (req, res) => {
   try {
-    const perPage = 15;
+    const perPage = 10;
     const page = req.query.pageNo;
     const movieCount = await Movie.countDocuments();
     const movies = await Movie.aggregate([
@@ -56,7 +56,7 @@ exports.getMovies = async (req, res) => {
 
 exports.getMoviesSort = async (req, res) => {
   try {
-    const perPage = 15;
+    const perPage = 10;
     const page = req.query.pageNo;
     const movieCount = await Movie.countDocuments();
     if (req.query.sortBy == "Name") {

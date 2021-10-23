@@ -42,5 +42,5 @@ exports.checkout = async (req, res) => {
   customer.cart = [];
   customer.save();
   rental.checkOut = rentId;
-  return res.redirect("/api/customers/getrentals");
+  return res.render("bill", { rental: rental });
 };

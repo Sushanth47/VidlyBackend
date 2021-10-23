@@ -62,6 +62,11 @@
     overflow: hidden;
     filter: drop-shadow(2px 4px 8px #3b3d3d);
     transition: filter 500ms;
+    backdrop-filter: blur(1px) saturate(180%);
+    -webkit-backdrop-filter: blur(1px) saturate(180%);
+    background-color: rgba(17, 25, 40, 0);
+    border-radius: 12px;
+    /* border: 1px solid rgba(255, 255, 255, 0.125); */
   }
 
   .card-text {
@@ -85,7 +90,6 @@
   .selectStyle {
     padding: 5px;
     width: 100px;
-    /* box-shadow: 1px 1px 5px lightgrey; */
     border-radius: 5px;
   }
   .selectStyle:open {
@@ -107,7 +111,7 @@
 
   .img:hover {
     -webkit-transform: scale(1);
-    transform: scale(1.1);
+    transform: scale(1.09);
   }
 
   b {
@@ -249,7 +253,7 @@
   </div>
 </body>
 <%var i =0%>
-<form action="/api/movies/movies" method="GET" class="text-center">
+<form action="/api/movies/movies/" method="GET" class="text-center">
   <%for(i=0; i< movieCount/perPage; i++){%>
   <input type="submit" name="pageNo" class="btn btn-info" value="<%=i+1%>" />
   <%}%>

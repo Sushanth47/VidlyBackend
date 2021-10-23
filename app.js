@@ -61,6 +61,10 @@ app.get("/phonetoken", async (req, res) => {
   return res.status(200).json("done");
 });
 
+app.get("/pagerender", async (req, res) => {
+  return res.render("bill.ejs");
+});
+
 app.get("/sysinfo", async (req, res) => {
   valueObject = {
     cpu: "*",
@@ -114,9 +118,9 @@ app.get("/cookie", checkauth, function (req, res) {
 });
 
 app.get("/setrent", async (req, res) => {
-  await Customer.updateMany({}, {$set:{reviewedMovied:[]}});
-  
-  return res.json("done ");
+  await Customer.updateMany({}, { $set: { reviewedMovied: [] } });
+
+  return res.json("done");
 });
 
 app.get("/webscrap", async (req, res) => {

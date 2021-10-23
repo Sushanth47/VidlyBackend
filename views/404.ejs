@@ -1,16 +1,31 @@
 <%- include('./partials/header') %>
 <body>
   <style>
+    body {
+      /* background-image: url("https://c4.wallpaperflare.com/wallpaper/724/284/952/titanic-the-final-moment-wallpaper-preview.jpg"); */
+      background-repeat: no-repeat, repeat;
+      background-position: center;
+      background-position-y: 128px;
+      /* background-color: #2467a2; */
+      /* backgrou */
+      /* background-color: #cccccc; */
+    }
     .centerBox {
       border: 1px solid rgb(247, 244, 244);
-      border-radius: 15px;
-      width: 800px;
-      height: 400px;
+      /* border-radius: 15px; */
+      width: 728px;
+      height: 455px;
       margin: auto;
       padding: 10px;
+      backdrop-filter: blur(6px) saturate(180%);
+      -webkit-backdrop-filter: blur(6px) saturate(180%);
+      background-color: rgba(17, 25, 40, 0);
+      border-radius: 2px;
+      border: 1px solid rgba(255, 255, 255, 0.125);
+      /* padding-top: 30px; */
+      box-shadow: 0 0 10px 2px rgb(236, 50, 50);
     }
     .centerBox:hover {
-      box-shadow: 0 0 10px 2px rgb(236, 50, 50);
       transition: 0.3s ease-in-out;
     }
     h1 {
@@ -27,10 +42,12 @@
       margin: auto;
     }
   </style>
+  <br />
+  <br />
   <div class="centerBox">
     <h1 class="text-center">This Page Doesn't Exist</h1>
     <br /><br />
-    <div style="margin-left: 320px">
+    <div style="margin-left: 314px">
       <button
         onclick="history.back()"
         class="btn btn-primary btn-lg"
@@ -38,6 +55,18 @@
       >
         Go Back
       </button>
+    </div>
+    <br />
+    <br />
+    <div class="text-align-center" style="padding-left: 150px">
+      <a
+        class="btn btn-success btn-lg"
+        href="/api/auth/loginCustomer"
+        style="margin-right: 35vh"
+      >
+        Login
+      </a>
+      <a href="/api/auth/signupPage" class="btn btn-info btn-lg">SignUp</a>
     </div>
   </div>
 </body>
