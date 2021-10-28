@@ -483,7 +483,7 @@ exports.getSpecificMovie = async (req, res) => {
       },
     },
   ]);
-  var tester = await Movie.findOne({ _id: req.params.mid }).populate("genreId");
+  var tester = await Movie.findOne({ _id: req.params.mid }, 'genreId').populate("genreId");
   var rgenres = [];
   tester.genreId.forEach((list) => {
     rgenres.push(list.name);
