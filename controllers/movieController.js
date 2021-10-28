@@ -13,24 +13,13 @@ exports.getMovies = async (req, res) => {
     const movieCount = await Movie.countDocuments();
     const movies = await Movie.aggregate([
       {
-        $lookup: {
-          from: "genres",
-          localField: "genreId",
-          foreignField: "_id",
-          as: "genre",
-        },
-      },
-      {
-        $unwind: "$genre",
-      },
-      {
         $project: {
           title: 1,
           year: 1,
           img: 1,
           genreId: 1,
           dailyRentalRate: 1,
-          genre: 1,
+          // genre: 1,
         },
       },
       {
@@ -43,6 +32,7 @@ exports.getMovies = async (req, res) => {
         $limit: perPage,
       },
     ]);
+    console.log(movies);
     return res.status(200).render("./movies", {
       movies: movies,
       url: process.env.WEBURL,
@@ -461,11 +451,11 @@ exports.getSpecificMovie = async (req, res) => {
         from: "genres",
         localField: "genreId",
         foreignField: "_id",
-        as: "genreId",
+        as: "thegenres",
       },
     },
     {
-      $unwind: "$genreId",
+      $unwind: "$thegenres",
     },
     {
       $project: {
@@ -489,10 +479,15 @@ exports.getSpecificMovie = async (req, res) => {
         imdbRating: 1,
         runtime: 1,
         mpAARating: 1,
+        thegenres: 1,
       },
     },
   ]);
-  // console.log(movie);
+  var tester = await Movie.findOne({ _id: req.params.mid }).populate("genreId");
+  var rgenres = [];
+  tester.genreId.forEach((list) => {
+    rgenres.push(list.name);
+  });
   var otherMovies = await Movie.find(
     {
       _id: { $nin: [req.params.mid] },
@@ -502,7 +497,7 @@ exports.getSpecificMovie = async (req, res) => {
   );
   return res
     .status(200)
-    .render("./moviePage.ejs", { movie: movie[0], otherMovies });
+    .render("./moviePage.ejs", { movie: movie[0], otherMovies, rgenres });
 };
 
 exports.addToWishlist = async (req, res) => {

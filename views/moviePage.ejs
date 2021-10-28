@@ -90,7 +90,7 @@
       <h1><%=movie.title%> (<%=movie.year%>)</h1>
       <h5>Starring: <b><%=movie.cast%></b></h5>
       <h5>Director: <b><%=movie.director%></b></h5>
-      <h5>Genre: <a style="text-decoration: none;" href="/api/movies/search/?title=<%=movie.genre%>"><b><%=movie.genre%></a></b></h5>
+      <h5>Genre: <%for(var i=0; i< rgenres.length; i++){%> <%=rgenres[i]%>,  <%}%>
       <h5>CBFC Rating: <b><%=movie.mpAARating%></b></h5>
       <%if(movie.worldwide!=""){%>
       <h5>Box Office: <b><%=movie.worldwide%></b></h5>

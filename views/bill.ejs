@@ -16,7 +16,7 @@
     border-radius: 12px;
     border: 1px solid rgba(209, 213, 219, 0.3);
     font-family: "Yaldevi", sans-serif;
-    color: black;
+    color: white;
   }
   h5 {
     padding-left: 100px;
@@ -39,6 +39,7 @@
     margin-bottom: 30px;
   }
 </style>
+<%console.log(rental, 'rentalllllllllllll')%>
 <body>
   <div class="buttonbar">
     <p>Vidly™ Bill</p>
@@ -49,11 +50,11 @@
     <h1 class="text-center" style="margin-top: 10px; margin-bottom: 40px">
       Thank You for Shopping with Vidly™
     </h1>
-    <h5>Movies:</h5>
-    <h5>Total Price:</h5>
-    <h5>Date of Buying:</h5>
-    <h5>Date of Returning:</h5>
-    <h5>Unique Code:</h5>
+    <h5>Movies: <%=rental.movie%></h5>
+    <h5>Total Price: <%=rental.rentalFee%></h5>
+    <h5>Date of Buying: <%=rental.dateOut%></h5>
+    <h5>Date of Returning: <%=rental.dateReturned%></h5>
+    <h5>Unique Code: <%=rental.checkOut%></h5>
     <div class="continue">
       <a class="btn btn-primary">Continue Shopping</a>
     </div>
