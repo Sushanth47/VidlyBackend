@@ -21,7 +21,7 @@
   }
   .iconStyling {
     position: relative;
-    left: 185px;
+    left: 55px;
     margin-top: 20px;
     top: 5px;
     color: white;
@@ -96,35 +96,6 @@
                 <%=list.title%>(<%=list.year%>)
               </h6></a
             >
-            <!-- <li class="movieclass">
-              <p class="card-text"><b>Cast </b>: <%=list.cast%></p>
-            </li>
-            <li class="movieclass">
-              <p class="card-text">
-                <b>IMDb</b>:
-                <a
-                  style="text-decoration: none; font-weight: bold"
-                  href="<%=list.links%>"
-                  ><%=list.imdbRating%>/10</a
-                >
-              </p>
-            </li>
-            <li class="movieclass">
-              <p class="card-text">
-                <b>Genre</b>:
-                <a
-                  style="text-decoration: none"
-                  href="/api/movies/search/?title=<%=list.genre%>"
-                  ><%=list.genre%></a
-                >
-              </p>
-            </li>
-            <li class="movieclass">
-              <p class="card-text">
-                <b>Rent</b>: $<%=list.dailyRentalRate.toFixed(2)%>
-              </p>
-            </li>
-            <br /> -->
           </ul>
         </div>
       </div>
@@ -140,27 +111,20 @@
     <a href="/api/rentals/rentalpage"
       ><button class="btn btn-success">Checkout</button></a
     >
-  </div>
-  <br />
-  <div class="container">
-    <div class="row">
+    <div class="maincontainer">
       <br />
-      <%cust.cart.forEach(list=>{%>
-      <div class="col-md-4 col-xs-6">
+      <div class="nextcontainer">
+        <%cust.cart.forEach(list=>{%>
+
         <div class="card" id="cardStyling">
-          <div class="col-md-8 col-xs-4">
+          <div>
             <a
               class="text-right iconStyling"
-              href="/api/customers/pullfromcart/<%=list._id%>"
+              href="/api/customers/pullfromlist/<%=list._id%>"
               ><i class="fas fa-trash fa-2x"></i
             ></a>
             <a target="_blank" href="/api/movies/<%=list._id%>"
-              ><img
-                class="card-img align-items-center"
-                style="border-radius: 10px; position: relative; left: 50px"
-                src="<%=list.img%>"
-                class="card-img"
-                alt="..."
+              ><img class="card-img" src="<%=list.img%>" alt="..."
             /></a>
           </div>
           <div class="card-block" style="padding: 4px">
@@ -172,47 +136,23 @@
                 href="/api/movies/<%=list._id%>"
                 style="text-decoration: none"
                 target="_blank"
-                ><h4 class="card-title" style="text-align: center">
+                ><h6
+                  class="card-title"
+                  style="text-align: center; position: relative; bottom: 5px"
+                >
                   <%=list.title%>(<%=list.year%>)
-                </h4></a
+                </h6></a
               >
-              <li class="movieclass">
-                <p class="card-text"><b>Cast </b>: <%=list.cast%></p>
-              </li>
-              <li class="movieclass">
-                <p class="card-text">
-                  <b>IMDb</b>:
-                  <a
-                    style="text-decoration: none; font-weight: bold"
-                    href="<%=list.links%>"
-                    ><%=list.imdbRating%>/10</a
-                  >
-                </p>
-              </li>
-              <li class="movieclass">
-                <p class="card-text">
-                  <b>Genre</b>:
-                  <a
-                    style="text-decoration: none"
-                    href="/api/movies/search/?title=<%=list.genre%>"
-                    ><%=list.genre%></a
-                  >
-                </p>
-              </li>
-              <li class="movieclass">
-                <p class="card-text">
-                  <b>Rent</b>: $<%=list.dailyRentalRate.toFixed(2)%>
-                </p>
-              </li>
-              <br />
             </ul>
           </div>
         </div>
         <br />
+        <%})%>
       </div>
-      <%})%>
     </div>
   </div>
+  <br />
+
   <%} else if(subject == 'rental'){%>
   <title>My Rentals</title>
   <h1 class="text-center">My Rentals</h1>

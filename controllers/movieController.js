@@ -49,39 +49,14 @@ exports.getMoviesSort = async (req, res) => {
     const perPage = 10;
     const page = req.query.pageNo;
     const movieCount = await Movie.countDocuments();
-    if (req.query.sortBy == "Name") {
+    if (req.body.sortBy == "Name") {
       var movies = await Movie.aggregate([
         {
-          $lookup: {
-            from: "genres",
-            localField: "genreId",
-            foreignField: "_id",
-            as: "genre",
-          },
-        },
-        {
-          $unwind: "$genre",
-        },
-        {
           $project: {
-            _id: 1,
             title: 1,
             img: 1,
             genreId: 1,
-            rank: 1,
-            cast: 1,
             year: 1,
-            links: 1,
-            numberInStock: 1,
-            dailyRentalRate: 1,
-            rentedCustomers: 1,
-            ismovieCreated: 1,
-            requestCount: 1,
-            genre: 1,
-            director: 1,
-            imdbRating: 1,
-            mpAARating: 1,
-            runTime: 1,
           },
         },
         {
@@ -94,39 +69,15 @@ exports.getMoviesSort = async (req, res) => {
           $limit: perPage,
         },
       ]);
-    } else if (req.query.sortBy == "Year") {
+    } else if (req.body.sortBy == "Year") {
       var movies = await Movie.aggregate([
-        {
-          $lookup: {
-            from: "genres",
-            localField: "genreId",
-            foreignField: "_id",
-            as: "genre",
-          },
-        },
-        {
-          $unwind: "$genre",
-        },
         {
           $project: {
             _id: 1,
             title: 1,
             img: 1,
             genreId: 1,
-            rank: 1,
-            cast: 1,
             year: 1,
-            links: 1,
-            numberInStock: 1,
-            dailyRentalRate: 1,
-            rentedCustomers: 1,
-            ismovieCreated: 1,
-            requestCount: 1,
-            genre: 1,
-            director: 1,
-            imdbRating: 1,
-            mpAARating: 1,
-            runTime: 1,
           },
         },
         {
@@ -139,19 +90,8 @@ exports.getMoviesSort = async (req, res) => {
           $limit: perPage,
         },
       ]);
-    } else if (req.query.sortBy == "Rank") {
+    } else if (req.body.sortBy == "Rank") {
       var movies = await Movie.aggregate([
-        {
-          $lookup: {
-            from: "genres",
-            localField: "genreId",
-            foreignField: "_id",
-            as: "genre",
-          },
-        },
-        {
-          $unwind: "$genre",
-        },
         {
           $project: {
             _id: 1,
@@ -159,19 +99,8 @@ exports.getMoviesSort = async (req, res) => {
             img: 1,
             genreId: 1,
             rank: 1,
-            cast: 1,
+
             year: 1,
-            links: 1,
-            numberInStock: 1,
-            dailyRentalRate: 1,
-            rentedCustomers: 1,
-            ismovieCreated: 1,
-            requestCount: 1,
-            genre: 1,
-            director: 1,
-            imdbRating: 1,
-            mpAARating: 1,
-            runTime: 1,
           },
         },
         {
@@ -184,39 +113,18 @@ exports.getMoviesSort = async (req, res) => {
           $limit: perPage,
         },
       ]);
-    } else if (req.query.sortBy == "IMDb") {
+    } else if (req.body.sortBy == "IMDb") {
       var movies = await Movie.aggregate([
-        {
-          $lookup: {
-            from: "genres",
-            localField: "genreId",
-            foreignField: "_id",
-            as: "genre",
-          },
-        },
-        {
-          $unwind: "$genre",
-        },
         {
           $project: {
             _id: 1,
             title: 1,
             img: 1,
             genreId: 1,
-            rank: 1,
-            cast: 1,
+
             year: 1,
-            links: 1,
-            numberInStock: 1,
-            dailyRentalRate: 1,
-            rentedCustomers: 1,
-            ismovieCreated: 1,
-            requestCount: 1,
-            genre: 1,
-            director: 1,
+
             imdbRating: 1,
-            mpAARating: 1,
-            runTime: 1,
           },
         },
         {
@@ -229,39 +137,18 @@ exports.getMoviesSort = async (req, res) => {
           $limit: perPage,
         },
       ]);
-    } else if (req.query.sortBy == "Price") {
+    } else if (req.body.sortBy == "Price") {
       var movies = await Movie.aggregate([
-        {
-          $lookup: {
-            from: "genres",
-            localField: "genreId",
-            foreignField: "_id",
-            as: "genre",
-          },
-        },
-        {
-          $unwind: "$genre",
-        },
         {
           $project: {
             _id: 1,
             title: 1,
             img: 1,
             genreId: 1,
-            rank: 1,
-            cast: 1,
+
             year: 1,
-            links: 1,
-            numberInStock: 1,
+
             dailyRentalRate: 1,
-            rentedCustomers: 1,
-            ismovieCreated: 1,
-            requestCount: 1,
-            genre: 1,
-            director: 1,
-            imdbRating: 1,
-            mpAARating: 1,
-            runTime: 1,
           },
         },
         {
@@ -274,39 +161,18 @@ exports.getMoviesSort = async (req, res) => {
           $limit: perPage,
         },
       ]);
-    } else if (req.query.sortBy == "Availability") {
+    } else if (req.body.sortBy == "Availability") {
       var movies = await Movie.aggregate([
-        {
-          $lookup: {
-            from: "genres",
-            localField: "genreId",
-            foreignField: "_id",
-            as: "genre",
-          },
-        },
-        {
-          $unwind: "$genre",
-        },
         {
           $project: {
             _id: 1,
             title: 1,
             img: 1,
             genreId: 1,
-            rank: 1,
-            cast: 1,
+
             year: 1,
-            links: 1,
             numberInStock: 1,
             dailyRentalRate: 1,
-            rentedCustomers: 1,
-            ismovieCreated: 1,
-            requestCount: 1,
-            genre: 1,
-            director: 1,
-            imdbRating: 1,
-            mpAARating: 1,
-            runTime: 1,
           },
         },
         {
@@ -319,39 +185,20 @@ exports.getMoviesSort = async (req, res) => {
           $limit: perPage,
         },
       ]);
-    } else if (req.query.sortBy == "Popularity") {
+    } else if (req.body.sortBy == "Popularity") {
       var movies = await Movie.aggregate([
-        {
-          $lookup: {
-            from: "genres",
-            localField: "genreId",
-            foreignField: "_id",
-            as: "genre",
-          },
-        },
-        {
-          $unwind: "$genre",
-        },
         {
           $project: {
             _id: 1,
             title: 1,
             img: 1,
             genreId: 1,
-            rank: 1,
-            cast: 1,
+
             year: 1,
-            links: 1,
-            numberInStock: 1,
-            dailyRentalRate: 1,
+
             rentedCustomers: 1,
-            ismovieCreated: 1,
+
             requestCount: 1,
-            genre: 1,
-            director: 1,
-            imdbRating: 1,
-            mpAARating: 1,
-            runTime: 1,
           },
         },
         {
@@ -364,43 +211,44 @@ exports.getMoviesSort = async (req, res) => {
           $limit: perPage,
         },
       ]);
-    } else if (req.query.sortBy == "Genre") {
+    } else if (req.body.sortBy == "Genre") {
       var movies = await Movie.aggregate([
         {
-          $lookup: {
-            from: "genres",
-            localField: "genreId",
-            foreignField: "_id",
-            as: "genre",
-          },
-        },
-        {
-          $unwind: "$genre",
-        },
-        {
           $project: {
-            _id: 1,
             title: 1,
             img: 1,
             genreId: 1,
-            rank: 1,
-            cast: 1,
+
             year: 1,
-            links: 1,
-            numberInStock: 1,
-            dailyRentalRate: 1,
-            rentedCustomers: 1,
-            ismovieCreated: 1,
-            requestCount: 1,
+
             genre: 1,
-            director: 1,
-            imdbRating: 1,
-            mpAARating: 1,
-            runTime: 1,
           },
         },
         {
           $sort: { genre: 1 },
+        },
+        {
+          $skip: perPage * (page - 1),
+        },
+        {
+          $limit: perPage,
+        },
+      ]);
+    } else if (req.body.sortBy == "Runtime") {
+      var movies = await Movie.aggregate([
+        {
+          $project: {
+            title: 1,
+            img: 1,
+            genreId: 1,
+
+            year: 1,
+            runtime: 1,
+            genre: 1,
+          },
+        },
+        {
+          $sort: { runtime: -1 },
         },
         {
           $skip: perPage * (page - 1),
@@ -483,7 +331,9 @@ exports.getSpecificMovie = async (req, res) => {
       },
     },
   ]);
-  var tester = await Movie.findOne({ _id: req.params.mid }, 'genreId').populate("genreId");
+  var tester = await Movie.findOne({ _id: req.params.mid }, "genreId").populate(
+    "genreId"
+  );
   var rgenres = [];
   tester.genreId.forEach((list) => {
     rgenres.push(list.name);
@@ -491,13 +341,28 @@ exports.getSpecificMovie = async (req, res) => {
   var otherMovies = await Movie.find(
     {
       _id: { $nin: [req.params.mid] },
-      genreId: movie[0].genreId._id,
     },
-    "_id title rank cast year img links dailyRentalRate director"
-  );
+    "_id title rank cast year img links dailyRentalRate director genreId"
+  ).populate("genreId");
+  var othermovies = [];
+  otherMovies.forEach((list) => {
+    for (var i = 0; i < tester.genreId.length; i++) {
+      list.genreId.forEach((lost) => {
+        if (lost._id.toString() == tester.genreId[i]._id.toString()) {
+          othermovies.push(list);
+        }
+      });
+    }
+  });
+  // var a = [1, 1, 2];
+
+  var p = [...new Set(othermovies)];
+  // console.log(p);
+  // array_splice($p, 0, 5);
+  p.splice(0, 5);
   return res
     .status(200)
-    .render("./moviePage.ejs", { movie: movie[0], otherMovies, rgenres });
+    .render("./moviePage.ejs", { movie: movie[0], otherMovies: p, rgenres });
 };
 
 exports.addToWishlist = async (req, res) => {
@@ -757,9 +622,27 @@ exports.displayMovie = async (req, res) => {
   var movie = await Movie.find({
     title: { $regex: req.query.title, $options: "$i" },
   }).populate("genreId");
-  var genresearch = await Movie.find({
-    genre: { $regex: req.query.title, $options: "$i" },
+  var genresearch = await Genre.findOne(
+    {
+      name: { $regex: req.query.title, $options: "$i" },
+    },
+    "_id"
+  );
+  // console.log(genresearch);
+  var genreSearch = [];
+
+  var moviesearch = await Movie.find(
+    {},
+    "cast _id, img year title director imdbRating genreId dailyRentalRate "
+  ).populate("genreId");
+  moviesearch.forEach((list) => {
+    list.genreId.forEach((lost) => {
+      if (lost._id.toString() == genresearch._id.toString()) {
+        genreSearch.push(list);
+      }
+    });
   });
+  console.log(genreSearch);
   let genre = await Genre.find({
     name: { $regex: req.query.title, $options: "$i" },
   });
@@ -767,6 +650,6 @@ exports.displayMovie = async (req, res) => {
     movie: movie,
     genre: genre,
     title: req.query.title,
-    genresearch: genresearch,
+    genresearch: genreSearch,
   });
 };

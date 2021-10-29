@@ -64,7 +64,7 @@
   }
   .otherContainer {
     margin-top:40px;
-    margin-left: 8vh;
+    margin-left: 6vh;
     margin-bottom:90px;
     flex-direction: row;
     -webkit-transform: scale(1);
@@ -90,7 +90,7 @@
       <h1><%=movie.title%> (<%=movie.year%>)</h1>
       <h5>Starring: <b><%=movie.cast%></b></h5>
       <h5>Director: <b><%=movie.director%></b></h5>
-      <h5>Genre: <%for(var i=0; i< rgenres.length; i++){%> <%=rgenres[i]%>,  <%}%>
+      <h5>Genre: <%for(var i=0; i< rgenres.length; i++){%> <a href="/api/movies/search/?title=<%=rgenres[i]%>" style="text-decoration: none;"><%=rgenres[i]%> </a>  <%}%>
       <h5>CBFC Rating: <b><%=movie.mpAARating%></b></h5>
       <%if(movie.worldwide!=""){%>
       <h5>Box Office: <b><%=movie.worldwide%></b></h5>
@@ -155,10 +155,10 @@
     <h4 style="text-align: center">Other Popular Movies you may like</h4>
   </div>
   <br />
-
+  <%var p = 5;%>
   <div class="row">
-    <%otherMovies.forEach(list=>{%>
-    <a href="/api/movies/<%=list._id%>">
+    <%for(var i=0; i< p; i++){%>
+    <a href="/api/movies/<%=otherMovies[i]._id%>">
       <div class="otherContainer">
         <div class="col-md-4 col-xs-9">
           <div
@@ -166,35 +166,17 @@
             style="width: 220px; height:300px;align-items: center; justify-content: center"
           >
             <div class="col-md-9 col-xs-9">
-              <img class="img" src="<%=list.img%>" alt="Card image cap" />
+              <img class="img" src="<%=otherMovies[i].img%>" alt="Card image cap" />
             </div>
             <div class="card-body" style="width: 20rem">
               <a
                 target="_blank"
-                href="/api/movies/<%=list._id%>"
+                href="/api/movies/<%=otherMovies[i]._id%>"
                 style="text-decoration: none; color:white"
                 ><h5 class="card-title text-center" style="position: relative; bottom:25px;">
-                  <%=list.title%> (<%=list.year%>)
+                  <%=otherMovies[i].title%> (<%=otherMovies[i].year%>)
                 </h5></a
               >
-              <!-- <p class="card-text" style="margin-left: 30px">
-                <strong>Cast</strong>: <%=list.cast%>
-              </p>
-              <p class="card-text" style="margin-left: 30px">
-                <strong>Director</strong>: <%=list.director%>
-              </p>
-              <p class="card-text" style="margin-left: 30px">
-                <strong>Rate</strong>: $<%=list.dailyRentalRate.toFixed(2)%>
-              </p> -->
-              <!-- <br /> -->
-              <!-- <a
-                class="card-text movieclass"
-                style="text-align: center; position: relative; left: 60px"
-                href="<%=movie.links%>"
-                target="_blank"
-                id="imdb"
-                >IMDb: <%=movie.imdbRating%>/10</a
-              > -->
             </div>
           </div>
         </div>
@@ -203,8 +185,16 @@
       <br>
     </a>
     
-    <%})%>
+    <%}%>
   </div>
+  <div class="text-center">
+  <!-- <center><button class="btn btn-info" onclick="incCount()">Load More</button></center> -->
+</div>
 </body>
-
+<script>
+  function incCount(){
+    p=p+5;
+    console.log(p);
+  }
+</script>
 <%- include('./partials/footer') %>

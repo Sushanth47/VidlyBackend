@@ -162,13 +162,14 @@
                 <%=list.title%> (<%=list.year%>)
               </h5></a>
               <br />
-              <h6 class="mt-0"><strong>Cast</strong>: <%=list.cast%></h6>
+              <h6 class="mt-0" style="white-space:wrap"><strong>Cast</strong>: <%=list.cast%></h6>
+              <h6 class="mt-0"><strong>Director</strong>: <%=list.director%></h6>
               <h6 class="mt-0">
-                <strong>Genre</strong>:
+                <strong>Genre</strong>: <%for(var i=0; i < list.genreId.length; i++ ){%><a href="/api/movies/search/?title=<%=list.genreId[i].name%>"><%=list.genreId[i].name%> </a><%}%>
                 <a
                   style="text-decoration: none"
                   href="/api/movies/search/?title=<%=list.genre%>"
-                  ><%=list.genre%></a
+                  ></a
                 >
               </h6>
               <h6 class="mt-0"><strong>IMDb</strong>: <%=list.imdbRating%></h6>
