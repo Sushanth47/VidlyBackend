@@ -37,6 +37,7 @@
     <div class="container">
         <div class="row">
           <%customer.cart.forEach(list=>{%>
+            <%console.log(list)%>
             <div class="col-md-4 col-xs-6">
                 <div class="card" id="cardStyling">
                   <div class="col-md-8 col-xs-4">
@@ -48,7 +49,7 @@
                         <a href="/api/movies/<%=list._id%>" target="_blank"><h4 class="card-title" style="text-align: center;"><%=list.title%>(<%=list.year%>)</h4></a>
                         <li class="list-group-item"><center><p class="card-text "><%=list.cast%></p></li>
                         <li class="list-group-item text-center" ><p class="card-text ">3/5</p></li>
-                        <li class="list-group-item text-center"><span><b>Rank</b>: <%=list.rank%></span><br></li>
+                        <li class="list-group-item text-center"><span><b>IMDb</b>: <%=list.imdbRating%></span><br></li>
                         <li class="list-group-item text-center"><p class="card-text"><b>Rental Price</b>: $<%=list.dailyRentalRate%></p></li>
                         <br><a class="card-text" style="text-align:center" href="<%=list.links%>" target="_blank"><p>IMDB Page</p></a>
                       </ul>

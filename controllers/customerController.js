@@ -1,5 +1,6 @@
 const { Customer } = require("../models/customer");
 const { Movie } = require("../models/movie");
+const { Rental } = require("../models/rental");
 const { Review } = require("../models/reviews");
 
 exports.getWishlist = async (req, res) => {
@@ -30,11 +31,12 @@ exports.getMyCart = async (req, res) => {
 
 exports.getRentals = async (req, res) => {
   try {
-    var cust = await Customer.findOne({ _id: req.user._id }).populate(
-      "rentedMovies"
+    var cust = await Rental.findOne({ customer: req.user._id }).populate(
+      "movie",
+      "title year img"
     );
     var subject = "rental";
-    // console.log(cust);
+    console.log(cust);
     return res.render("./myWatchlist.ejs", { cust: cust, subject: subject });
   } catch (err) {
     console.log(err);
