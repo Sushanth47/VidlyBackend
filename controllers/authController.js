@@ -39,12 +39,16 @@ exports.signupPage = async (req, res) => {
 
 exports.signupPageCustomer = async (req, res) => {
   var type = "customerSignup";
-  return res.status(200).render("./signupPage", { type: type });
+  return res
+    .status(200)
+    .render("signupCustomer", { type: type, message: req.flash("message") });
 };
 
 exports.loginPageCustomer = async (req, res) => {
   var type = "customerLogin";
-  return res.status(200).render("./loginPage.ejs", { type: type });
+  return res
+    .status(200)
+    .render("loginCustomer.ejs", { type: type, message: req.flash("message") });
 };
 
 exports.getUser = async (req, res) => {
@@ -118,7 +122,11 @@ exports.getCustomerfromData = async (req, res) => {
       password: req.body.password,
     });
     if (!customer || req.body.password != customer.password) {
-      return res.status(400).json("Invalid Email/Password");
+      req.flash("message", "Wrong Credentials");
+      // const errors = req.flash("message", "Wrong Credentials");
+      // console.log(errors)``;
+      // console.log("came here");
+      return res.status(409).redirect("/api/auth/loginCustomer");
     }
     const token = generateAuthToken(
       res,
@@ -140,7 +148,8 @@ exports.getCustomer = async (req, res) => {
   try {
     var customer = await Customer.findOne({ phone: req.body.phone });
     if (customer) {
-      return res.status(400).send("User already Exists");
+      req.flash("message", "User already exists");
+      return res.redirect("/api/auth/signupPage");
     }
     customer = await Customer.create({
       name: req.body.name,

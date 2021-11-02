@@ -2,6 +2,8 @@ require("dotenv").config();
 var express = require("express");
 var app = express();
 const cookieParser = require("cookie-parser");
+var session = require("express-session");
+var flash = require("connect-flash");
 const cors = require("cors");
 const axios = require("axios");
 const cheerio = require("cheerio");
@@ -14,7 +16,7 @@ const movies = require("./routes/movies");
 const home = require("./routes/home");
 const users = require("./routes/userRoutes");
 const auth = require("./routes/authRoutes");
-const { userauth, checkauth } = require("./middleware/auth");
+const { checkauth } = require("./middleware/auth");
 const { User } = require("./models/user");
 const { Customer } = require("./models/customer");
 const { Genre } = require("./models/genre");
@@ -32,6 +34,15 @@ app.use(morgan("dev"));
 
 app.use(express.static(__dirname + "public"));
 app.use(cookieParser());
+app.use(
+  session({
+    secret: "123",
+    cookie: { maxAge: 60000 },
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+app.use(flash());
 
 app.use((req, res, next) => {
   res.locals.currentUser = req.user;
@@ -66,6 +77,7 @@ app.get("/pagerender", async (req, res) => {
 });
 
 app.get("/sysinfo", async (req, res) => {
+  req.flash("successMessage", "You are successfully using req-flash");
   valueObject = {
     cpu: "*",
     osInfo: "platform, release",
@@ -80,7 +92,7 @@ app.get("/getallmoviestest", async (req, res) => {
   // console.log(v);
   return res.json(mov);
 });
-
+//Add Genre
 app.post("/addgenre", async (req, res) => {
   console.log(req.body);
   var obj = {
@@ -176,20 +188,20 @@ app.get("/webscrapmoviedata", async (req, res) => {
             //   const runtime = title.substr(7, title.length);
             //   list.runtime = runtime;
             // }
-            // if (title.startsWith("Certificate")) {
-            //   const certificate = title.substr(11, title.length);
-            //   list.mpAARating = certificate;
-            // }
+            if (title.startsWith("Certificate")) {
+              const certificate = title.substr(11, title.length);
+              list.mpAARating = certificate;
+            }
             // if (title.startsWith("Release date")) {
             //   const releasedate = title.substr(12, title.length);
             //   list.releaseDate = releasedate;
             //   console.log(releasedate);
             // }
-            if (title.startsWith("Gross worldwide")) {
-              const i = title.indexOf("$");
-              const gross = title.substr(i, title.length);
-              list.worldwide = gross;
-            }
+            // if (title.startsWith("Gross worldwide")) {
+            //   const i = title.indexOf("$");
+            //   const gross = title.substr(i, title.length);
+            //   list.worldwide = gross;
+            // }
             // if (title.startsWith("Aspect ratio")) {
             //   const gross = title.substr(12, title.length);
             //   list.aspectRatio = gross;

@@ -91,7 +91,8 @@
       <h5>Starring: <b><%=movie.cast%></b></h5>
       <h5>Director: <b><%=movie.director%></b></h5>
       <h5>Genre: <%for(var i=0; i< rgenres.length; i++){%> <a href="/api/movies/search/?title=<%=rgenres[i]%>" style="text-decoration: none;"><%=rgenres[i]%> </a>  <%}%>
-      <h5>CBFC Rating: <b><%=movie.mpAARating%></b></h5>
+      <h5>CBFC Rating: <b><%if(movie.mpAARating==""){%>U/A<%}else{%><%=movie.mpAARating%><%}%></b></h5>
+      <%console.log(movie.mpAARating)%>
       <%if(movie.worldwide!=""){%>
       <h5>Box Office: <b><%=movie.worldwide%></b></h5>
       <%} else {}%>

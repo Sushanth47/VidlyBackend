@@ -32,7 +32,7 @@ exports.getMovies = async (req, res) => {
         $limit: perPage,
       },
     ]);
-    console.log(movies);
+    // console.log(movies);
     return res.status(200).render("./movies", {
       movies: movies,
       url: process.env.WEBURL,
@@ -515,9 +515,9 @@ exports.requestedMoviePage = async (req, res) => {
     for (var i = 0; i < customer.wishList.length; i++) {
       genresCustomer.push(customer.wishList[i].genre);
     }
-    console.log(genresCustomer);
+    // console.log(genresCustomer);
     const uniquegenres = [...new Set(genresCustomer)];
-    console.log(uniquegenres);
+    // console.log(uniquegenres);
     var movies = await Movie.aggregate([
       {
         $lookup: {
@@ -554,7 +554,7 @@ exports.requestedMoviePage = async (req, res) => {
         },
       },
     ]);
-    console.log(movies, "movies");
+    // console.log(movies, "movies");
     return res.status(200).render("./requestMovie", { movies });
   } catch (err) {
     console.log(err);
@@ -642,7 +642,7 @@ exports.displayMovie = async (req, res) => {
       }
     });
   });
-  console.log(genreSearch);
+  // console.log(genreSearch);
   let genre = await Genre.find({
     name: { $regex: req.query.title, $options: "$i" },
   });

@@ -34,7 +34,7 @@ exports.getRentals = async (req, res) => {
       "rentedMovies"
     );
     var subject = "rental";
-    console.log(cust);
+    // console.log(cust);
     return res.render("./myWatchlist.ejs", { cust: cust, subject: subject });
   } catch (err) {
     console.log(err);
