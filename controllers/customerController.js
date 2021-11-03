@@ -89,9 +89,19 @@ exports.giveReview = async (req, res) => {
   return res.status(200).redirect(`/api/movies/${req.params.mid}`);
 };
 
+exports.applyGold = async (req, res) => {
+  return res.render("goldpage", { message: req.flash("message") });
+};
+
 exports.ApplyGold = async (req, res) => {
-  const { phone, email } = req.body;
-  await Customer.updateOne({ phone: phone }, { $set: { email: email } });
+  const { password, email } = req.body;
+  var customer = await Customer.findOne({ email: email });
+  if (password != customer.password || !customer) {
+    req.flash("message", "Wrong Credentials");
+    res.redirect("/api/customers/goldpage");
+  }
+  customer.isGold = true;
+  customer.save();
   return res.status(200).redirect("/api/movies/movies");
 };
 

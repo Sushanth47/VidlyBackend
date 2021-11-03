@@ -1,0 +1,67 @@
+<%- include('./partials/header') %>
+<title>Apply Gold</title>
+<style>
+  body {
+    color: white;
+    background-color: rgb(39, 39, 39);
+  }
+  h1 {
+    font-family: "Yaldevi", sans-serif;
+  }
+</style>
+<body>
+  <h1 class="text-center">Apply Gold</h1>
+  <br />
+
+  <div>
+    <form
+      class="justify-content-center"
+      style="padding-left: 650px"
+      action="/api/customers/goldapp"
+      method="POST"
+    >
+      <%if(message.length>0){%>
+
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong><%=message%></strong>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="alert"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <%}%>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Email address</label>
+        <input
+          type="email"
+          class="form-control"
+          id="exampleInputEmail1"
+          aria-describedby="emailHelp"
+          placeholder="Enter email"
+          style="width: 30%"
+        />
+        <small id="emailHelp" class="form-text text-muted"
+          >We'll never share your email with anyone else.</small
+        >
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1">Password</label>
+        <input
+          type="password"
+          class="form-control"
+          id="exampleInputPassword1"
+          placeholder="Password"
+          style="width: 30%"
+        />
+      </div>
+
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</body>
+
+<%- include('./partials/footer') %>

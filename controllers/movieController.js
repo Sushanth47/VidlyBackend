@@ -11,6 +11,10 @@ exports.getMovies = async (req, res) => {
     const perPage = 10;
     const page = req.query.pageNo;
     const movieCount = await Movie.countDocuments();
+    var name = "";
+    if (req.user) {
+      name = req.user.name;
+    }
     const movies = await Movie.aggregate([
       {
         $project: {
@@ -38,6 +42,7 @@ exports.getMovies = async (req, res) => {
       url: process.env.WEBURL,
       movieCount: movieCount,
       perPage: perPage,
+      name: name,
     });
   } catch (err) {
     console.log(err);
@@ -49,6 +54,10 @@ exports.getMoviesSort = async (req, res) => {
     const perPage = 10;
     const page = req.query.pageNo;
     const movieCount = await Movie.countDocuments();
+    var name = "";
+    if (req.user) {
+      name = req.user.name;
+    }
     if (req.body.sortBy == "Name") {
       var movies = await Movie.aggregate([
         {
@@ -64,9 +73,6 @@ exports.getMoviesSort = async (req, res) => {
         },
         {
           $skip: perPage * (page - 1),
-        },
-        {
-          $limit: perPage,
         },
       ]);
     } else if (req.body.sortBy == "Year") {
@@ -85,9 +91,6 @@ exports.getMoviesSort = async (req, res) => {
         },
         {
           $skip: perPage * (page - 1),
-        },
-        {
-          $limit: perPage,
         },
       ]);
     } else if (req.body.sortBy == "Rank") {
@@ -108,9 +111,6 @@ exports.getMoviesSort = async (req, res) => {
         },
         {
           $skip: perPage * (page - 1),
-        },
-        {
-          $limit: perPage,
         },
       ]);
     } else if (req.body.sortBy == "IMDb") {
@@ -133,9 +133,6 @@ exports.getMoviesSort = async (req, res) => {
         {
           $skip: perPage * (page - 1),
         },
-        {
-          $limit: perPage,
-        },
       ]);
     } else if (req.body.sortBy == "Price") {
       var movies = await Movie.aggregate([
@@ -157,9 +154,6 @@ exports.getMoviesSort = async (req, res) => {
         {
           $skip: perPage * (page - 1),
         },
-        {
-          $limit: perPage,
-        },
       ]);
     } else if (req.body.sortBy == "Availability") {
       var movies = await Movie.aggregate([
@@ -180,9 +174,6 @@ exports.getMoviesSort = async (req, res) => {
         },
         {
           $skip: perPage * (page - 1),
-        },
-        {
-          $limit: perPage,
         },
       ]);
     } else if (req.body.sortBy == "Popularity") {
@@ -207,9 +198,6 @@ exports.getMoviesSort = async (req, res) => {
         {
           $skip: perPage * (page - 1),
         },
-        {
-          $limit: perPage,
-        },
       ]);
     } else if (req.body.sortBy == "Genre") {
       var movies = await Movie.aggregate([
@@ -229,9 +217,6 @@ exports.getMoviesSort = async (req, res) => {
         },
         {
           $skip: perPage * (page - 1),
-        },
-        {
-          $limit: perPage,
         },
       ]);
     } else if (req.body.sortBy == "Runtime") {
@@ -253,15 +238,13 @@ exports.getMoviesSort = async (req, res) => {
         {
           $skip: perPage * (page - 1),
         },
-        {
-          $limit: perPage,
-        },
       ]);
     }
     return res.status(200).render("./movies", {
       movies: movies,
       movieCount: movieCount,
       perPage: perPage,
+      name: name,
     });
   } catch (err) {
     console.log(err);
@@ -379,8 +362,22 @@ exports.addToWishlist = async (req, res) => {
 
 exports.createMovies = async (req, res) => {
   try {
-    const genre = await Genre.findOne({ name: req.body.genreName });
-    if (!genre) return res.status(400).json("Invalid Genre");
+    var str = req.body.genreName;
+    var myarray = str.split(",");
+    var genrearr = [];
+
+    for (var i = 0; i < myarray.length; i++) {
+      console.log(myarray[i]);
+      const genre = await Genre.findOne(
+        {
+          name: { $regex: myarray[i], $options: "$i" },
+        },
+        "_id name"
+      );
+      if (!genre) res.status(400).json("Invalid Genre");
+      genrearr.push(genre);
+    }
+    console.log(genrearr);
     const movieadd = req.body.title;
     const checkmovie = await Movie.findOne({
       title: { $regex: req.body.title, $options: "$i" },
@@ -413,15 +410,21 @@ exports.createMovies = async (req, res) => {
             }
           }
         });
+        var genreobject = [];
+        console.log(genrearr);
+        genrearr.forEach((list) => {
+          // console.log(list);
+          genreobject.push(list._id);
+        });
         let movie = new Movie({
           title: newarr[0].l,
-          genreId: genre._id,
+          genreId: genreobject,
           year: newarr[0].y,
           img: newarr[0].i.imageUrl,
           links: "https://www.imdb.com/title/" + newarr[0].id + "/",
           cast: newarr[0].s,
           rank: newarr[0].rank,
-          genre: genre.name,
+          // genre: genre.name,
           numberInStock: req.body.numberInStock,
           dailyRentalRate: req.body.dailyRentalRate,
           ismovieCreated: true,
@@ -483,7 +486,7 @@ exports.createMovies = async (req, res) => {
           }
           movie.worldwide = worldwide;
           movie.save();
-          res.status(200).redirect(`/crm/crm/createmoviespage`);
+          res.status(200).redirect(`/api/movies/createmovies`);
         }, 5000);
       })
       .catch(function (error) {

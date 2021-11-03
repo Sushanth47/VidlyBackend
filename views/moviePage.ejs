@@ -120,7 +120,7 @@
         <b style="color: red">$<%=(movie.dailyRentalRate - 0.5).toFixed(2)%></b
         >&nbsp;<span style="font-size: xx-small"
           ><a
-            href="#"
+            href="/api/customers/goldpage"
             style="text-decoration: none; position: relative; bottom: 3px"
             ><strong>Apply here</strong></a
           ></span
@@ -133,7 +133,6 @@
       >
       <%}%>
       <%if(movie.iReviewed){%>
-        
         <span><a href="#"
           ><button class="btn btn-success">Review</button></a
         ></span>
@@ -188,14 +187,7 @@
     
     <%}%>
   </div>
-  <div class="text-center">
-  <!-- <center><button class="btn btn-info" onclick="incCount()">Load More</button></center> -->
-</div>
+ 
 </body>
-<script>
-  function incCount(){
-    p=p+5;
-    console.log(p);
-  }
-</script>
+
 <%- include('./partials/footer') %>

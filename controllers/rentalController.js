@@ -66,6 +66,8 @@ exports.checkout = async (req, res) => {
 
       rentals.movie.forEach(async (list) => {
         var moviess = await Movie.findOne({ _id: list });
+        moviess.numberInStock--;
+        await moviess.save();
         moviearr.push(moviess.title);
       });
       dateOut = rentals.dateOut.toString();
