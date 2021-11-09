@@ -8,6 +8,7 @@ const { Customer } = require("../models/customer");
 
 exports.getMovies = async (req, res) => {
   try {
+    // console.log(req.cookies);
     const perPage = 10;
     const page = req.query.pageNo;
     const movieCount = await Movie.countDocuments();
@@ -23,7 +24,6 @@ exports.getMovies = async (req, res) => {
           img: 1,
           genreId: 1,
           dailyRentalRate: 1,
-          // genre: 1,
         },
       },
       {
