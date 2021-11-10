@@ -46,7 +46,6 @@ app.use(flash());
 
 app.use((req, res, next) => {
   res.locals.currentUser = req.user;
-  // console.log(req.user, 'requserinappjs')
   next();
 });
 

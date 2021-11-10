@@ -3,16 +3,21 @@ const jwt = require("jsonwebtoken");
 const { Customer } = require("../models/customer");
 
 exports.checkauth = async (req, res, next) => {
-  if (!req.cookies.token) {
+  // console.log(req);
+  // const obj = JSON.parse(JSON.stringify(req.cookies));
+  const checkstring = JSON.stringify(req.cookies);
+  // console.log(typeof checkstring, "cs");
+  // console.log(obj, "obj");
+  if (checkstring == "{}") {
     req.user = { subject: "Guest", genres: [] };
     res.locals.currentUser = req.user;
     next();
   } else {
     if (req.cookies.token.subject == "User") {
-      userauth(req, res);
+      await userauth(req, res);
       next();
     } else if (req.cookies.token.subject == "Customer") {
-      customerauth(req, res);
+      await customerauth(req, res);
       next();
     }
   }
@@ -44,10 +49,8 @@ exports.userauth = async function (req, res, next) {
     if (!token) return res.status(409).render("./404");
     const decoded = jwt.verify(token, process.env.jwtPrivateKey);
     if (decoded.subject == "User") {
-      // console.log(decoded, "decoded");
       req.user = decoded;
       res.locals.currentUser = req.user;
-      // console.log(req.user, "authcheck");
     } else {
       return res.status(409).render("./404");
     }
