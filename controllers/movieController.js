@@ -37,7 +37,7 @@ exports.getMovies = async (req, res) => {
       },
     ]);
     // console.log(movies);
-    return res.status(200).render("./movies", {
+    return res.status(200).render('movies.ejs',{
       movies: movies,
       url: process.env.WEBURL,
       movieCount: movieCount,
@@ -314,6 +314,7 @@ exports.getSpecificMovie = async (req, res) => {
       },
     },
   ]);
+
   var tester = await Movie.findOne({ _id: req.params.mid }, "genreId").populate(
     "genreId"
   );
@@ -340,9 +341,10 @@ exports.getSpecificMovie = async (req, res) => {
   // var a = [1, 1, 2];
 
   var p = [...new Set(othermovies)];
-  // console.log(p);
+
   // array_splice($p, 0, 5);
   p.splice(0, 5);
+  // console.log(p);
   return res
     .status(200)
     .render("./moviePage.ejs", { movie: movie[0], otherMovies: p, rgenres });
@@ -640,8 +642,10 @@ exports.displayMovie = async (req, res) => {
   ).populate("genreId");
   moviesearch.forEach((list) => {
     list.genreId.forEach((lost) => {
-      if (lost._id.toString() == genresearch._id.toString()) {
-        genreSearch.push(list);
+      if (!genersearch) {
+        if (lost._id.toString() == genresearch._id.toString()) {
+          genreSearch.push(list);
+        }
       }
     });
   });
