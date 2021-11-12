@@ -37,7 +37,7 @@ exports.getMovies = async (req, res) => {
       },
     ]);
     // console.log(movies);
-    return res.status(200).render('movies.ejs',{
+    return res.status(200).render("movies.ejs", {
       movies: movies,
       url: process.env.WEBURL,
       movieCount: movieCount,
@@ -642,7 +642,7 @@ exports.displayMovie = async (req, res) => {
   ).populate("genreId");
   moviesearch.forEach((list) => {
     list.genreId.forEach((lost) => {
-      if (!genersearch) {
+      if (genresearch) {
         if (lost._id.toString() == genresearch._id.toString()) {
           genreSearch.push(list);
         }
