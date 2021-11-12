@@ -12,7 +12,7 @@
   body {
     max-width: 100%;
     overflow-x: hidden;
-    background-color: rgb(39, 39, 39);
+    background-color: rgb(52, 58, 64);
     color: white;
   }
   h5,
@@ -157,8 +157,9 @@
   <br />
   <%var p = 5;%>
   <div class="row">
-    <%for(var i=0; i< p; i++){%>
-    <a href="/api/movies/<%=otherMovies[i]._id%>">
+  
+    <%otherMovies.forEach(list=>{%>
+    <a href="/api/movies/<%=list._id%>">
       <div class="otherContainer">
         <div class="col-md-4 col-xs-9">
           <div
@@ -166,15 +167,15 @@
             style="width: 220px; height:300px;align-items: center; justify-content: center"
           >
             <div class="col-md-9 col-xs-9">
-              <img class="img" src="<%=otherMovies[i].img%>" alt="Card image cap" />
+              <img class="img" src="<%=list.img%>" alt="Card image cap" />
             </div>
             <div class="card-body" style="width: 20rem">
               <a
                 target="_blank"
-                href="/api/movies/<%=otherMovies[i]._id%>"
+                href="/api/movies/<%=list._id%>"
                 style="text-decoration: none; color:white"
                 ><h5 class="card-title text-center" style="position: relative; bottom:25px;">
-                  <%=otherMovies[i].title%> (<%=otherMovies[i].year%>)
+                  <%=list.title%> (<%=list.year%>)
                 </h5></a
               >
             </div>
@@ -185,7 +186,7 @@
       <br>
     </a>
     
-    <%}%>
+    <%})%>
   </div>
  
 </body>

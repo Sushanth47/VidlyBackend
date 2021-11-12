@@ -26,13 +26,14 @@
     href="https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap"
     rel="stylesheet"
   />
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <style>
   body {
     max-width: 105%;
     overflow-x: hidden;
     scroll-behavior: smooth;
-    background-color: rgb(39, 39, 39);
+    background-color: rgb(52, 58, 64);
     color: white;
   }
   .pagination {
@@ -229,8 +230,10 @@
 </script>
 
 <script>
-  function get() {
-    document.getElementById("myForm").submit();
+  getMovies();
+  async function getMovies() {
+    const url = "/api/movies/movies/";
+    await axios.get(url).then((response) => console.log(response));
   }
 </script>
 <%- include('./partials/footer') %>

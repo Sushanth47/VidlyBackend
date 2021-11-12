@@ -15,6 +15,7 @@
   href="https://fonts.googleapis.com/css2?family=Yaldevi:wght@300&display=swap"
   rel="stylesheet"
 />
+<link href="https://fonts.googleapis.com/css2?family=Carrois+Gothic&display=swap" rel="stylesheet">
 </head>
 <style>
   /* Style The Dropdown Button */
@@ -43,7 +44,12 @@
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
   }
-  
+  .nav-link{
+    font-family: 'Carrois Gothic', sans-serif;
+  }
+  .nav-link:hover{
+    padding-top:3px;
+  }
   /* Links inside the dropdown */
   .dropdown-content a {
     color: black;
@@ -53,7 +59,7 @@
   }
   
   /* Change color of dropdown links on hover */
-  .dropdown-content a:hover {background-color: #f1f1f1}
+  .dropdown-content a:hover {background-color: #a2ffaf}
   
   /* Show the dropdown menu on hover */
   .dropdown:hover .dropdown-content {
@@ -67,26 +73,26 @@
   </style>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-   <a class="navbar-brand " style="font-style:italic; font-family: 'Dancing Script', cursive; margin-left:5px;" href="/">Vidly</a>
+   <a class="navbar-brand " style="font-style:italic; font-family: 'Dancing Script', cursive; margin-left:25px;margin-bottom:3px" href="/">Vidly</a>
    <div class="navbar-collapse " id="navbarSupportedContent">
      <ul class="navbar-nav ">
        <li class="nav-item ">
-         <a class="nav-link" href="/api/movies/movies">Movies <span class="sr-only">(current)</span></a>
+         <a class="nav-link" href="/api/movies/movies" style="color:white; font-family: 'Carrois Gothic', sans-serif;">Movies <span class="sr-only">(current)</span></a>
        </li>
        <li class="nav-item ">
-         <a class="nav-link" href="/api/customers/getrentals">Rentals</a>
+         <a class="nav-link" style="color:white" href="/api/customers/getrentals">Rentals</a>
        </li>
        <%if(currentUser){%>
         <%if(currentUser.subject == 'User'){%>
         <li class="nav-item ">
-         <a class="nav-link" href="/api/movies/createmoviespage" role="button" >
+         <a class="nav-link" style="color:white" href="/api/movies/createmoviespage" role="button" >
            AddMovie
          </a>
         </li> 
         <%}%>
         <%}%>
         <li class="nav-item ">
-          <a class="nav-link" href="/api/movies/requestMovie" role="button" >
+          <a class="nav-link" href="/api/movies/requestMovie" style="color:white" role="button" >
             RequestMovie
           </a>
         
@@ -94,37 +100,38 @@
        
      </ul>
       
-                <div class="container nav justify-content-lg-end">
-                  
-                  <div class="dropdown">
-                    <%if(currentUser){%>
-                      <%if(currentUser.subject == 'Customer'){%>
-                        <span style="color:rgb(101, 197, 241);"><i class="fas fa-user"></i
-                          ></span>&nbsp;&nbsp;<button class="dropbtn"><%=currentUser.name%></button>
-                        <%} else {%>
-                          <button class="dropbtn">My Account</button>
-                          <%}%>
-                      <%}else{%>
-                    <button class="dropbtn">My Account</button>
-                    <%}%>
-                    <div class="dropdown-content">
-                      <%if(currentUser){%>
-                      <%if(currentUser.subject == 'Guest'){%>
-                      <a href="/api/auth/loginCustomer">Log In</a>
-                      <a href="/api/auth/signupPage">SignUp</a>
-                      <a href="/api/auth/login">Owner</a>
-                      <%}else if(currentUser.subject == 'User'){%>
-                        <a href="/api/auth/logoutuser">Logout</a>
-                      <%}else{%>
-                        <a href="/api/customers/getWishlist">My Wishlist</a>
-                        <a href="/api/customers/getMyCart">My Cart</a>
-                        <a href="/api/auth/logoutcustomer">Logout</a>
-                        <%}%>
-                     
-                      <%}%>
-                    </div>
-                </div>
-              </div> 
+    <div class="container nav justify-content-lg-end">
+      <a href="/api/customers/getMyCart" style="color:rgb(101, 197, 241);"><i class="fas fa-shopping-cart"></i></a>&nbsp;&nbsp;
+      &nbsp;&nbsp;
+      <div class="dropdown">
+        <%if(currentUser){%>
+          <%if(currentUser.subject == 'Customer'){%>
+            
+            <button class="dropbtn"> <%=currentUser.name%></button>
+            <%} else {%>
+              <button class="dropbtn">My Account</button>
+              <%}%>
+          <%}else{%>
+        <button class="dropbtn">My Account</button>
+        <%}%>
+        <div class="dropdown-content">
+          <%if(currentUser){%>
+          <%if(currentUser.subject == 'Guest'){%>
+          <a href="/api/auth/loginCustomer">Log In</a>
+          <a href="/api/auth/signupPage">SignUp</a>
+          <a href="/api/auth/login">Owner</a>
+          <%}else if(currentUser.subject == 'User'){%>
+            <a href="/api/auth/logoutuser">Logout</a>
+          <%}else{%>
+            <a href="/api/customers/getWishlist">My Wishlist</a>
+            <a href="/api/customers/getMyCart">My Cart</a>
+            <a href="/api/auth/logoutcustomer">Logout</a>
+            <%}%>
+          
+          <%}%>
+        </div>
+    </div>
+  </div> 
  </nav>
 <br>
 </body>

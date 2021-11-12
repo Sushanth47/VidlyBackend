@@ -116,7 +116,7 @@ exports.pullFromCart = async (req, res) => {
 exports.pullFromList = async (req, res) => {
   await Customer.updateOne(
     { _id: req.user._id },
-    { $pull: { myWishlist: req.params.movieId } }
+    { $pull: { wishList: req.params.movieId } }
   );
   return res.status(200).redirect("/api/customers/getWishlist");
 };

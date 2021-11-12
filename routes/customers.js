@@ -18,7 +18,7 @@ router.get("/getMyCart", customerauth, getMyCart);
 
 router.get("/pullfromcart/:movieId", customerauth, pullFromCart);
 
-router.get("/pullfromlist/:movieId", customerauth, pullFromList);
+router.get("/pullfromlist/:movieId", customerauth,pullFromList);
 
 router.get("/getrentals", customerauth, getRentals);
 
