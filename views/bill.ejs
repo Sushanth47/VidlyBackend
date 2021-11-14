@@ -1,63 +1,134 @@
-<%- include('./partials/header') %>
+<%- include('./partials/header') %> <title>Bill</title
+><head>
+  <script src="https://rawgit.com/moment/moment/2.2.1/min/moment.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap"
+    rel="stylesheet"
+  />
+</head>
 <style>
   body {
-    background-color: rgb(252, 210, 180);
-    background-image: url("https://images.unsplash.com/photo-1519681393784-d120267933ba?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1124&q=100");
-    background-position: center;
-  }
-  .billbox {
-    margin: auto;
-    width: 720px;
-    height: 470px;
-    /* border: 1px solid black; */
-    backdrop-filter: blur(30px) saturate(200%);
-    -webkit-backdrop-filter: blur(10px) saturate(200%);
-    background-color: rgba(255, 255, 255, 0);
-    border-radius: 12px;
-    border: 1px solid rgba(209, 213, 219, 0.3);
-    font-family: "Yaldevi", sans-serif;
+    background: rgb(2, 0, 36);
+    background: linear-gradient(
+      90deg,
+      rgba(2, 0, 36, 1) 0%,
+      rgba(2, 0, 36, 1) 0%,
+      rgba(2, 0, 36, 1) 0%,
+      rgba(134, 134, 243, 1) 0%,
+      rgba(0, 212, 255, 1) 100%
+    );
     color: white;
   }
-  h5 {
-    padding-left: 100px;
-    margin-bottom: 30px;
+  .billbox {
+    background: white;
+    color: black;
+    margin: auto;
+    margin-top: 10px;
+    width: 620px;
+    height: 470px;
+    font-family: "Roboto Condensed", sans-serif;
+    border-radius: 12px;
   }
+
   .continue {
     text-align: center;
   }
-  .buttonbar {
+  .midbox {
     margin: auto;
-    width: 640px;
-    height: 50px;
-    flex-direction: row;
-    /* border: 1px solid black; */
-    backdrop-filter: blur(30px) saturate(200%);
-    -webkit-backdrop-filter: blur(0px) saturate(200%);
-    background-color: rgba(17, 25, 40, 0);
+    margin-top: 10px;
+    box-shadow: 2px 2px 1px rgb(104, 103, 103);
     border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.125);
-    margin-bottom: 30px;
+    width: 620px;
+    height: 90px;
+  }
+  .customerName {
+    font-size: 20px;
+    padding-left: 20px;
+    padding-top: 20px;
+    margin-bottom: 25px;
+  }
+  .contents {
+    padding-left: 55px;
+    margin-bottom: 20px;
+  }
+  .topOne {
+    margin-top: 20px;
+  }
+  .buttonbar {
+    background: white;
+    color: rgb(63, 63, 63);
+    margin: auto;
+    width: 620px;
+    height: 90px;
+    padding-left: 20px;
+    padding-bottom: 20px;
+    border-radius: 16px;
+    margin-top: 20px;
+  }
+  .headings {
+    font-weight: bolder;
+    margin-bottom: 13px;
+  }
+  .values {
+    color: rgb(83, 83, 83);
   }
 </style>
-<%console.log(rental, 'rentalllllllllllll')%>
+
 <body>
   <div class="buttonbar">
-    <p>Vidly™ Bill</p>
-    <button>Take Screen Shot</button>
-    <button>Download PDF</button>
+    <span style="color: rgb(11, 214, 11)"
+      ><i
+        class="fas fa-check-circle fa-3x"
+        style="padding-left: 550px; position: relative; top: 20px; right: 15px"
+      ></i
+    ></span>
+    <div style="position: relative; bottom: 25px">
+      <h4>Purchase Successful</h4>
+      <h6 id="totalPrice"></h6>
+    </div>
   </div>
+  <!-- <div class="midbox">
+    <h6 class="customerName">Customer Name</h6>
+    <p style="position: relative; bottom: 18px; left: 20px">Name</p>
+  </div> -->
   <div class="billbox">
-    <h1 class="text-center" style="margin-top: 10px; margin-bottom: 40px">
-      Thank You for Shopping with Vidly™
-    </h1>
-    <h5>Movies: <%=rental.movie%></h5>
-    <h5>Total Price: <%=rental.rentalFee%></h5>
-    <h5>Date of Buying: <%=rental.dateOut%></h5>
-    <h5>Date of Returning: <%=rental.dateReturned%></h5>
-    <h5>Unique Code: <%=rental.checkOut%></h5>
+    <br />
+    <h6 class="contents headings">Movies</h6>
+    <h6 class="contents values" id="moviesClass"></h6>
+    <h6 class="contents headings">Return On</h6>
+    <h6 class="contents values" id="comingDate"></h6>
+    <h6 class="contents headings">Unique ID:</h6>
+    <h6 class="contents values" id="uniqueval"></h6>
+    <h6 class="contents headings">Download Reciept</h6>
+    <button
+      style="align-items: center; position: relative; left: 65px"
+      class="btn btn-outline-primary"
+    >
+      Download
+    </button>
     <div class="continue">
       <a class="btn btn-primary" href="/api/api/movies">Continue Shopping</a>
     </div>
   </div>
 </body>
+
+<script>
+  getBill();
+  async function getBill() {
+    var data = [];
+    await axios.get("/api/rentals/rentaldisplay").then((response) => {
+      data = response.data;
+    });
+    console.log(data);
+    document.getElementById("moviesClass").innerHTML = data.rental[0].movies;
+    document.getElementById("totalPrice").innerHTML =
+      "$" + data.rental[0].rentalFee + "0";
+
+    document.getElementById("comingDate").innerHTML = data.rental[0].dateCome;
+    document.getElementById(
+      "uniqueval"
+    ).innerHTML = `MOV-${data.rental[0]._id}`;
+  }
+</script>
 <%- include('./partials/footer') %>

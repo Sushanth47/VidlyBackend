@@ -76,7 +76,7 @@
           type="search"
           class="form-control"
           style="
-            width: 210px;
+            width: 180px;
             border: 2px solid grey;
             margin-top: 3px;
             border-radius: 25px;
@@ -123,9 +123,9 @@
           alt="Generic placeholder image"
         />
         <div class="media-body" style="margin: 20">
-          <h5 class="mt-0" style="font-weight: bold">
+          <a href="/api/movies/<%=list._id%>" style="text-decoration: none; color:white;"><h5 class="mt-0" style="font-weight: bold">
             <%=list.title%> (<%=list.year%>)
-          </h5>
+          </h5></a>
           <br />
           <h6 class="mt-0"><strong>Cast</strong>: <%=list.cast%></h6>
           <h6 class="mt-0"><strong>Genre</strong>: <%=list.genre%></h6>

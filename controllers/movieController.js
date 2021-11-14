@@ -338,24 +338,26 @@ exports.getSpecificMovie = async (req, res) => {
       });
     }
   });
-  // var a = [1, 1, 2];
 
   var p = [...new Set(othermovies)];
 
-  // array_splice($p, 0, 5);
   p.splice(0, 5);
   // console.log(p);
-  return res
-    .status(200)
-    .render("./moviePage.ejs", { movie: movie[0], otherMovies: p, rgenres });
+  return res.status(200).render("./moviePage.ejs", {
+    movie: movie[0],
+    otherMovies: p,
+    rgenres,
+    message: req.flash("message"),
+  });
 };
 
 exports.addToWishlist = async (req, res) => {
   try {
-    var cust = await Customer.updateOne(
+    await Customer.updateOne(
       { _id: req.user._id },
       { $addToSet: { wishList: req.params.movieId } }
     );
+    req.flash("message", `Movie Added to WishList`);
     return res.status(200).redirect("/api/movies/" + req.params.movieId + "/");
   } catch (err) {
     console.log(err);

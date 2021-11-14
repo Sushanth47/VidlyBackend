@@ -14,6 +14,12 @@ const rentalSchema = new mongoose.Schema(
         required: true,
       },
     ],
+    movies: [
+      {
+        type: String,
+        required: true,
+      },
+    ],
     dateOut: {
       type: Date,
       required: true,
