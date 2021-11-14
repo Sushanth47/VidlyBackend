@@ -24,8 +24,8 @@
     background: white;
     color: black;
     margin: auto;
-    margin-top: 10px;
-    width: 620px;
+    margin-top: 20px;
+    max-width: 360px;
     height: 470px;
     font-family: "Roboto Condensed", sans-serif;
     border-radius: 12px;
@@ -39,7 +39,7 @@
     margin-top: 10px;
     box-shadow: 2px 2px 1px rgb(104, 103, 103);
     border-radius: 12px;
-    width: 620px;
+    max-width: 320px;
     height: 90px;
   }
   .customerName {
@@ -49,8 +49,9 @@
     margin-bottom: 25px;
   }
   .contents {
-    padding-left: 55px;
+    /* padding-left: 55px; */
     margin-bottom: 20px;
+    text-align: center;
   }
   .topOne {
     margin-top: 20px;
@@ -59,8 +60,8 @@
     background: white;
     color: rgb(63, 63, 63);
     margin: auto;
-    width: 620px;
-    height: 90px;
+    max-width: 620px;
+    height: 100px;
     padding-left: 20px;
     padding-bottom: 20px;
     border-radius: 16px;
@@ -101,12 +102,12 @@
     <h6 class="contents headings">Unique ID:</h6>
     <h6 class="contents values" id="uniqueval"></h6>
     <h6 class="contents headings">Download Reciept</h6>
-    <button
-      style="align-items: center; position: relative; left: 65px"
-      class="btn btn-outline-primary"
-    >
-      Download
-    </button>
+    <div class="continue">
+      <button style="text-align: center" class="btn btn-outline-primary">
+        Download
+      </button>
+    </div>
+    <br />
     <div class="continue">
       <a class="btn btn-primary" href="/api/api/movies">Continue Shopping</a>
     </div>
