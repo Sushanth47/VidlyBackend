@@ -115,12 +115,13 @@ exports.logoutCustomer = async (req, res) => {
 
 exports.getCustomerfromData = async (req, res) => {
   try {
-    res.clearCookie(req.headers["cookie"]);
-    res.locals.subject = "User";
+    console.log("camehere");
+    // res.clearCookie(req.headers["cookie"]);
+    // res.locals.subject = "User";
     var customer = await Customer.findOne({
       phone: req.body.phone,
-      password: req.body.password,
     });
+    console.log("come here");
     if (!customer || req.body.password != customer.password) {
       req.flash("message", "Wrong Credentials");
       // const errors = req.flash("message", "Wrong Credentials");

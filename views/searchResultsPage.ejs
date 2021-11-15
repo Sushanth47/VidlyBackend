@@ -6,20 +6,32 @@
   rel="stylesheet"
 />
 <style>
+  :root{
+    --clr-background:rgb(52, 58, 64);
+    --clr-text:white
+  }
   body {
     max-width: 100%;
     overflow-x: hidden;
     scroll-behavior: smooth;
-    background-color: rgb(52, 58, 64);
+    background-color: var(--clr-background);
     color: white;
+  }
+  a{
+    text-decoration: none;
+    color:black
+  }
+  a:hover{
+    text-decoration: none;
+    color:black
   }
   h1 {
     text-align: center;
   }
   .mainbox {
-    padding-left: 50px;
-
+    padding-left: 3rem;
     flex-direction: row;
+    /* background-color: white; */
   }
 
   #submitButton {
@@ -30,57 +42,65 @@
     color: white;
     margin-top: 3px;
     margin-left: 3px;
-    box-shadow: 0.5px 0.5px 5px #343d47;
   }
   .searchResults {
     width: 26rem;
     height: 22rem;
-    overflow: hidden;
-    margin-bottom: 40px;
+
+    margin-bottom: 2.12rem;
     border: 1px solid transparent;
-    box-shadow: 5px 5px 5px rgb(10, 10, 10);
     border-radius: 10px;
-    margin-right: 50px;
-    -webkit-transform: scale(1);
-    transform: scale(1);
-    -webkit-transition: 0.3s ease-in-out;
-    transition: 0.3s ease-in-out;
+    margin-right: 3rem;
+    background-color: white;
+    color:black
   }
-  .seachResults:hover {
-    -webkit-transform: scale(1);
-    transform: scale(1.1);
+  .input{
+    width: 35%;
+    border: 2px solid grey;
+    margin-top: 3px;
+    border-radius: 25px;
   }
   #searchResultsGenre {
     width: 35rem;
     height: 12rem;
-    overflow: hidden;
-    /* border-radius: 10px; */
+    display:flex;
+    justify-content: space-between;
     margin-right: 0px;
   }
-  .mainbox1 {
-    padding-left: 66vh;
-    margin-bottom: 40px;
+  .searchBar{
+    position:relative;
+    left:36%;
+    margin-bottom:2rem;
   }
+  .mainbox1 {
+    position:relative;
+    left:36%;
+    margin-bottom:3.2rem;
+  }
+  .textBody{
+    margin-left: 1.2rem
+  }
+  .textBody textarea{
+    line-height: 1.2;
+    background-color:var(--clr-background);
+    color:white;
+    border:none;
+    
+  }
+  
 </style>
 <body>
   
   <title>Search Results for "<%=title%>"</title>
 
-  <h1 class="text-center">Search Results for "<%=title%>"</h1>
-  <br />
+  <h1 class="text-center" style="margin-bottom:2rem;">Search Results for "<%=title%>"</h1>
 
-  <div style="padding-left: 1200px">
+  <div class="searchBar">
     <form action="/api/movies/search/" method="GET">
       <div class="container row">
         <input
           type="search"
-          class="form-control"
-          style="
-            width: 180px;
-            border: 2px solid grey;
-            margin-top: 3px;
-            border-radius: 25px;
-          "
+          class="form-control input"
           name="title"
           placeholder="Search Here"
         />
@@ -91,17 +111,17 @@
 
   <div class="mainbox1">
     <%genre.forEach(list=>{%>
-    <div class="media" id="searchResultsGenre">
+    <div id="searchResultsGenre">
       <img
-        class="float-left"
+        
         src="<%=list.img%>"
         height="180"
         width="auto"
         alt="Generic placeholder image"
       />
-      <div class="media-body" style="margin: 20">
-        <h5 class="mt-0" style="font-weight: bold"><%=list.name%></h5>
-        <h6 class="mt-0" ><%=list.description%></h6>
+      <div class="textBody">
+        <h5 style="font-weight: bold"><%=list.name%></h5>
+        <textarea rows="6"><%=list.description%></textarea>
       </div>
     </div>
     <%})%>
@@ -111,6 +131,8 @@
   <%}else{%>
   <h1 class="text-center" style="margin-bottom: 20px">Movies</h1>
   <%}%>
+
+
   <div class="mainbox">
     <div class="row">
       <%movie.forEach(list=>{%>
@@ -123,13 +145,13 @@
           alt="Generic placeholder image"
         />
         <div class="media-body" style="margin: 20">
-          <a href="/api/movies/<%=list._id%>" style="text-decoration: none; color:white;"><h5 class="mt-0" style="font-weight: bold">
+          <a href="/api/movies/<%=list._id%>" ><h5 class="mt-0" style="font-weight: bold">
             <%=list.title%> (<%=list.year%>)
           </h5></a>
           <br />
-          <h6 class="mt-0"><strong>Cast</strong>: <%=list.cast%></h6>
-          <h6 class="mt-0"><strong>Genre</strong>: <%=list.genre%></h6>
-          <h6 class="mt-0"><strong>Rank</strong>: <%=list.rank%></h6>
+          <h6 class="mt-0"> <%=list.cast%></h6>
+          <h6 class="mt-0"><strong>Genre</strong> <%=list.genre%></h6>
+          <h6 class="mt-0"><strong>Rank</strong> <%=list.rank%></h6>
           <h6 class="mt-0">
             <strong>Rent</strong>: $<%=list.dailyRentalRate%>
           </h6>
@@ -158,16 +180,16 @@
               alt="Generic placeholder image"
             /></a>
             <div class="media-body" style="margin: 20">
-              <a style="text-decoration:none; color:white" href="/api/movies/<%=list._id%>"><h5 class="mt-0" >
+              <a  href="/api/movies/<%=list._id%>"><h5 class="mt-0" >
                 <%=list.title%> (<%=list.year%>)
               </h5></a>
               <br />
-              <h6 class="mt-0" style="white-space:wrap"><strong>Cast</strong>: <%=list.cast%></h6>
-              <h6 class="mt-0"><strong>Director</strong>: <%=list.director%></h6>
+              <h6 class="mt-0" style="white-space:wrap"> <%=list.cast%></h6>
+              <h6 class="mt-0"><strong>Director</strong> <%=list.director%></h6>
               <h6 class="mt-0">
-                <strong>Genre</strong>: <%for(var i=0; i < list.genreId.length; i++ ){%><a href="/api/movies/search/?title=<%=list.genreId[i].name%>"><%=list.genreId[i].name%> </a><%}%>
+                <strong> <%for(var i=0; i < list.genreId.length; i++ ){%><a style="color:blue" href="/api/movies/search/?title=<%=list.genreId[i].name%>"><%=list.genreId[i].name%> </a><%}%></strong>
                 <a
-                  style="text-decoration: none"
+                  
                   href="/api/movies/search/?title=<%=list.genre%>"
                   ></a
                 >

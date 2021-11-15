@@ -1,5 +1,7 @@
-<%- include('./partials/header') %> <title>Bill</title
-><head>
+<%- include('./partials/header') %> <title>Bill</title>
+<link rel="stylesheet" type="text/css" href="billStyle.css" />
+
+<head>
   <script src="https://rawgit.com/moment/moment/2.2.1/min/moment.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <link
@@ -25,8 +27,8 @@
     color: black;
     margin: auto;
     margin-top: 20px;
-    max-width: 360px;
-    height: 470px;
+    max-width: 22%;
+    height: 58%;
     font-family: "Roboto Condensed", sans-serif;
     border-radius: 12px;
   }
@@ -34,38 +36,34 @@
   .continue {
     text-align: center;
   }
-  .midbox {
+
+  /* .midbox {
     margin: auto;
     margin-top: 10px;
     box-shadow: 2px 2px 1px rgb(104, 103, 103);
     border-radius: 12px;
     max-width: 320px;
     height: 90px;
-  }
-  .customerName {
+  } */
+  /* .customerName {
     font-size: 20px;
     padding-left: 20px;
     padding-top: 20px;
     margin-bottom: 25px;
-  }
+  } */
   .contents {
-    /* padding-left: 55px; */
     margin-bottom: 20px;
     text-align: center;
   }
-  .topOne {
-    margin-top: 20px;
-  }
+
   .buttonbar {
     background: white;
     color: rgb(63, 63, 63);
     margin: auto;
-    max-width: 620px;
-    height: 100px;
-    padding-left: 20px;
-    padding-bottom: 20px;
+    max-width: 42%;
+    padding-left: 2rem;
     border-radius: 16px;
-    margin-top: 20px;
+    margin-top: 1.42rem;
   }
   .headings {
     font-weight: bolder;
@@ -75,7 +73,6 @@
     color: rgb(83, 83, 83);
   }
 </style>
-
 <body>
   <div class="buttonbar">
     <span style="color: rgb(11, 214, 11)"
@@ -108,7 +105,7 @@
       </button>
     </div>
     <br />
-    <div class="continue">
+    <div class="continue bottomMost">
       <a class="btn btn-primary" href="/api/api/movies">Continue Shopping</a>
     </div>
   </div>

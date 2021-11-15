@@ -18,7 +18,7 @@ const {
 router.get("/login", checkauth, loginPage);
 router.post("/loginData", getUserfromdata);
 
-router.get("/loginCustomer", checkauth, loginPageCustomer);
+router.get("/loginCustomer", loginPageCustomer);
 router.post("/customerlogin", getCustomerfromData);
 
 router.get("/signupData", checkauth, signupPage);
