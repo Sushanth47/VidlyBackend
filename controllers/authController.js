@@ -83,7 +83,7 @@ exports.getUserfromdata = async (req, res) => {
   user.active = true;
   // req.user = user;
   user.save();
-  return res.status(200).redirect("/api/movies/movies");
+  return res.status(200).redirect("/");
 };
 
 exports.logoutUser = async (req, res) => {
@@ -94,7 +94,7 @@ exports.logoutUser = async (req, res) => {
     userfind.save();
 
     res.clearCookie("token");
-    return res.status(200).redirect("/api/movies/movies");
+    return res.status(200).redirect("/");
   } catch (err) {
     console.log(err);
   }
@@ -107,7 +107,7 @@ exports.logoutCustomer = async (req, res) => {
     customerfind.phoneToken = "";
     customerfind.save();
     res.clearCookie("token");
-    return res.status(200).redirect("/api/movies/movies");
+    return res.status(200).redirect("/");
   } catch (err) {
     console.log(err);
   }
@@ -139,7 +139,7 @@ exports.getCustomerfromData = async (req, res) => {
       customer.phoneToken = value;
     });
     customer.save();
-    return res.status(200).redirect("/api/movies/movies");
+    return res.status(200).redirect("/");
   } catch (err) {
     console.log(err);
   }
@@ -167,7 +167,7 @@ exports.getCustomer = async (req, res) => {
     customer.active = true;
     customer.isGold = false;
     await customer.save();
-    return res.status(200).redirect("/api/movies/movies");
+    return res.status(200).redirect("/");
   } catch (err) {
     console.log(err);
   }

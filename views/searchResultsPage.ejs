@@ -15,23 +15,21 @@
     overflow-x: hidden;
     scroll-behavior: smooth;
     background-color: var(--clr-background);
-    color: white;
+    color: var(--clr-text);
   }
   a{
     text-decoration: none;
-    color:black
+    color:var(--clr-background)
   }
   a:hover{
     text-decoration: none;
-    color:black
+    color:var(--clr-background)
   }
   h1 {
     text-align: center;
   }
   .mainbox {
-    padding-left: 3rem;
     flex-direction: row;
-    /* background-color: white; */
   }
 
   #submitButton {
@@ -44,19 +42,18 @@
     margin-left: 3px;
   }
   .searchResults {
+    margin:auto;
     width: 26rem;
     height: 22rem;
-
     margin-bottom: 2.12rem;
     border: 1px solid transparent;
     border-radius: 10px;
-    margin-right: 3rem;
-    background-color: white;
-    color:black
+    justify-content:space-around;
+    background-color: var(--clr-text);
+    color:var(--clr-background);
   }
   .input{
     width: 35%;
-    border: 2px solid grey;
     margin-top: 3px;
     border-radius: 25px;
   }
@@ -65,7 +62,7 @@
     height: 12rem;
     display:flex;
     justify-content: space-between;
-    margin-right: 0px;
+
   }
   .searchBar{
     position:relative;
@@ -83,7 +80,7 @@
   .textBody textarea{
     line-height: 1.2;
     background-color:var(--clr-background);
-    color:white;
+    color:var(--clr-text);
     border:none;
     
   }
@@ -140,6 +137,7 @@
         <img
           class="rounded float-left"
           src="<%=list.img%>"
+          
           height="350"
           width="220"
           alt="Generic placeholder image"
@@ -177,6 +175,7 @@
               src="<%=list.img%>"
               height="350"
               width="220"
+
               alt="Generic placeholder image"
             /></a>
             <div class="media-body" style="margin: 20">
