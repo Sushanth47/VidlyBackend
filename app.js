@@ -9,6 +9,8 @@ const axios = require("axios");
 const cheerio = require("cheerio");
 const morgan = require("morgan");
 const si = require("systeminformation");
+
+//Routes
 const genres = require("./routes/genres");
 const customers = require("./routes/customers");
 const rentals = require("./routes/rentals");
@@ -16,7 +18,11 @@ const movies = require("./routes/movies");
 const home = require("./routes/home");
 const users = require("./routes/userRoutes");
 const auth = require("./routes/authRoutes");
+
+//middleware
 const { checkauth } = require("./middleware/auth");
+
+//models
 const { User } = require("./models/user");
 const { Customer } = require("./models/customer");
 const { Genre } = require("./models/genre");
