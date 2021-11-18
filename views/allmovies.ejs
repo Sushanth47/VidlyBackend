@@ -1,0 +1,145 @@
+<%- include('./partials/header') %>
+
+<title>All Movies</title>
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap"
+    rel="stylesheet"
+  />
+</head>
+<style>
+  body {
+    max-width: 105%;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    background-color: rgb(52, 58, 64);
+    color: white;
+  }
+
+  h1,
+  h6 {
+    font-family: "Yaldevi", sans-serif;
+    cursor: default;
+  }
+  .moviesBox {
+    display: flex;
+    flex-wrap: wrap;
+    flex-shrink: inherit;
+    flex-basis: 4rem;
+    justify-content: space-around;
+    grid-template-columns: min-content;
+    /* flex: 100%; */
+  }
+
+  .input {
+    width: 50%;
+    margin-top: 3px;
+    border-radius: 1.6rem;
+    padding: 1.1rem;
+  }
+
+  .search {
+    margin: auto;
+    position: relative;
+    left: 30vw;
+    align-items: center;
+    margin-bottom: 4rem;
+  }
+  #submitButton {
+    background-color: #0fbd9c;
+    border-radius: 20px;
+    border: 1px solid white;
+    padding: 0.48rem;
+    display: block;
+    color: white;
+    margin-left: 5px;
+  }
+  #cardStyling {
+    margin: 0 4.1rem 2.1rem 1.3rem;
+    width: 12.5rem;
+    height: 21.25rem;
+    border: 25px;
+    border-radius: 1.25rem;
+    background-color: var(--clr-background);
+    transition: filter 300ms;
+    background-color: var(--clr-background);
+  }
+
+  .img {
+    height: 17.5rem;
+    min-width: 12.5rem;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-transition: 0.3s ease-in-out;
+    transition: 0.3s ease-in-out;
+  }
+
+  .img:hover {
+    -webkit-transform: scale(1);
+    transform: scale(1.09);
+  }
+</style>
+
+<body>
+  <header style="margin-bottom: 2rem">
+    <h1 class="text-center" style="font-size: 80px">Vidly</h1>
+    <h6 class="text-center" style="font-weight: 400">
+      All of the World Cinema At One Place
+    </h6>
+  </header>
+
+  <div class="search">
+    <form action="/api/movies/search/" method="GET">
+      <div class="container row">
+        <input
+          type="search"
+          id="searchString"
+          class="form-control input"
+          name="title"
+          placeholder="Type Movie, Genre or Something"
+        />
+        <button type="submit" id="submitButton">Search</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="moviesBox">
+    <%movies.forEach(list=>{%>
+    <div class="card" id="cardStyling">
+      <a target="_blank" href="/api/movies/<%=list._id%>"
+        ><div class="img-hover">
+          <img class="img" src="<%=list.img%>" /></div
+      ></a>
+
+      <br />
+      <div class="card-body">
+        <a href="/api/movies/<%=list._id%>" target="_blank"
+          ><h6 style="color: white" class="text-center">
+            <%=list.title%> (<%=list.year%>)
+          </h6></a
+        >
+      </div>
+    </div>
+    <%})%>
+  </div>
+</body>
+
+<script>
+  $("#searchString").keyup(function (e) {
+    clearTimeout($.data(this, "timer"));
+    if (e.keyCode == 13) search(true);
+    else $(this).data("timer", setTimeout(search, 500));
+  });
+  function search(force) {
+    var existingString = $("#searchString").val();
+    if (!force && existingString.length < 3) return; //wasn't enter, not > 2 char
+    $.get("/movies/movies/search" + existingString, function (data) {
+      $("div#results").html(data);
+      $("#results").show();
+    });
+  }
+</script>
+
+<%- include('./partials/footer') %>

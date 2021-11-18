@@ -8,121 +8,55 @@
     background-color: rgb(52, 58, 64);
     color: white;
   }
-  .otherContainer {
-    margin-left: 23vh;
-    margin-bottom: 10px;
-    flex-direction: row;
+  #submitButton {
+    background-color: #0fbd9c;
+    border-radius: 20px;
     border: 1px solid white;
-    -webkit-transform: scale(1);
-    transform: scale(1);
-    -webkit-transition: 0.3s ease-in-out;
-    transition: 0.3s ease-in-out;
-  }
-  .otherContainer:hover {
-    -webkit-transform: scale(1);
-    transform: scale(1.1);
-  }
-  #imdb {
-    margin-top: 10px;
+    padding: 0.48rem;
+    display: block;
+    color: white;
     margin-left: 5px;
-    border-color: 1px solid transparent;
-    font-weight: bolder;
-    font-family: "Roboto", sans-serif;
-    color: black;
-    width: 90px;
-    background-color: #dba506;
-    padding: 5px;
-    border-radius: 10px;
-    text-decoration: none;
-    -webkit-transform: scale(1);
-    transform: scale(1);
-    -webkit-transition: 0.3s ease-in-out;
-    transition: 0.3s ease-in-out;
   }
-  #imdb:hover {
-    -webkit-transform: scale(1);
-    transform: scale(1.1);
+  .input {
+    width: 50%;
+    margin-top: 3px;
+    border-radius: 1.6rem;
+    padding: 1.1rem;
+  }
+  .search {
+    margin: auto;
+    position: relative;
+    left: 30vw;
+    align-items: center;
+    margin-bottom: 2rem;
   }
 </style>
 <body>
   <div style="text-align: center">
-    <h1 style="text-size-adjust: 30px">Request Movies</h1>
+    <h1 style="text-size-adjust: 1.9rem">Request Movies</h1>
     <h6>Please add the title to request a specific movie</h6>
     <h7>**Make sure to add the right title for the movie**</h7><br />
     <br />
   </div>
-  <div class="container">
-    <div class="col d-flex justify-content-center">
-      <form
-        style="text-align: center"
-        action="/api/movies/requestmovie"
-        method="POST"
-      >
+  <div class="search">
+    <form
+      style="text-align: center"
+      action="/api/movies/requestmovie"
+      method="POST"
+    >
+      <div class="container row">
         <input
           type="text"
-          class="form-control"
+          class="form-control input"
           name="title"
           placeholder="Add movie name here..."
           style="border-radius: 5px"
         /><br />
-        <button
-          type="submit"
-          class="btn btn-success"
-          style="border-radius: 10px"
-        >
+        <button type="submit" id="submitButton" style="border-radius: 10px">
           Submit
         </button>
-      </form>
-    </div>
-  </div>
-  <h4 class="text-center">Movies you might like</h4>
-  <br />
-
-  <div class="row">
-    <%movies.forEach(list=>{%>
-    <a href="/api/movies/<%=list._id%>">
-      <div class="otherContainer">
-        <div
-          class="card"
-          style="width: 18rem; align-items: center; justify-content: center"
-        >
-          <img
-            class="img"
-            height="300px;"
-            width="200px"
-            src="<%=list.img%>"
-            alt="Card image cap"
-          />
-
-          <div class="card-body" style="width: 20rem">
-            <a
-              target="_blank"
-              href="/api/movies/<%=list._id%>"
-              style="text-decoration: none"
-              ><h5 class="card-title text-center">
-                <%=list.title%> (<%=list.year%>)
-              </h5></a
-            >
-            <p class="card-text" style="margin-left: 30px">
-              <strong>Cast</strong>: <%=list.cast%>
-            </p>
-            <p class="card-text" style="margin-left: 30px">
-              <strong>Rate</strong>: $<%=list.dailyRentalRate.toFixed(2)%>
-            </p>
-            <br />
-            <a
-              class="card-text movieclass"
-              style="text-align: center; position: relative; left: 60px"
-              href="<%=list.links%>"
-              target="_blank"
-              id="imdb"
-              >IMDb: <%=list.imdbRating%>/10</a
-            >
-          </div>
-        </div>
       </div>
-    </a>
-    <%})%>
+    </form>
   </div>
 </body>
-<%- include('./partials/footer') %>
+<footer><%- include('./partials/footer') %></footer>

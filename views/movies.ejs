@@ -71,10 +71,6 @@
     background-color: var(--clr-background);
   }
   .search {
-    /* position: relative;
-    left: 32%; */
-    /* display: block;
-    float: calc(); */
     margin: auto;
     position: relative;
     left: 30vw;
@@ -203,9 +199,10 @@
       <br />
       <div class="card-body">
         <a href="/api/movies/<%=list._id%>" target="_blank"
-          ><h6 style="color: white" class="movietitle text-center"><%=list.title%> (<%=list.year%>)</h6></a
+          ><h6 style="color: white" class="movietitle text-center">
+            <%=list.title%> (<%=list.year%>)
+          </h6></a
         >
-        <ul class="main-card"></ul>
       </div>
     </div>
     <%})%>

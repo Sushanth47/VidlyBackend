@@ -7,6 +7,7 @@ const {
   getMoviesSort,
   createMoviesPage,
   displayMovie,
+  getAllMovies,
   getSpecificMovie,
   requestedMoviePage,
   addToWishlist,
@@ -27,6 +28,8 @@ router.post("/requestmovie", customerauth, requestedMovie);
 router.get("/movies", checkauth, getMovies);
 
 router.get("/createmoviespage", userauth, createMoviesPage);
+
+router.get("/getallmovies", checkauth, getAllMovies);
 
 router.post("/createmovies", userauth, createMovies);
 

@@ -4,10 +4,10 @@ const _ = require("lodash");
 const { User } = require("../models/user");
 const { Customer } = require("../models/customer");
 
-async function generateAuthToken(res, _id, name, subject) {
+async function generateAuthToken(res, _id, name, subject, cart, wishList) {
   const expiration = 604800000;
   const token = jwt.sign(
-    { _id: _id, name: name, subject: subject },
+    { _id: _id, name: name, subject: subject, cart: cart, wishList: wishList },
     process.env.jwtPrivateKey,
     {
       expiresIn: process.env.DB_ENV === "testing" ? "1d" : "7d",
@@ -18,6 +18,8 @@ async function generateAuthToken(res, _id, name, subject) {
     name: name,
     _id: _id,
     subject: subject,
+    cart: cart,
+    wishList: wishList,
   };
   res.cookie("token", obj, {
     expires: new Date(Date.now() + expiration),
@@ -57,8 +59,16 @@ exports.getUser = async (req, res) => {
   let user = await User.findOne({ email: req.body.email });
   if (user) return res.status(400).send("User already registered");
   user = new User(_.pick(req.body, ["name", "email", "password"]));
-
-  const token = await generateAuthToken(res, user._id, user.name, "User");
+  var cart = [],
+    wishList = [];
+  const token = await generateAuthToken(
+    res,
+    user._id,
+    user.name,
+    "User",
+    cart,
+    wishList
+  );
   token.then((value) => {
     user.phoneToken = value;
   });
@@ -76,7 +86,16 @@ exports.getUserfromdata = async (req, res) => {
   if (!user || req.body.password != user.password) {
     return res.status(400).send("Invalid Email/Password");
   }
-  const token = generateAuthToken(res, user._id, user.name, "User");
+  var cart = [],
+    wishList = [];
+  const token = generateAuthToken(
+    res,
+    user._id,
+    user.name,
+    "User",
+    cart,
+    wishList
+  );
   token.then((value) => {
     user.phoneToken = value;
   });
@@ -129,7 +148,9 @@ exports.getCustomerfromData = async (req, res) => {
       res,
       customer._id,
       customer.name,
-      "Customer"
+      "Customer",
+      customer.wishList,
+      customer.cart
     );
     token.then((value) => {
       customer.phoneToken = value;
@@ -157,7 +178,9 @@ exports.getCustomer = async (req, res) => {
       res,
       customer._id,
       customer.name,
-      "Customer"
+      "Customer",
+      customer.cart,
+      customer.wishList
     );
     customer.phoneToken = token;
     customer.active = true;
