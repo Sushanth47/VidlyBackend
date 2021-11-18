@@ -122,22 +122,13 @@
         <b style="color: red">$<%=movie.dailyRentalRate.toFixed(2)%></b
         ><small><small style="margin-bottom: 2px"> </small></small>
       </h5>
-      <h5 style="margin-bottom: 20px">
-        Gold Customer Rental Rate:
-        <b style="color: red">$<%=(movie.dailyRentalRate - 0.5).toFixed(2)%></b
-        >&nbsp;<span style="font-size: xx-small"
-          ><a
-            href="/api/customers/goldpage"
-            style="text-decoration: none; position: relative; bottom: 3px"
-            ><strong>Apply here</strong></a
-          ></span
-        >
-      </h5>
+      
       <%if(movie.numberInStock <=10){%>
       <h5 style="color: red">Available in Stock: <%=movie.numberInStock%></h5>
       <span style="color: red; font-size: small"
         >This item is quickly running out of stock</span
       >
+      <br>
       <%}%>
       <%if(movie.iReviewed){%>
         <span><a href="#"

@@ -19,7 +19,7 @@ router.get("/requestMovie", customerauth, requestedMoviePage);
 
 router.get("/addtowishlist/:movieId", customerauth, addToWishlist);
 
-router.post("/movies/select", checkauth, getMoviesSort);
+router.get("/movies/select", checkauth, getMoviesSort);
 
 router.get("/addToCart/:movieId", customerauth, addToCart);
 

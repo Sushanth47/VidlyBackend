@@ -88,14 +88,9 @@ exports.getAllMovies = async (req, res) => {
 
 exports.getMoviesSort = async (req, res) => {
   try {
-    const perPage = 10;
-    const page = req.query.pageNo;
     const movieCount = await Movie.countDocuments();
-    var name = "";
-    if (req.user) {
-      name = req.user.name;
-    }
-    if (req.body.sortBy == "Name") {
+
+    if (req.query.sortBy == "Name") {
       var movies = await Movie.aggregate([
         {
           $project: {
@@ -108,11 +103,8 @@ exports.getMoviesSort = async (req, res) => {
         {
           $sort: { title: 1 },
         },
-        {
-          $skip: perPage * (page - 1),
-        },
       ]);
-    } else if (req.body.sortBy == "Year") {
+    } else if (req.query.sortBy == "Year") {
       var movies = await Movie.aggregate([
         {
           $project: {
@@ -126,11 +118,8 @@ exports.getMoviesSort = async (req, res) => {
         {
           $sort: { year: 1 },
         },
-        {
-          $skip: perPage * (page - 1),
-        },
       ]);
-    } else if (req.body.sortBy == "Rank") {
+    } else if (req.query.sortBy == "Rank") {
       var movies = await Movie.aggregate([
         {
           $project: {
@@ -146,11 +135,8 @@ exports.getMoviesSort = async (req, res) => {
         {
           $sort: { rank: 1 },
         },
-        {
-          $skip: perPage * (page - 1),
-        },
       ]);
-    } else if (req.body.sortBy == "IMDb") {
+    } else if (req.query.sortBy == "IMDb") {
       var movies = await Movie.aggregate([
         {
           $project: {
@@ -167,11 +153,8 @@ exports.getMoviesSort = async (req, res) => {
         {
           $sort: { imdbRating: -1 },
         },
-        {
-          $skip: perPage * (page - 1),
-        },
       ]);
-    } else if (req.body.sortBy == "Price") {
+    } else if (req.query.sortBy == "Price") {
       var movies = await Movie.aggregate([
         {
           $project: {
@@ -188,11 +171,8 @@ exports.getMoviesSort = async (req, res) => {
         {
           $sort: { dailyRentalRate: 1 },
         },
-        {
-          $skip: perPage * (page - 1),
-        },
       ]);
-    } else if (req.body.sortBy == "Availability") {
+    } else if (req.query.sortBy == "Availability") {
       var movies = await Movie.aggregate([
         {
           $project: {
@@ -209,11 +189,8 @@ exports.getMoviesSort = async (req, res) => {
         {
           $sort: { numberInStock: 1 },
         },
-        {
-          $skip: perPage * (page - 1),
-        },
       ]);
-    } else if (req.body.sortBy == "Popularity") {
+    } else if (req.query.sortBy == "Popularity") {
       var movies = await Movie.aggregate([
         {
           $project: {
@@ -232,11 +209,8 @@ exports.getMoviesSort = async (req, res) => {
         {
           $sort: { rentedCustomers: 1 },
         },
-        {
-          $skip: perPage * (page - 1),
-        },
       ]);
-    } else if (req.body.sortBy == "Genre") {
+    } else if (req.query.sortBy == "Genre") {
       var movies = await Movie.aggregate([
         {
           $project: {
@@ -252,11 +226,8 @@ exports.getMoviesSort = async (req, res) => {
         {
           $sort: { genre: 1 },
         },
-        {
-          $skip: perPage * (page - 1),
-        },
       ]);
-    } else if (req.body.sortBy == "Runtime") {
+    } else if (req.query.sortBy == "Runtime") {
       var movies = await Movie.aggregate([
         {
           $project: {
@@ -272,16 +243,11 @@ exports.getMoviesSort = async (req, res) => {
         {
           $sort: { runtime: -1 },
         },
-        {
-          $skip: perPage * (page - 1),
-        },
       ]);
     }
-    return res.status(200).render("./movies", {
+    return res.status(200).render("./allmovies.ejs", {
       movies: movies,
       movieCount: movieCount,
-      perPage: perPage,
-      name: name,
     });
   } catch (err) {
     console.log(err);
@@ -545,12 +511,7 @@ exports.createMovies = async (req, res) => {
 };
 
 exports.requestedMoviePage = async (req, res) => {
-  try {
-    console.log(movies, "movies");
-    return res.status(200).render("./requestMovie", { movies });
-  } catch (err) {
-    console.log(err);
-  }
+  return res.status(200).render("./requestMovie");
 };
 
 exports.requestedMovie = async (req, res) => {
