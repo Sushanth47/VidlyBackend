@@ -122,7 +122,7 @@ exports.getCustomerfromData = async (req, res) => {
     console.log("come here");
     if (!customer || req.body.password != customer.password) {
       req.flash("message", "Wrong Credentials");
-     
+
       return res.status(409).redirect("/api/auth/loginCustomer");
     }
     const token = generateAuthToken(

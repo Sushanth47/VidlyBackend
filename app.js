@@ -244,6 +244,11 @@ app.get("/rentedcustomers", async (req, res) => {
   return res.json("done");
 });
 
+// app.get("/clicks", async (req, res) => {
+//   await Movie.updateMany({}, { $set: { clicks: 0 } });
+//   return res.status(200).json("done");
+// });
+
 //404 Page
 // app.all('*', (req, res, next) =>{
 //    res.render('404');

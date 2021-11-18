@@ -37,7 +37,7 @@ exports.getMovies = async (req, res) => {
       },
     ]);
     // console.log(movies);
-    return res.status(200).render("movies.ejs", {
+    return res.status(200).render('movies.ejs',{
       movies: movies,
       url: process.env.WEBURL,
       movieCount: movieCount,
@@ -257,6 +257,7 @@ exports.addToCart = async (req, res) => {
       { _id: req.user._id },
       { $addToSet: { cart: req.params.movieId } }
     );
+    req.flash("message", `Movie Added to Cart`);
     return res.status(200).redirect(`/api/movies/${req.params.movieId}`);
   } catch (err) {
     console.log(err);
@@ -311,13 +312,16 @@ exports.getSpecificMovie = async (req, res) => {
         runtime: 1,
         mpAARating: 1,
         thegenres: 1,
+        clicks: 1,
       },
     },
   ]);
 
-  var tester = await Movie.findOne({ _id: req.params.mid }, "genreId").populate(
-    "genreId"
-  );
+  // console.log(movie[0].clicks, "clicks");
+  var tester = await Movie.findOne(
+    { _id: req.params.mid },
+    "genreId clicks"
+  ).populate("genreId");
   var rgenres = [];
   tester.genreId.forEach((list) => {
     rgenres.push(list.name);
@@ -327,7 +331,9 @@ exports.getSpecificMovie = async (req, res) => {
       _id: { $nin: [req.params.mid] },
     },
     "_id title rank cast year img links dailyRentalRate director genreId"
-  ).populate("genreId");
+  )
+    .populate("genreId")
+    .limit(10);
   var othermovies = [];
   otherMovies.forEach((list) => {
     for (var i = 0; i < tester.genreId.length; i++) {
@@ -338,7 +344,8 @@ exports.getSpecificMovie = async (req, res) => {
       });
     }
   });
-
+  tester.clicks += 1;
+  tester.save();
   var p = [...new Set(othermovies)];
 
   p.splice(0, 5);

@@ -61,6 +61,7 @@ const movieSchema = new mongoose.Schema(
     worldwide: { type: String, default: "" },
     ismovieCreated: { type: Boolean, default: false },
     requestCount: { type: Number, default: 0 },
+    clicks: { type: Number, default: 0 },
   },
   {
     timestamps: true,
