@@ -2,40 +2,32 @@
 <title>404</title>
 <body>
   <style>
-    body {
-      background-repeat: no-repeat, repeat;
-      background-position: center;
-      background-position-y: 128px;
-    }
     .centerBox {
       border: 1px solid rgb(247, 244, 244);
       /* border-radius: 15px; */
-      width: 728px;
+      max-width: 45.5rem;
       height: 455px;
       margin: auto;
-      padding: 10px;
+      padding: 0.8rem;
       backdrop-filter: blur(6px) saturate(180%);
       -webkit-backdrop-filter: blur(6px) saturate(180%);
-      background-color: rgba(17, 25, 40, 0);
-      border-radius: 2px;
       border: 1px solid rgba(255, 255, 255, 0.125);
-      /* padding-top: 30px; */
       box-shadow: 0 0 10px 2px rgb(236, 50, 50);
     }
-    .centerBox:hover {
-      transition: 0.3s ease-in-out;
+    .backButton {
+      margin: auto;
+      /* align-items: center; */
+      text-align: center;
     }
     h1 {
       margin-top: 10px;
       font-family: "Spartan", sans-serif;
     }
-    button {
-      padding: 50px;
-    }
+
     .buttonBox {
-      margin-top: 30px;
-      padding-left: 30px;
-      width: 600px;
+      /* margin-top: 30px; */
+      /* padding-left: 30px; */
+      max-width: 37.5rem;
       margin: auto;
     }
   </style>
@@ -44,26 +36,24 @@
   <div class="centerBox">
     <h1 class="text-center">Login to Access this part</h1>
     <br /><br />
-    <div style="margin-left: 314px">
-      <button
-        onclick="history.back()"
-        class="btn btn-primary btn-lg"
-        style="margin: auto"
-      >
+    <div class="backButton">
+      <button onclick="history.back()" class="btn btn-primary btn-lg">
         Go Back
       </button>
     </div>
     <br />
     <br />
-    <div class="text-align-center" style="padding-left: 150px">
-      <a
-        class="btn btn-success btn-lg"
-        href="/api/auth/loginCustomer"
-        style="margin-right: 35vh"
-      >
-        Login
-      </a>
-      <a href="/api/auth/signupPage" class="btn btn-info btn-lg">SignUp</a>
+    <div class="row container">
+      <div style="margin: auto; align-items: center">
+        <a
+          class="btn btn-success btn-lg"
+          style="margin-right: 5rem"
+          href="/api/auth/loginCustomer"
+        >
+          Login
+        </a>
+        <a href="/api/auth/signupPage" class="btn btn-info btn-lg">SignUp</a>
+      </div>
     </div>
   </div>
 </body>
