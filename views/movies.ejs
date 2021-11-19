@@ -26,123 +26,12 @@
     href="https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap"
     rel="stylesheet"
   />
+  <meta name="description" content="" />
+  <meta name="keywords" content="" />
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="/css/style.css" />
 </head>
-<style>
-  :root {
-    --clr-background: rgb(52, 58, 64);
-  }
-  body {
-    max-width: 105%;
-    overflow-x: hidden;
-    scroll-behavior: smooth;
-    background-color: rgb(52, 58, 64);
-    color: white;
-  }
-  .pagination {
-    font-size: 1.25rem;
-  }
-  .moviesBox {
-    flex-direction: row;
-    display: flex;
-    flex-wrap: wrap;
-    flex-shrink: inherit;
-    flex-basis: 4rem;
-    /* flex-flow: row; */
-    justify-content: space-around;
-    grid-template-columns: min-content;
-    margin-bottom: 2rem;
-    /* flex: 100%; */
-  }
-  #submitButton {
-    background-color: #0fbd9c;
-    border-radius: 20px;
-    border: 1px solid white;
-    padding: 0.48rem;
-    display: block;
-    color: white;
-    margin-left: 5px;
-  }
-  #cardStyling {
-    margin: 0 4.1rem 2.1rem 1.3rem;
-    width: 12.5rem;
-    height: 21.25rem;
-    border: 25px;
-    border-radius: 1.25rem;
-    background-color: var(--clr-background);
-    transition: filter 300ms;
-    background-color: var(--clr-background);
-  }
-  .search {
-    margin: auto;
-    position: relative;
-    left: 30vw;
-    align-items: center;
-    margin-bottom: 4rem;
-  }
-  .input {
-    width: 50%;
-    margin-top: 3px;
-    border-radius: 1.6rem;
-    padding: 1.1rem;
-  }
-  .sort {
-    position: relative;
-    right: 2%;
-    margin-bottom: 2rem;
-  }
-  .card-text {
-    color: #000;
-    font-family: "Yaldevi", sans-serif;
-    font-weight: bold;
-  }
 
-  .popbuttons {
-    background-color: rgb(74, 175, 74);
-    color: white;
-    border-radius: 12px;
-    border: 1px solid rgb(218, 217, 217);
-  }
-  ul {
-    list-style: none;
-    border-radius: 5px;
-  }
-  .selectStyle {
-    padding: 0.3125rem;
-    min-width: 9%;
-    border-radius: 5px;
-    margin-bottom: 5px;
-  }
-
-  .img {
-    height: 17.5rem;
-    min-width: 12.5rem;
-    -webkit-transform: scale(1);
-    transform: scale(1);
-    -webkit-transition: 0.3s ease-in-out;
-    transition: 0.3s ease-in-out;
-  }
-
-  .img:hover {
-    -webkit-transform: scale(1);
-    transform: scale(1.09);
-  }
-
-  a,
-  a:hover {
-    text-decoration: none;
-  }
-  p {
-    font-weight: 900;
-    margin-right: 50;
-  }
-
-  h1,
-  h6 {
-    font-family: "Yaldevi", sans-serif;
-    cursor: default;
-  }
-</style>
 <body>
   <head>
     <title>Vidly</title>

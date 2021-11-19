@@ -6,45 +6,17 @@
     href="https://fonts.googleapis.com/css2?family=Yaldevi:wght@300&display=swap"
     rel="stylesheet"
   />
+  <link rel="stylesheet" type="text/css" href="/css/style.css" />
 </head>
 <title><%=movie.title%> (<%=movie.year%>)</title>
 <style>
-  body {
-    max-width: 100%;
-    overflow-x: hidden;
-    background-color: rgb(52, 58, 64);
-    color: white;
-  }
-  h5,
-  h4,
-  p,
-  span {
-    font-family: "Yaldevi", sans-serif;
-  }
+  
+ 
   h5 {
     margin-top: 25px;
   }
-  #imdb {
-    margin-top: 10px;
-    margin-left: 5px;
-    border-color: 1px solid transparent;
-    font-weight: bolder;
-    font-family: "Roboto", sans-serif;
-    color: black;
-    width: 90px;
-    background-color: #dba506;
-    padding: 5px;
-    border-radius: 10px;
-    text-decoration: none;
-    -webkit-transform: scale(1);
-    transform: scale(1);
-    -webkit-transition: 0.3s ease-in-out;
-    transition: 0.3s ease-in-out;
-  }
-  #imdb:hover {
-    -webkit-transform: scale(1);
-    transform: scale(1.1);
-  }
+ 
+  
   .card-text {
     font-family: "Work Sans", sans-serif;
     margin: 5px;
@@ -62,20 +34,7 @@
   span {
     font-size: 20px;
   }
-  .otherContainer {
-    margin-top:40px;
-    margin-left: 6vh;
-    margin-bottom:90px;
-    flex-direction: row;
-    -webkit-transform: scale(1);
-    transform: scale(1);
-    -webkit-transition: 0.3s ease-in-out;
-    transition: 0.3s ease-in-out;
-  }
-  .otherContainer:hover {
-    -webkit-transform: scale(1);
-    transform: scale(1.1);
-  }
+  
   
 </style>
 <body>
@@ -105,7 +64,7 @@
       <%} else {}%>
       <h5>
         <a
-          class="card-text movieclass"
+          class="card-text "
           style="text-align: center; position: relative; right: 10"
           href="<%=movie.links%>"
           target="_blank"
