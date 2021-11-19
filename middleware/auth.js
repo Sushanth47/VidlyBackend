@@ -28,7 +28,7 @@ exports.checkauth = async (req, res, next) => {
 async function userauth(req, res, next) {
   const token = req.cookies.token.token;
   try {
-    if (!token) return res.status(409).render("./404");
+    if (!token) return res.status(409).render("404");
     const decoded = jwt.verify(token, process.env.jwtPrivateKey);
     if (decoded.subject == "User") {
       // console.log(decoded, "decoded");
@@ -36,7 +36,7 @@ async function userauth(req, res, next) {
       res.locals.currentUser = req.user;
       // console.log(req.user, "authcheck");
     } else {
-      return res.status(409).render("./404");
+      return res.status(409).render("404");
     }
     // next();
   } catch (ex) {
@@ -48,13 +48,13 @@ async function userauth(req, res, next) {
 exports.userauth = async function (req, res, next) {
   try {
     const token = req.cookies.token.token;
-    if (!token) return res.status(409).render("./404");
+    if (!token) return res.status(409).render("404");
     const decoded = jwt.verify(token, process.env.jwtPrivateKey);
     if (decoded.subject == "User") {
       req.user = decoded;
       res.locals.currentUser = req.user;
     } else {
-      return res.status(409).render("./404");
+      return res.status(409).render("404");
     }
     next();
   } catch (ex) {

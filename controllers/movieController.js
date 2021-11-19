@@ -18,11 +18,15 @@ exports.getMovies = async (req, res) => {
     }
     const movies = await Movie.aggregate([
       {
+        $match: { numberInStock: { $gte: 1 } },
+      },
+      {
         $project: {
           title: 1,
           year: 1,
           img: 1,
           genreId: 1,
+          numberInStock: 1,
           dailyRentalRate: 1,
         },
       },
@@ -60,6 +64,9 @@ exports.getAllMovies = async (req, res) => {
       name = req.user.name;
     }
     const movies = await Movie.aggregate([
+      {
+        $match: { numberInStock: { $gte: 1 } },
+      },
       {
         $project: {
           title: 1,
