@@ -37,7 +37,7 @@
 <body>
   <%if(message.length>0){%>
     <div class="alert alert-success alert-dismissible fade show" role="alert">
-      <p><%=message%></p> 
+      <p style="color:black"><%=message%></p> 
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -49,6 +49,7 @@
        
         src="<%=movie.img%>"
     /></a>
+    
     <div class="cardDiv">
       <div style="min-width:2rem;" ><h1><%=movie.title%> (<%=movie.year%>)</h1></div>
       
@@ -104,11 +105,14 @@
       ></span>
       
     </div>
+    
     <br /><br />
+    
   </div>
+  
   <div class="container">
     <br />
-    <h4 style="text-align: center">Other Popular Movies you may like</h4>
+    <h4 style="text-align: center">Related Movies</h4>
   </div>
   <br />
   <%var p = 5;%>

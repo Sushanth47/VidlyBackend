@@ -27,6 +27,7 @@ exports.rentalDisplay = async (req, res) => {
         customer: 1,
         rentalFee: 1,
         checkOut: 1,
+        address: 1,
         dateGone: {
           $dateToString: { format: "%Y-%m-%d", date: "$dateOut" },
         },
@@ -67,6 +68,7 @@ exports.checkout = async (req, res, next) => {
       dateOut: date,
       dateReturned: Date.now() + req.body.days * 86400000,
       rentalFee: ans,
+      address: req.body.address,
     });
     customer.cart = [];
     customer.rentedMovies.push(rental._id);

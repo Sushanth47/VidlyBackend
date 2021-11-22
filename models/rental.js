@@ -33,6 +33,7 @@ const rentalSchema = new mongoose.Schema(
       min: 0,
     },
     checkOut: { type: String },
+    address: { type: String },
   },
   { timestamps: true }
 );

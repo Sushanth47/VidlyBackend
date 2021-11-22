@@ -27,6 +27,7 @@ const { User } = require("./models/user");
 const { Customer } = require("./models/customer");
 const { Genre } = require("./models/genre");
 const { Movie } = require("./models/movie");
+const { Rental } = require("./models/rental");
 var db = require("./models/index");
 const port = process.env.PORT;
 
@@ -133,6 +134,11 @@ app.get("/cookie", checkauth, function (req, res) {
   console.log("Cookies: ", req.cookies);
   res.clearCookie();
   console.log("Signed Cookies: ");
+});
+
+app.get("/setaddress", async (req, res) => {
+  await Rental.updateMany({}, { $set: { address: "" } });
+  return res.json("done");
 });
 
 app.get("/setrent", async (req, res) => {

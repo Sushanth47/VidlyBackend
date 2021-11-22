@@ -205,9 +205,9 @@ span {
   transition: 0.3s ease-in-out;
 }
 .otherContainer {
-  margin-top: 40px;
+  margin-top: 1.5rem;
   margin-left: 6vh;
-  margin-bottom: 90px;
+  margin-bottom: 3.5rem;
   flex-direction: row;
   -webkit-transform: scale(1);
   transform: scale(1);

@@ -85,12 +85,13 @@
     <h6 class="contents values" id="comingDate"></h6>
     <h6 class="contents headings">Unique ID:</h6>
     <h6 class="contents values" id="uniqueval"></h6>
-    <h6 class="contents headings">Download Reciept</h6>
-    <div class="continue">
+    <h6 class="contents headings">Address</h6>
+    <h6 class="contents values" id="address"></h6>
+    <!-- <div class="continue">
       <button style="text-align: center" class="btn btn-outline-primary">
         Download
       </button>
-    </div>
+    </div> -->
     <br />
     <div class="continue bottomMost">
       <a class="btn btn-primary" href="/api/movies/movies">Continue Shopping</a>
@@ -105,15 +106,16 @@
     await axios.get("/api/rentals/rentaldisplay").then((response) => {
       data = response.data;
     });
-    console.log(data);
+
     document.getElementById("moviesClass").innerHTML = data.rental[0].movies;
     document.getElementById("totalPrice").innerHTML =
-      "$" + data.rental[0].rentalFee + "0";
+      "$" + data.rental[0].rentalFee;
 
     document.getElementById("comingDate").innerHTML = data.rental[0].dateCome;
     document.getElementById(
       "uniqueval"
     ).innerHTML = `MOV-${data.rental[0]._id}`;
+    document.getElementById("address").innerHTML = data.rental[0].address;
   }
 </script>
 <%- include('./partials/footer') %>
