@@ -1,28 +1,21 @@
 <%- include('./partials/header') %>
 <title>Sign Up</title>
+<head>
+  <link rel="stylesheet" type="text/css" href="/css/style.css" />
+</head>
 <script
   src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"
   data-auto-replace-svg="nest"
 ></script>
-<style>
-  #cardOutline {
-    border: 1px solid black;
-    border-radius: 15px;
-  }
-</style>
 
 <div>
-  <div class="container mt--8 pb-5" style="padding-top: 100px">
-    <h1 style="text-align: center; padding-bottom: 70px; position: relative">
-      Vidly
-    </h1>
+  <div class="container mt--8 pb-5">
+    <h1 style="text-align: center">Vidly</h1>
+    <br /><br />
     <div class="row justify-content-center">
-      <div class="col-lg-5 col-md-7" style="color: blue">
-        <div
-          class="card border-0 mb-0"
-          style="color: red; border: 1px solid black"
-        >
-          <div class="card-body px-lg-5 py-lg-5" id="cardOutline">
+      <div class="col-lg-5 col-md-7">
+        <div class="card" style="color: red">
+          <div class="card-body px-lg-5 py-lg-5">
             <div class="text-center mb-4">
               <small>Sign Up!</small>
             </div>
@@ -33,13 +26,14 @@
                 >
                   <div class="input-group-prepend">
                     <span class="input-group-text"
-                      ><i class="fas fa-phone"></i
+                      ><i class="fas fa-envelope-square"></i
                     ></span>
                   </div>
                   <input
+                    type="email"
                     class="form-control"
-                    name="phone"
-                    placeholder="phone"
+                    name="email"
+                    placeholder="email"
                   />
                 </div>
               </div>
@@ -79,22 +73,17 @@
               </div>
 
               <div class="text-center">
-                <input
-                  type="submit"
-                  class="btn btn-primary my-4"
-                  value="Sign Up"
-                  style="padding-left: 30px; padding-right: 30px"
-                />
+                <button type="submit" class="btn btn-primary my-4">
+                  Sign Up
+                </button>
               </div>
 
               <div class="text-center">
-                <h7 style="margin: auto" class="text-center"
-                  >Already have an Account?</h7
-                ><br />
-                <button class="btn btn-primary">Log In</button>
+                <h6 style="color: Red">Already have an Account?</h6>
+                <br />
+                <a href="/api/auth/login" class="btn btn-info">Log In</a>
               </div>
               <br />
-              <div></div>
             </form>
           </div>
         </div>

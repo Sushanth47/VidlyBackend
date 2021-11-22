@@ -4,6 +4,7 @@
     href="https://fonts.googleapis.com/css2?family=Alegreya:wght@500&display=swap"
     rel="stylesheet"
   />
+  <link rel="stylesheet" type="text/css" href="/css/style.css" />
 </head>
 <title>Login | Vidly</title>
 <style>
@@ -16,121 +17,81 @@
     /* background-image: url("./styles/img.svg"); */
     /* background-image: url("./styles/img.svg"); */
   }
-
-  #mainCard {
-    border: 1px solid white;
-    border-radius: 15px;
-
-    /* background-color: rgb(214, 214, 214); */
-  }
-  h1 {
-    text-align: center;
-    padding-bottom: 70px;
-    font-size: 40px;
-    position: relative;
-    color: black;
-    font-family: "Alegreya", serif;
-  }
-  .mb-0 {
-    filter: drop-shadow(2px 2px 2px #fcf9f9);
+  .centering {
+    padding-left: 5.5rem;
   }
 </style>
 
-<div id="mainDiv">
-  <div class="container mt--8 pb-5">
-    <h1 style="color: white">VIDLY</h1>
-    <div class="row justify-content-center">
-      <div class="col-lg-5 col-md-7">
-        <div class="card border-0 mb-0">
-          <div class="card-body px-lg-5 py-lg-5" id="mainCard">
-            <div class="text-center text-muted mb-4">
-              <h5>Sign in</h5>
-            </div>
-            <%if(message.length>0){%>
-
-            <div
-              class="alert alert-danger alert-dismissible fade show"
-              role="alert"
-            >
-              <strong><%=message%></strong>
-              <button
-                type="button"
-                class="close"
-                data-dismiss="alert"
-                aria-label="Close"
-              >
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <%}%>
-
-            <form role="form" action="/api/auth/customerlogin" method="POST">
-              <div class="form-group mb-3">
-                <div
-                  class="input-group input-group-merge input-group-alternative"
-                >
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"
-                      ><i class="fas fa-phone"></i
-                    ></span>
-                  </div>
-                  <input
-                    class="form-control"
-                    name="phone"
-                    placeholder="phone"
-                  />
-                </div>
-              </div>
-              <div class="form-group">
-                <div
-                  class="input-group input-group-merge input-group-alternative"
-                >
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"
-                      ><i class="fas fa-lock"></i
-                    ></span>
-                  </div>
-                  <input
-                    class="form-control"
-                    placeholder="Password"
-                    name="password"
-                    type="password"
-                  />
-                </div>
-              </div>
-
-              <div class="text-center">
-                <button type="submit" class="btn btn-primary my-4">
-                  Log in
-                </button>
-              </div>
-            </form>
-
-            <span
-              style="
-                margin-top: 0px;
-                text-align: center;
-                padding-left: 100px;
-                padding-bottom: 20px;
-                color: red;
-              "
-              >Dont have an Account?</span
-            >
-            <br /><br />
-            <a
-              style="
-                text-align: center;
-                padding-left: 100px;
-                padding-bottom: 100px;
-              "
-              href="/api/auth/customersignup"
-              ><button type="submit" class="btn btn-success">
-                Create an account
-              </button></a
-            >
+<div class="container mt--8 pb-5">
+  <h1 class="text-center mb-4" style="color: white">VIDLY</h1>
+  <br />
+  <br />
+  <div class="row justify-content-center">
+    <div class="col-lg-5 col-md-7">
+      <div class="card">
+        <div class="card-body px-lg-5 py-lg-5">
+          <div class="text-center text-muted mb-4">
+            <h5 style="color: red">Sign in</h5>
           </div>
+          <%if(message.length>0){%>
+
+          <div
+            class="alert alert-danger alert-dismissible fade show"
+            role="alert"
+          >
+            <strong><%=message%></strong>
+          </div>
+          <%}%>
+
+          <form role="form" action="/api/auth/customerlogin" method="POST">
+            <div class="form-group mb-3">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"
+                    ><i class="fas fa-phone"></i
+                  ></span>
+                </div>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="phone"
+                  placeholder="phone"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <div
+                class="input-group input-group-merge input-group-alternative"
+              >
+                <div class="input-group-prepend">
+                  <span class="input-group-text"
+                    ><i class="fas fa-lock"></i
+                  ></span>
+                </div>
+                <input
+                  class="form-control"
+                  placeholder="Password"
+                  name="password"
+                  type="password"
+                />
+              </div>
+            </div>
+
+            <div class="text-center">
+              <button type="submit" class="btn btn-primary my-4">Log in</button>
+            </div>
+          </form>
+
+          <span class="centering" style="color: red"
+            >Dont have an Account?</span
+          >
+          <br /><br />
+          <a class="centering" href="/api/auth/signupPage"
+            ><button type="submit" class="btn btn-success">
+              Create an account
+            </button></a
+          >
         </div>
-        <div class="row mt-3"></div>
       </div>
     </div>
   </div>

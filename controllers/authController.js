@@ -31,12 +31,12 @@ async function generateAuthToken(res, _id, name, subject, cart, wishList) {
 
 exports.loginPage = async (req, res) => {
   var type = "userLogin";
-  return res.status(200).render("./loginPage.ejs", { type: type });
+  return res.status(200).render("./loginPage.ejs", { type: type, message:req.flash('message') });
 };
 
 exports.signupPage = async (req, res) => {
   var type = "userSignup";
-  return res.status(200).render("./signupPage", { type: type });
+  return res.status(200).render("./signupPage", { type: type, message:req.flash('message') });
 };
 
 exports.signupPageCustomer = async (req, res) => {
@@ -54,37 +54,42 @@ exports.loginPageCustomer = async (req, res) => {
 };
 
 exports.getUser = async (req, res) => {
-  res.clearCookie(req.headers["cookie"]);
-  res.locals = {};
-  let user = await User.findOne({ email: req.body.email });
-  if (user) return res.status(400).send("User already registered");
-  user = new User(_.pick(req.body, ["name", "email", "password"]));
-  var cart = [],
-    wishList = [];
-  const token = await generateAuthToken(
-    res,
-    user._id,
-    user.name,
-    "User",
-    cart,
-    wishList
-  );
-  token.then((value) => {
-    user.phoneToken = value;
-  });
-  user.active = true;
-  req.user = user;
-  await user.save();
-  res
-    .header("x-auth-token", token)
-    .send(_.pick(user, ["_id", "name", "email"]));
+  try {
+    const { name, email, password } = req.body;
+    let user = await User.findOne({ email: email });
+    if (user) {
+      req.flash("message", "User already registered");
+      return res.status(304).redirect("/api/auth/signupData");
+    }
+    var newuser = await User.create({
+      name: name,
+      email: email,
+      password: password,
+    });
+    var cart = [],
+      wishList = [];
+    await generateAuthToken(
+      res,
+      newuser._id,
+      newuser.name,
+      "User",
+      cart,
+      wishList
+    );
+    newuser.active = true;
+    user.save();
+    return res.status(200).redirect("/");
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 exports.getUserfromdata = async (req, res) => {
   let user = await User.findOne({ email: req.body.email });
 
   if (!user || req.body.password != user.password) {
-    return res.status(400).send("Invalid Email/Password");
+    req.flash("message", "Invalid Email/Password");
+    return res.status(400).redirect("/api/auth/signupData");
   }
   var cart = [],
     wishList = [];
@@ -96,11 +101,9 @@ exports.getUserfromdata = async (req, res) => {
     cart,
     wishList
   );
-  token.then((value) => {
-    user.phoneToken = value;
-  });
+
   user.active = true;
-  // req.user = user;
+
   user.save();
   return res.status(200).redirect("/");
 };

@@ -108,9 +108,7 @@ i {
        <li class="nav-item ">
          <a class="nav-link" href="/api/movies/getallmovies" style="color:white;">Movies <span class="sr-only">(current)</span></a>
        </li>
-       <li class="nav-item ">
-         <a class="nav-link" style="color:white" href="/api/customers/getrentals">Rentals</a>
-       </li>
+       
        <li class="nav-item ">
         <a class="nav-link" style="color:white" href="/api/customers/getWishlist">Wishlist</a>
       </li>
@@ -129,6 +127,9 @@ i {
           </a>
         
        </li>
+       <li class="nav-item ">
+        <a class="nav-link" style="color:white" href="/api/customers/getrentals">RentedMovies</a>
+      </li>
        
      </ul>
       
@@ -145,15 +146,11 @@ i {
       &nbsp;&nbsp;
       <div class="dropdown">
         <%if(currentUser){%>
-          <%if(currentUser.subject == 'Customer'){%>
-            
+          <%if(currentUser.subject == 'Customer' || currentUser.subject == 'User'){%>
             <button class="dropbtn"> <%=currentUser.name%></button>
             <%} else {%>
-              <button class="dropbtn">My Account</button>
-              <%}%>
-          <%}else{%>
-        <button class="dropbtn">My Account</button>
-        <%}%>
+                <button class="dropbtn">My Account</button>
+          <%}%><%}%>
         <div class="dropdown-content">
           <%if(currentUser){%>
           <%if(currentUser.subject == 'Guest'){%>

@@ -19,22 +19,19 @@
   
   .card-text {
     font-family: "Work Sans", sans-serif;
-    margin: 5px;
+    /* margin: 5px; */
     color: rgb(20, 20, 20);
   }
   .img {
     position: relative;
-    width: 220px;
-    height: 330px;
-    right: 51px;
-    top:5px;
+    width: 13.75rem;
+    height: 20.625rem;
     left: 0;
-    overflow-x:hidden;
   }
   span {
     font-size: 20px;
   }
-  
+ 
   
 </style>
 <body>
@@ -48,17 +45,18 @@
     <%}%>
   <div class="row">
     <a target="_blank" href="<%=movie.img%>"
-      ><img
-        style="height: 560px; width: 400px; margin-left: 25px"
+      ><img class="moviepagimg"
+       
         src="<%=movie.img%>"
     /></a>
-    <div style="position: relative; left: 40px">
-      <h1><%=movie.title%> (<%=movie.year%>)</h1>
+    <div class="cardDiv">
+      <div style="min-width:2rem;" ><h1><%=movie.title%> (<%=movie.year%>)</h1></div>
+      
       <h5>Starring: <b><%=movie.cast%></b></h5>
       <h5>Director: <b><%=movie.director%></b></h5>
-      <h5>Genre: <%for(var i=0; i< rgenres.length; i++){%> <a href="/api/movies/search/?title=<%=rgenres[i]%>" style="text-decoration: none;"><%=rgenres[i]%> </a>  <%}%>
+      <h5>Genre: <%for(var i=0; i< rgenres.length; i++){%> <a href="/api/movies/search/?title=<%=rgenres[i]%>" style="text-decoration: none;"><%=rgenres[i]%> </a> <%if(i!=rgenres.length-1){%><span>,</span><%}%> <%}%>
       <h5>CBFC Rating: <b><%if(movie.mpAARating==""){%>U/A<%}else{%><%=movie.mpAARating%><%}%></b></h5>
-      <%console.log(movie.mpAARating)%>
+  
       <%if(movie.worldwide!=""){%>
       <h5>Box Office: <b><%=movie.worldwide%></b></h5>
       <%} else {}%>
@@ -76,10 +74,10 @@
       <%if(movie.aspectRatio!=""){%>
       <h5>Aspect Ratio: <b><%=movie.aspectRatio%></b></h5>
       <%} else {}%>
-      <h5>
+      <h5 >
         Rental Rate (per day):
         <b style="color: red">$<%=movie.dailyRentalRate.toFixed(2)%></b
-        ><small><small style="margin-bottom: 2px"> </small></small>
+        >
       </h5>
       
       <%if(movie.numberInStock <=10){%>
@@ -94,6 +92,7 @@
           ><button class="btn btn-success">Review</button></a
         ></span>
         <%}%>
+        <br>
         &nbsp;&nbsp;<span
         ><a href="/api/movies/addToCart/<%=movie._id%>"
           ><button class="btn btn-success">Add to Cart</button></a
@@ -113,17 +112,17 @@
   </div>
   <br />
   <%var p = 5;%>
-  <div class="row">
+  <div class="moviesBox">
   
     <%otherMovies.forEach(list=>{%>
     <a href="/api/movies/<%=list._id%>">
       <div class="otherContainer">
-        <div class="col-md-4 col-xs-9">
+        <div class="col-md-4 col-xs-9" >
           <div
             class="card"
-            style="width: 220px; height:300px;align-items: center; justify-content: center"
+            id="cardStyling"
           >
-            <div class="col-md-9 col-xs-9">
+          <div class="img-hover">
               <img class="img" src="<%=list.img%>" alt="Card image cap" />
             </div>
             <div class="card-body" style="width: 20rem">
@@ -131,7 +130,7 @@
                 target="_blank"
                 href="/api/movies/<%=list._id%>"
                 style="text-decoration: none; color:white"
-                ><h5 class="card-title text-center" style="position: relative; bottom:25px;">
+                ><h5 class="card-title " style="position: relative; bottom:25px;">
                   <%=list.title%> (<%=list.year%>)
                 </h5></a
               >
@@ -139,10 +138,8 @@
           </div>
         </div>
       </div>
-      <br>
-      <br>
+     
     </a>
-    
     <%})%>
   </div>
  

@@ -6,7 +6,7 @@ exports.checkauth = async (req, res, next) => {
   // console.log(req);
   // const obj = JSON.parse(JSON.stringify(req.cookies));
 
-  console.log(req.cookies, "cookies");
+  // console.log(req.cookies, "cookies");
   const checkstring = JSON.stringify(req.cookies);
   // console.log(typeof checkstring, "cs");
   // console.log(obj, "obj");

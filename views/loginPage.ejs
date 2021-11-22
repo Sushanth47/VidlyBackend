@@ -1,186 +1,77 @@
 <%- include('./partials/header') %>
 <title>Login | Vidly</title>
-<style>
-  body {
-    background-color: #ecf1ee;
-    /* background-image: url("./styles/img.svg"); */
-    /* background-image: url("./styles/img.svg"); */
-  }
-
-  #mainCard {
-    border: 1px solid white;
-    border-radius: 15px;
-    /* background-color: rgb(214, 214, 214); */
-  }
-  h1 {
-    text-align: center;
-    padding-bottom: 70px;
-    position: relative;
-    color: black;
-    font-family: "Dancing Script", cursive;
-  }
-  .mb-0 {
-    border: 1px solid white;
-    border-radius: 15px;
-    filter: drop-shadow(2px 4px 8px #2d2e2e);
-  }
-</style>
+<head>
+  <link rel="stylesheet" type="text/css" href="/css/style.css" />
+</head>
+<style></style>
 <body>
-  <div id="mainDiv">
-    <div class="container mt--8 pb-5" style="padding-top: 50px">
-      <h1>VIDLY</h1>
-      <div class="row justify-content-center">
-        <div class="col-lg-5 col-md-7">
-          <div class="card border-0 mb-0">
-            <div class="card-body px-lg-5 py-lg-5" id="mainCard">
-              <div class="text-center text-muted mb-4">
-                <h5>Sign in</h5>
-              </div>
-              <%if(type=="userLogin"){%>
-              <form role="form" action="/api/auth/loginData" method="POST">
-                <div class="form-group mb-3">
-                  <div
-                    class="
-                      input-group input-group-merge input-group-alternative
-                    "
-                  >
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"
-                        ><i class="fas fa-mobile"></i
-                      ></span>
-                    </div>
-                    <input
-                      class="form-control"
-                      name="email"
-                      placeholder="username or email or phone"
-                    />
-                  </div>
-                </div>
-                <div class="form-group">
-                  <div
-                    class="
-                      input-group input-group-merge input-group-alternative
-                    "
-                  >
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"
-                        ><i class="fas fa-lock"></i
-                      ></span>
-                    </div>
-                    <input
-                      class="form-control"
-                      placeholder="Password"
-                      name="password"
-                      type="password"
-                    />
-                  </div>
-                </div>
+  <div class="container mt--8 pb-5">
+    <h1 class="text-center mb-5">VIDLY</h1>
+    <br /><br />
+    <div class="row justify-content-center">
+      <div class="col-lg-5 col-md-7">
+        <div class="card border-0 mb-0">
+          <div class="card-body px-lg-5 py-lg-5">
+            <div class="text-center text-muted mb-4">
+              <h5 style="color: red">Sign in</h5>
+            </div>
 
-                <div class="text-center">
+            <form role="form" action="/api/auth/loginData" method="POST">
+              <div class="form-group mb-3">
+                <div
+                  class="input-group input-group-merge input-group-alternative"
+                >
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"
+                      ><i class="fas fa-envelope-square"></i
+                    ></span>
+                  </div>
                   <input
-                    type="submit"
-                    class="btn btn-primary my-4"
-                    value="Log in"
+                    type="email"
+                    class="form-control"
+                    name="email"
+                    placeholder="Email"
                   />
                 </div>
-              </form>
-              <span
-                style="
-                  text-align: center;
-                  padding-left: 100px;
-                  padding-bottom: 10px;
-                "
-                >Dont have an Account?</span
-              >
-              <br /><br />
-              <a
-                style="
-                  text-align: center;
-                  padding-left: 100px;
-                  padding-bottom: 100px;
-                "
-                href="/api/auth/signupData"
-                ><button type="submit" class="btn btn-success">
-                  Create an account
-                </button></a
-              >
-              <%}else if(type=="customerLogin"){%>
-              <form role="form" action="/api/auth/customerlogin" method="POST">
-                <div class="form-group mb-3">
-                  <div
-                    class="
-                      input-group input-group-merge input-group-alternative
-                    "
-                  >
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"
-                        ><i class="fas fa-phone"></i
-                      ></span>
-                    </div>
-                    <input
-                      class="form-control"
-                      name="phone"
-                      placeholder="phone"
-                    />
+              </div>
+              <div class="form-group">
+                <div
+                  class="input-group input-group-merge input-group-alternative"
+                >
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"
+                      ><i class="fas fa-lock"></i
+                    ></span>
                   </div>
+                  <input
+                    class="form-control"
+                    placeholder="Password"
+                    name="password"
+                    type="password"
+                  />
                 </div>
-                <div class="form-group">
-                  <div
-                    class="
-                      input-group input-group-merge input-group-alternative
-                    "
-                  >
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"
-                        ><i class="fas fa-lock"></i
-                      ></span>
-                    </div>
-                    <input
-                      class="form-control"
-                      placeholder="Password"
-                      name="password"
-                      type="password"
-                    />
-                  </div>
-                </div>
+              </div>
 
-                <div class="text-center">
-                  <button
-                    type="submit"
-                    onclick="history.back()"
-                    class="btn btn-primary my-4"
-                  >
-                    Log in
-                  </button>
-                </div>
-              </form>
-
-              <span
-                style="
-                  text-align: center;
-                  padding-left: 100px;
-                  padding-bottom: 10px;
-                "
-                >Dont have an Account?</span
-              >
-              <br /><br />
-              <a
-                style="
-                  text-align: center;
-                  padding-left: 100px;
-                  padding-bottom: 100px;
-                "
-                href="/api/auth/customersignup"
-                ><button type="submit" class="btn btn-success">
-                  Create an account
-                </button></a
-              >
-
-              <!-- <a class="align-items-center" href="/api/auth/customersignup"><button type="submit" class="btn btn-success">Create an account</button></a> -->
-              <%}%>
-            </div>
+              <div class="text-center">
+                <input
+                  type="submit"
+                  class="btn btn-primary my-4"
+                  value="Log in"
+                />
+              </div>
+            </form>
+            <span style="padding-left: 5.9rem; color: red"
+              >Dont have an Account?</span
+            >
+            <br /><br />
+            <a
+              style="text-align: center; padding-left: 5.9rem"
+              href="/api/auth/signupData"
+              ><button type="submit" class="btn btn-success">
+                Create an account
+              </button></a
+            >
           </div>
-          <div class="row mt-3"></div>
         </div>
       </div>
     </div>

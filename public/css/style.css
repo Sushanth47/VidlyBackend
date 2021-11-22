@@ -39,8 +39,8 @@
   display: flex;
   flex-wrap: wrap;
   flex-shrink: inherit;
-  flex-basis: 4rem;
-  justify-content: space-around;
+  flex-basis: 2rem;
+  justify-content: space-evenly;
   grid-template-columns: min-content;
   margin-bottom: 2rem;
   /* flex: 100%; */
@@ -63,12 +63,12 @@
   margin-left: 5px;
 }
 #cardStyling {
-  margin: 0 4.1rem 2.1rem 1.3rem;
+  margin: 0 4.1rem 1.5rem 1.3rem;
   width: 12.5rem;
   height: 21.25rem;
   border: 25px;
   border-radius: 1.25rem;
-  transition: filter 300ms;
+  /* transition: filter 200ms; */
   background-color: var(--clr-background);
 }
 .search {
@@ -111,7 +111,48 @@ ul {
   border-radius: 5px;
   margin-bottom: 5px;
 }
+.moviepagimg {
+  margin-bottom: 2rem;
+  height: 35rem;
+  width: 25rem;
+  margin-left: 1.8rem;
+}
+.billbox {
+  background: white;
+  color: black;
+  margin: auto;
+  margin-top: 20px;
+  max-width: 22%;
+  height: 58%;
+  font-family: "Roboto Condensed", sans-serif;
+  border-radius: 12px;
+}
 
+.continue {
+  text-align: center;
+}
+
+.contents {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.buttonbar {
+  background: white;
+  color: rgb(63, 63, 63);
+  margin: auto;
+  max-width: 42%;
+  padding-left: 2rem;
+  border-radius: 16px;
+  margin-top: 1.42rem;
+}
+.headings {
+  font-weight: bolder;
+  margin-bottom: 13px;
+}
+.values {
+  color: rgb(83, 83, 83);
+}
 .img {
   height: 17.5rem;
   min-width: 12.5rem;
@@ -208,4 +249,10 @@ body {
   align-items: center;
   margin-top: 50px;
   padding-left: 700px;
+}
+
+.cardDiv {
+  position: relative;
+  left: 2.5rem;
+  top: 0.5rem;
 }

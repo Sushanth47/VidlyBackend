@@ -4,52 +4,22 @@
     href="https://fonts.googleapis.com/css2?family=Alegreya:wght@500&display=swap"
     rel="stylesheet"
   />
+  <link rel="stylesheet" type="text/css" href="/css/style.css" />
 </head>
 <title>Sign Up</title>
 <script
   src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"
   data-auto-replace-svg="nest"
 ></script>
-<style>
-  body {
-    max-width: 105%;
-    overflow-x: hidden;
-    scroll-behavior: smooth;
-    background-color: rgb(52, 58, 64);
-    color: white;
-  }
-  #cardOutline {
-    /* border: 1px solid black; */
-    border-radius: 25px;
-    /* background-color: rgb(34, 34, 34); */
-  }
-  .container {
-    filter: drop-shadow(2px 4px 8px #6c6d6d);
-    /* background-color: rgb(34, 34, 34); */
-  }
-</style>
+
 <body>
   <div>
-    <h1
-      style="
-        text-align: center;
-        padding-bottom: 70px;
-        position: relative;
-        font-family: 'Alegreya', serif;
-      "
-    >
-      Vidly
-    </h1>
-    <div
-      class="container mt--8 pb-5"
-      style="padding-top: 0px; border-radius: 25px"
-    >
+    <h1 class="text-center mb-5">Vidly</h1>
+
+    <div class="container mt--8 pb-5">
       <div class="row justify-content-center">
         <div class="col-lg-5 col-md-7" style="color: blue">
-          <div
-            class="card border-0 mb-0"
-            style="color: red; border: 1px solid black"
-          >
+          <div class="card border-0" style="color: red">
             <div class="card-body px-lg-5 py-lg-5" id="cardOutline">
               <div class="text-center mb-4">
                 <small>Sign Up!</small>
@@ -84,6 +54,7 @@
                       ></span>
                     </div>
                     <input
+                      tye="text"
                       class="form-control"
                       name="phone"
                       placeholder="Phone"
@@ -130,18 +101,15 @@
                 </div>
 
                 <div class="text-center">
-                  <input
-                    type="submit"
-                    class="btn btn-primary my-4"
-                    value="Sign Up"
-                    style="padding-left: 30px; padding-right: 30px"
-                  />
+                  <button type="submit" class="btn btn-primary my-4">Sign Up</button>
+                  
                 </div>
 
                 <div class="text-center">
-                  <h7 style="margin: auto" class="text-center"
-                    >Already have an Account? </h7
-                  ><br /><br /><a
+                  <h6 style="margin: auto" class="text-center"></h6>
+                    Already have an Account?
+                  </h6>
+                  <br /><br /><a
                     class="btn btn-info"
                     href="/api/auth/loginCustomer"
                     >Login</a

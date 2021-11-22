@@ -1,6 +1,5 @@
 <%- include('./partials/header') %> <title>Bill</title>
 
-
 <head>
   <script src="https://rawgit.com/moment/moment/2.2.1/min/moment.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -11,6 +10,7 @@
 </head>
 <style>
   body {
+    max-width: 100%;
     background: rgb(2, 0, 36);
     background: linear-gradient(
       90deg,
@@ -21,6 +21,7 @@
       rgba(0, 212, 255, 1) 100%
     );
     color: white;
+    overflow-x: hidden;
   }
   .billbox {
     background: white;
@@ -37,20 +38,6 @@
     text-align: center;
   }
 
-  /* .midbox {
-    margin: auto;
-    margin-top: 10px;
-    box-shadow: 2px 2px 1px rgb(104, 103, 103);
-    border-radius: 12px;
-    max-width: 320px;
-    height: 90px;
-  } */
-  /* .customerName {
-    font-size: 20px;
-    padding-left: 20px;
-    padding-top: 20px;
-    margin-bottom: 25px;
-  } */
   .contents {
     margin-bottom: 20px;
     text-align: center;
@@ -106,7 +93,7 @@
     </div>
     <br />
     <div class="continue bottomMost">
-      <a class="btn btn-primary" href="/api/api/movies">Continue Shopping</a>
+      <a class="btn btn-primary" href="/api/movies/movies">Continue Shopping</a>
     </div>
   </div>
 </body>
