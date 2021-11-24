@@ -2,8 +2,16 @@
   --clr-background: rgb(52, 58, 64);
   --clr-text: white;
   --clr-search: #0fbd9c;
+  --clr-imdb: #dba506;
 }
 
+body {
+  /* max-width: 100%; */
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  background-color: var(--clr-background);
+  color: var(--clr-text);
+}
 .pagination {
   font-size: 1.25rem;
 }
@@ -28,31 +36,15 @@
   margin-bottom: 4rem;
 }
 
-.movieclass {
-  margin-left: 10vh;
-  align-items: center;
-  margin-top: 5px;
-  margin-bottom: 5px;
-}
 .moviesBox {
-  flex-direction: row;
   display: flex;
+  flex-direction: row;
   flex-wrap: wrap;
-  flex-shrink: inherit;
-  flex-basis: 2rem;
-  justify-content: space-evenly;
-  grid-template-columns: min-content;
-  margin-bottom: 2rem;
-  /* flex: 100%; */
+  flex-shrink: initial;
+  justify-content: space-around;
+  margin: 2rem 0 2rem 0;
 }
 
-.search {
-  margin: auto;
-  position: relative;
-  left: 30vw;
-  align-items: center;
-  margin-bottom: 4rem;
-}
 #submitButton {
   background-color: var(--clr-search);
   border-radius: 20px;
@@ -63,44 +55,24 @@
   margin-left: 5px;
 }
 #cardStyling {
-  margin: 0 4.1rem 1.5rem 1.3rem;
+  margin: 0 2.2rem 1.5rem 1.3rem;
   width: 12.5rem;
   height: 21.25rem;
   border: 25px;
   border-radius: 1.25rem;
-  /* transition: filter 200ms; */
   background-color: var(--clr-background);
 }
-.search {
-  margin: auto;
-  position: relative;
-  left: 30vw;
-  align-items: center;
-  margin-bottom: 4rem;
-}
-.input {
-  width: 50%;
-  margin-top: 3px;
-  border-radius: 1.6rem;
-  padding: 1.1rem;
-}
+
 .sort {
   position: relative;
   right: 2%;
   margin-bottom: 2rem;
 }
 .card-text {
-  color: #000;
   font-family: "Yaldevi", sans-serif;
   font-weight: bold;
 }
 
-.popbuttons {
-  background-color: rgb(74, 175, 74);
-  color: white;
-  border-radius: 12px;
-  border: 1px solid rgb(218, 217, 217);
-}
 ul {
   list-style: none;
   border-radius: 5px;
@@ -117,42 +89,7 @@ ul {
   width: 25rem;
   margin-left: 1.8rem;
 }
-.billbox {
-  background: white;
-  color: black;
-  margin: auto;
-  margin-top: 20px;
-  max-width: 22%;
-  height: 58%;
-  font-family: "Roboto Condensed", sans-serif;
-  border-radius: 12px;
-}
 
-.continue {
-  text-align: center;
-}
-
-.contents {
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-.buttonbar {
-  background: white;
-  color: rgb(63, 63, 63);
-  margin: auto;
-  max-width: 42%;
-  padding-left: 2rem;
-  border-radius: 16px;
-  margin-top: 1.42rem;
-}
-.headings {
-  font-weight: bolder;
-  margin-bottom: 13px;
-}
-.values {
-  color: rgb(83, 83, 83);
-}
 .img {
   height: 17.5rem;
   min-width: 12.5rem;
@@ -188,67 +125,33 @@ span {
   color: var(--clr-text);
 }
 #imdb {
-  margin-top: 10px;
-  margin-left: 5px;
+  margin-top: 1.6rem;
+  margin-left: 0.4rem;
   border-color: 1px solid transparent;
   font-weight: bolder;
   font-family: "Roboto", sans-serif;
   color: black;
-  width: 90px;
-  background-color: #dba506;
+  width: 5.5rem;
+  background-color: var(--clr-imdb);
   padding: 5px;
   border-radius: 10px;
   text-decoration: none;
-  -webkit-transform: scale(1);
-  transform: scale(1);
-  -webkit-transition: 0.3s ease-in-out;
-  transition: 0.3s ease-in-out;
-}
-.otherContainer {
-  margin-top: 1.5rem;
-  margin-left: 6vh;
-  margin-bottom: 3.5rem;
-  flex-direction: row;
-  -webkit-transform: scale(1);
-  transform: scale(1);
-  -webkit-transition: 0.3s ease-in-out;
-  transition: 0.3s ease-in-out;
-}
-.otherContainer:hover {
-  -webkit-transform: scale(1);
-  transform: scale(1.1);
-}
-
-body {
-  max-width: 100%;
-  overflow-x: hidden;
-  scroll-behavior: smooth;
-  background-color: var(--clr-background);
-  color: var(--clr-text);
 }
 
 .iconStyling {
   float: right;
   margin-top: 1.25rem;
-  color: white;
+  color: var(--clr-text);
 }
 
 .iconStyling:hover {
   color: red;
 }
-.nextcontainer {
-  display: flex;
-  flex-wrap: wrap;
-  flex-shrink: inherit;
-  flex-basis: 2rem;
-  justify-content: space-around;
-  grid-template-columns: min-content;
-  margin-bottom: 2rem;
-}
+
 .form {
   align-items: center;
-  margin-top: 50px;
-  padding-left: 700px;
+  margin-top: 3.125rem;
+  padding-left: 43.75rem;
 }
 
 .cardDiv {

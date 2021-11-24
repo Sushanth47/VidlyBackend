@@ -3,8 +3,6 @@
   <link rel="stylesheet" type="text/css" href="/css/style.css" />
 </head>
 <style>
-  
-
   #cardStyling {
     border: 1px solid transparent;
     background-color: rgb(52, 58, 64);
@@ -13,14 +11,14 @@
     margin-bottom: 5vh;
   }
 
-  img {
+  /* img {
     position: relative;
-    /* top: 0; */
+    /* top: 0; 
     height: 20rem;
     margin: 0.625rem;
     border-radius: 10px;
     width: 14.5rem;
-  }
+  } */
 </style>
 <body>
   <%if(subject == "wishList"){%>
@@ -30,7 +28,7 @@
   <h1 class="text-center" style="margin-bottom: 2.5rem">My Wishlist</h1>
 
   <br />
-  <div class="nextcontainer">
+  <div class="moviesBox">
     <%cust.wishList.forEach(list=>{%>
 
     <div class="card" id="cardStyling">
@@ -38,21 +36,19 @@
         <a class="iconStyling" href="/api/customers/pullfromlist/<%=list._id%>"
           ><i class="fas fa-trash fa-2x"></i
         ></a>
-        <a target="_blank" href="/api/movies/<%=list._id%>"
-          ><img class="align-items-center" src="<%=list.img%>" alt="..."
-        /></a>
       </div>
-      <div class="card-block">
-        <ul class="list-group" style="border-color: white">
-          <a
-            href="/api/movies/<%=list._id%>"
-            style="text-decoration: none"
-            target="_blank"
-            ><h6 class="card-title text-center">
-              <%=list.title%>(<%=list.year%>)
-            </h6></a
-          >
-        </ul>
+      <a target="_blank" href="/api/movies/<%=list._id%>"
+        ><div class="img-hover">
+          <img class="img" src="<%=list.img%>" /></div
+      ></a>
+
+      <br />
+      <div class="card-body">
+        <a href="/api/movies/<%=list._id%>" target="_blank"
+          ><h6 style="color: white" class="movietitle text-center">
+            <%=list.title%> (<%=list.year%>)
+          </h6></a
+        >
       </div>
     </div>
     <br />
@@ -68,7 +64,7 @@
     ><button class="btn btn-success">Checkout</button></a
   >
   <br />
-  <div class="nextcontainer">
+  <div class="moviesBox">
     <%cust.cart.forEach(list=>{%>
     <div class="card" id="cardStyling">
       <div>
@@ -77,21 +73,19 @@
           href="/api/customers/pullfromlist/<%=list._id%>"
           ><i class="fas fa-trash fa-2x"></i
         ></a>
-        <a target="_blank" href="/api/movies/<%=list._id%>"
-          ><img class="align-items-center" src="<%=list.img%>" alt="..."
-        /></a>
       </div>
-      <div class="card-block">
-        <ul class="list-group" style="border-radius: 30px; border-color: white">
-          <a
-            href="/api/movies/<%=list._id%>"
-            style="text-decoration: none"
-            target="_blank"
-            ><h6 class="card-title text-center">
-              <%=list.title%>(<%=list.year%>)
-            </h6></a
-          >
-        </ul>
+      <a target="_blank" href="/api/movies/<%=list._id%>"
+        ><div class="img-hover">
+          <img class="img" src="<%=list.img%>" /></div
+      ></a>
+
+      <br />
+      <div class="card-body">
+        <a href="/api/movies/<%=list._id%>" target="_blank"
+          ><h6 style="color: white" class="movietitle text-center">
+            <%=list.title%> (<%=list.year%>)
+          </h6></a
+        >
       </div>
     </div>
     <br />
@@ -105,23 +99,21 @@
   <h1 class="text-center">My Rentals</h1>
   <br />
 
-  <div class="nextcontainer">
+  <div class="moviesBox">
     <%if(cust){%> <%cust.forEach(now=>{%> <%now.movie.forEach(list=>{%>
     <div class="card" id="cardStyling">
       <a target="_blank" href="/api/movies/<%=list._id%>"
-        ><img class="card-img align-items-center" src="<%=list.img%>" alt="..."
-      /></a>
-      <div class="card-block" style="padding: 4px">
-        <ul class="list-group" style="border-radius: 30px; border-color: white">
-          <a
-            href="/api/movies/<%=list._id%>"
-            style="text-decoration: none"
-            target="_blank"
-            ><h5 class="card-title" style="text-align: center; color: white">
-              <%=list.title%> (<%=list.year%>)
-            </h5></a
-          >
-        </ul>
+        ><div class="img-hover">
+          <img class="img" src="<%=list.img%>" /></div
+      ></a>
+
+      <br />
+      <div class="card-body">
+        <a href="/api/movies/<%=list._id%>" target="_blank"
+          ><h6 style="color: white" class="movietitle text-center">
+            <%=list.title%> (<%=list.year%>)
+          </h6></a
+        >
       </div>
     </div>
     <%})%> <%})%> <%} else {%>
