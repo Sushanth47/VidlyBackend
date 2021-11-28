@@ -44,18 +44,23 @@ exports.rentalDisplay = async (req, res) => {
 
 exports.checkout = async (req, res, next) => {
   try {
-    var customer = await Customer.findOne({ _id: req.user._id }).populate(
-      "cart"
-    );
+    var customer = await Customer.findOne(
+      { _id: req.user._id },
+      "cart rentedMovies"
+    ).populate("cart");
     var ans = 0;
     var arr = [];
     var newarr = [];
     var date = new Date();
 
     for (var i = 0; i < customer.cart.length; i++) {
-      var movie = await Movie.findOne({ _id: customer.cart[i]._id });
+      var movie = await Movie.findOne(
+        { _id: customer.cart[i]._id },
+        "_id title dailyRentalRate rentedCustomers numberInStock"
+      );
       movie.rentedCustomers.push(customer._id);
-      await movie.save();
+      movie.numberInStock--;
+      movie.save();
       arr.push(movie._id);
       newarr.push(movie.title);
       ans += req.body.days * movie.dailyRentalRate;

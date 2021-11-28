@@ -10,18 +10,9 @@
 </head>
 <title><%=movie.title%> (<%=movie.year%>)</title>
 <style>
-  
- 
   h5 {
     margin-top: 25px;
   }
- 
-  
- 
-  
-  
- 
-  
 </style>
 <body>
   <%if(message.length>0){%>
@@ -66,12 +57,12 @@
       <%} else {}%>
       <h5 >
         Rental Rate (per day):
-        <b style="color: red">$<%=movie.dailyRentalRate.toFixed(2)%></b
+        <b style="color: #fff">$<%=movie.dailyRentalRate.toFixed(2)%></b
         >
       </h5>
       
       <%if(movie.numberInStock <=10){%>
-      <h5 style="color: red">Available in Stock: <%=movie.numberInStock%></h5>
+      <h5 style="color: #fff">Available in Stock: <%=movie.numberInStock%></h5>
       <span style="color: red; font-size: small"
         >This item is quickly running out of stock</span
       >
