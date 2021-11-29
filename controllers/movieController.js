@@ -386,6 +386,7 @@ exports.getSpecificMovie = async (req, res) => {
     { _id: req.params.mid },
     "genreId clicks"
   ).populate("genreId");
+  // console.table(tester);
   rgenres = [];
   tester.genreId.forEach((list) => {
     rgenres.push(list.name);
@@ -396,7 +397,7 @@ exports.getSpecificMovie = async (req, res) => {
     },
     " title year img genreId"
   ).populate("genreId", "_id");
-
+  // console.table(otherMovies);
   otherMovies.forEach((list) => {
     for (var i = 0; i < tester.genreId.length; i++) {
       list.genreId.forEach((lost) => {
@@ -406,12 +407,12 @@ exports.getSpecificMovie = async (req, res) => {
       });
     }
   });
+  // console.log(othermovies);
   tester.clicks += 1;
   tester.save();
   var p = [...new Set(othermovies)];
 
-  p.length = Math.min(p.length, 8);
-  // console.log(p);
+  p.length = Math.min(p.length, 10);  
   return res.status(200).render("./moviePage.ejs", {
     movie: movie[0],
     otherMovies: p,
