@@ -70,29 +70,29 @@ app.use("/api/auth", auth);
 
 //Some Direct Routes
 
-app.get("/phonetoken", async (req, res) => {
-  var auth = await Customer.find({});
-  auth.forEach((list) => {
-    list.phoneToken = "N/A";
-    list.save();
-  });
-  return res.status(200).json("done");
-});
+// app.get("/phonetoken", async (req, res) => {
+//   var auth = await Customer.find({});
+//   auth.forEach((list) => {
+//     list.phoneToken = "N/A";
+//     list.save();
+//   });
+//   return res.status(200).json("done");
+// });
 
-app.get("/pagerender", async (req, res) => {
-  return res.render("bill.ejs");
-});
+// app.get("/pagerender", async (req, res) => {
+//   return res.render("bill.ejs");
+// });
 
-app.get("/sysinfo", async (req, res) => {
-  req.flash("successMessage", "You are successfully using req-flash");
-  valueObject = {
-    cpu: "*",
-    osInfo: "platform, release",
-    system: "model, manufacturer",
-  };
-  si.get(valueObject).then((data) => console.log(data));
-  return res.json("true");
-});
+// app.get("/sysinfo", async (req, res) => {
+//   req.flash("successMessage", "You are successfully using req-flash");
+//   valueObject = {
+//     cpu: "*",
+//     osInfo: "platform, release",
+//     system: "model, manufacturer",
+//   };
+//   si.get(valueObject).then((data) => console.log(data));
+//   return res.json("true");
+// });
 
 app.get("/getallmoviestest", async (req, res) => {
   var mov = await Customer.find({}, "cart wishList active isGold name phone ");
@@ -111,41 +111,48 @@ app.post("/addgenre", async (req, res) => {
   return res.status(200).json({ message: `Genre Added ${req.body.genre}` });
 });
 
-app.get("/addimages", async (req, res) => {
-  var img = await User.find({}, "imgs");
-  img.forEach((list) => {
-    list.imgs.push(req.body.photo);
-    list.save();
-  });
-  return res.status(200).json("done");
-});
+// app.get("/addimages", async (req, res) => {
+//   var img = await User.find({}, "imgs");
+//   img.forEach((list) => {
+//     list.imgs.push(req.body.photo);
+//     list.save();
+//   });
+//   return res.status(200).json("done");
+// });
 
-app.get("/genremodel", async (req, res) => {
-  var model = await Genre.find({});
-  model.forEach((list) => {
-    list.img = "";
-    list.description = "";
-    list.save();
-  });
-  return res.json("done");
-});
+// app.get("/genremodel", async (req, res) => {
+//   var model = await Genre.find({});
+//   model.forEach((list) => {
+//     list.img = "";
+//     list.description = "";
+//     list.save();
+//   });
+//   return res.json("done");
+// });
 
-app.get("/cookie", checkauth, function (req, res) {
-  console.log("Cookies: ", req.cookies);
-  res.clearCookie();
-  console.log("Signed Cookies: ");
-});
+// app.get("/cookie", checkauth, function (req, res) {
+//   console.log("Cookies: ", req.cookies);
+//   res.clearCookie();
+//   console.log("Signed Cookies: ");
+// });
 
-app.get("/setaddress", async (req, res) => {
-  await Rental.updateMany({}, { $set: { address: "" } });
-  return res.json("done");
-});
+// app.get('')
 
-app.get("/setrent", async (req, res) => {
-  await Customer.updateMany({}, { $set: { reviewedMovied: [] } });
+// app.get("/setaddress", async (req, res) => {
+//   var movie = await Movie.find({}, "dailyRentalRate");
+//   movie.forEach((list) => {
+//     list.dailyRentalRate = list.dailyRentalRate - 1;
+//     list.save();
+//   });
+//   console.log(movie);
+//   return res.json("done");
+// });
 
-  return res.json("done");
-});
+// app.get("/setrent", async (req, res) => {
+//   await Customer.updateMany({}, { $set: { reviewedMovied: [] } });
+
+//   return res.json("done");
+// });
 
 app.get("/webscrap", async (req, res) => {
   const movie = await Movie.find({}, "links");
@@ -233,23 +240,23 @@ app.get("/webscrapmoviedata", async (req, res) => {
   return res.json(rating);
 });
 
-app.get("/rentedcustomers", async (req, res) => {
-  await Movie.updateMany(
-    {},
-    {
-      $set: {
-        // director: "",
-        // mpAARating: "",
-        // awards: "",
-        // runtime: "",
-        // aspectRatio: "",
-        // releaseDate: "",
-        worldwide: "",
-      },
-    }
-  );
-  return res.json("done");
-});
+// app.get("/rentedcustomers", async (req, res) => {
+//   await Movie.updateMany(
+//     {},
+//     {
+//       $set: {
+//         // director: "",
+//         // mpAARating: "",
+//         // awards: "",
+//         // runtime: "",
+//         // aspectRatio: "",
+//         // releaseDate: "",
+//         worldwide: "",
+//       },
+//     }
+//   );
+//   return res.json("done");
+// });
 
 // app.get("/clicks", async (req, res) => {
 //   await Movie.updateMany({}, { $set: { clicks: 0 } });
