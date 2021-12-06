@@ -191,6 +191,21 @@ exports.getMoviesSort = async (req, res) => {
           $sort: { clicks: -1 },
         },
       ]);
+    } else if (req.query.sortBy == "BoxOffice") {
+      var movies = await Movie.aggregate([
+        {
+          $project: {
+            title: 1,
+            img: 1,
+            worldwide: 1,
+            clicks: 1,
+            year: 1,
+          },
+        },
+        {
+          $sort: { worldwide: 1 },
+        },
+      ]);
     } else if (req.query.sortBy == "Genre") {
       var movies = await Movie.aggregate([
         {
@@ -412,7 +427,7 @@ exports.getSpecificMovie = async (req, res) => {
   tester.save();
   var p = [...new Set(othermovies)];
 
-  p.length = Math.min(p.length, 10);  
+  p.length = Math.min(p.length, 10);
   return res.status(200).render("./moviePage.ejs", {
     movie: movie[0],
     otherMovies: p,
