@@ -1,3 +1,9 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 :root {
   --clr-background: rgb(52, 58, 64);
   --clr-text: white;
@@ -6,7 +12,8 @@
 }
 
 body {
-  /* max-width: 100%; */
+  margin: 0;
+  padding: 0;
   overflow-x: hidden;
   scroll-behavior: smooth;
   background-color: var(--clr-background);
@@ -34,6 +41,7 @@ body {
   left: 30vw;
   align-items: center;
   margin-bottom: 4rem;
+  text-align: center;
 }
 
 .moviesBox {
@@ -42,25 +50,31 @@ body {
   flex-wrap: wrap;
   flex-shrink: initial;
   justify-content: space-around;
+  align-items: center;
   margin: 2rem 0 2rem 0;
 }
 
 #submitButton {
   background-color: var(--clr-search);
   border-radius: 20px;
-  border: 1px solid var(--clr-text);
+  border: 1px solid transparent;
   padding: 0.48rem;
   display: block;
   color: var(---clr-text);
   margin-left: 5px;
+  outline: 0;
+  overflow: hidden;
 }
+
 #cardStyling {
   margin: 0 2.2rem 1.5rem 1.3rem;
   width: 12.5rem;
   height: 21.25rem;
   border: 25px;
-  border-radius: 1.25rem;
+  border-radius: 0.25rem;
   background-color: var(--clr-background);
+  box-shadow: 0 0 1px 2px transparent;
+  overflow: hidden;
 }
 
 .sort {
@@ -158,4 +172,8 @@ span {
   position: relative;
   left: 2.5rem;
   top: 0.5rem;
+}
+
+.cardDiv h5 {
+  margin-top: 25px;
 }
