@@ -8,7 +8,7 @@ const cors = require("cors");
 const axios = require("axios");
 const cheerio = require("cheerio");
 const morgan = require("morgan");
-const si = require("systeminformation");
+// const si = require("systeminformation");
 
 //Routes
 const genres = require("./routes/genres");
@@ -35,7 +35,7 @@ const port = process.env.PORT;
 app.set("view engine", "ejs");
 app.set("views", "./views");
 app.use(express.json());
-// app.use(cors());
+app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
 

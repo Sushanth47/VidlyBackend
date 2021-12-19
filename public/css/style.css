@@ -9,6 +9,7 @@
   --clr-text: white;
   --clr-search: #0fbd9c;
   --clr-imdb: #dba506;
+  --font-family: "Yaldevi", sans-serif;
 }
 
 body {
@@ -19,6 +20,7 @@ body {
   background-color: var(--clr-background);
   color: var(--clr-text);
 }
+
 .pagination {
   font-size: 1.25rem;
 }
@@ -42,6 +44,7 @@ body {
   align-items: center;
   margin-bottom: 4rem;
   text-align: center;
+  outline: none;
 }
 
 .moviesBox {
@@ -49,9 +52,10 @@ body {
   flex-direction: row;
   flex-wrap: wrap;
   flex-shrink: initial;
-  justify-content: space-around;
+  gap: 0.5rem;
+  justify-content: center;
   align-items: center;
-  margin: 2rem 0 2rem 0;
+  margin: 2rem 1rem 2rem 0;
 }
 
 #submitButton {
@@ -82,8 +86,9 @@ body {
   right: 2%;
   margin-bottom: 2rem;
 }
+
 .card-text {
-  font-family: "Yaldevi", sans-serif;
+  font-family: var(--font-family);
   font-weight: bold;
 }
 
@@ -91,12 +96,14 @@ ul {
   list-style: none;
   border-radius: 5px;
 }
+
 .selectStyle {
   padding: 0.3125rem;
   min-width: 9%;
   border-radius: 5px;
   margin-bottom: 5px;
 }
+
 .moviepagimg {
   margin-bottom: 2rem;
   height: 35rem;
@@ -122,7 +129,8 @@ a,
 a:hover {
   text-decoration: none;
 }
-p {
+
+p{
   font-weight: 900;
   margin-right: 50;
 }
@@ -134,10 +142,11 @@ h4,
 h5,
 p,
 span {
-  font-family: "Yaldevi", sans-serif;
+  font-family: var(--font-family);
   cursor: default;
   color: var(--clr-text);
 }
+
 #imdb {
   margin-top: 1.6rem;
   margin-left: 0.4rem;

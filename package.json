@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node app.js"
   },
-  "author": "",
+  "author": "Sushanth47",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.21.1",
