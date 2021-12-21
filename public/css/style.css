@@ -31,20 +31,23 @@ body {
 }
 
 .input {
-  width: 50%;
-  margin-top: 3px;
+  width: 35%;
   border-radius: 1.6rem;
-  padding: 1.1rem;
+  padding: 0.5rem 1rem;
 }
 
 .search {
-  margin: auto;
-  position: relative;
-  left: 30vw;
-  align-items: center;
   margin-bottom: 4rem;
-  text-align: center;
-  outline: none;
+}
+
+.search:focus {
+  background: none;
+}
+
+.search-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .moviesBox {
@@ -130,7 +133,7 @@ a:hover {
   text-decoration: none;
 }
 
-p{
+p {
   font-weight: 900;
   margin-right: 50;
 }
