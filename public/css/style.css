@@ -40,8 +40,8 @@ body {
   margin-bottom: 4rem;
 }
 
-.search:focus {
-  background: none;
+.input:focus {
+  outline: none !important;
 }
 
 .search-bar {
@@ -55,7 +55,6 @@ body {
   flex-direction: row;
   flex-wrap: wrap;
   flex-shrink: initial;
-  gap: 0.5rem;
   justify-content: center;
   align-items: center;
   margin: 2rem 1rem 2rem 0;
@@ -80,8 +79,8 @@ body {
 
 #cardStyling {
   margin: 0 2.2rem 1.5rem 1.3rem;
-  width: 12.5rem;
-  height: 21.25rem;
+  width: 10.5rem;
+  height: 19.25rem;
   border: 25px;
   border-radius: 0.25rem;
   background-color: var(--clr-background);
@@ -110,6 +109,7 @@ ul {
   min-width: 9%;
   border-radius: 5px;
   margin-bottom: 5px;
+  padding: 5px;
 }
 
 .moviepagimg {
@@ -120,8 +120,8 @@ ul {
 }
 
 .img {
-  height: 17.5rem;
-  min-width: 12.5rem;
+  height: 15.5rem;
+  min-width: 10.5rem;
   -webkit-transform: scale(1);
   transform: scale(1);
   -webkit-transition: 0.3s ease-in-out;

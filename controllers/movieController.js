@@ -8,7 +8,7 @@ const { Customer } = require("../models/customer");
 
 exports.getMovies = async (req, res) => {
   try {
-    const perPage = 10;
+    const perPage = 12;
     const page = req.query.pageNo;
     const movieCount = await Movie.countDocuments();
 
@@ -83,14 +83,11 @@ exports.getAllMoviesTester = async (req, res) => {
           img: 1,
         },
       },
-      {
-        $limit:10
-      }
     ]);
+    let allmovies = movies.splice(0, 10);
     return res.status(200).json({
-      movies: movies,
+      movies: allmovies,
       url: process.env.WEBURL,
-
     });
   } catch (err) {
     console.log(err);
@@ -448,7 +445,7 @@ exports.getSpecificMovie = async (req, res) => {
   tester.clicks += 1;
   tester.save();
   var p = [...new Set(othermovies)];
-  p.length = Math.min(p.length, 10);
+  p.length = Math.min(p.length, 12);
   return res.status(200).render("./moviePage.ejs", {
     movie: movie[0],
     otherMovies: p,
@@ -477,7 +474,6 @@ exports.createMovies = async (req, res) => {
     var genrearr = [];
 
     for (var i = 0; i < myarray.length; i++) {
-      // console.log(myarray[i]);
       const genre = await Genre.findOne(
         {
           name: { $regex: myarray[i], $options: "$i" },
@@ -490,7 +486,6 @@ exports.createMovies = async (req, res) => {
       }
       genrearr.push(genre);
     }
-    // console.log(genrearr);
     const movieadd = req.body.title;
     const checkmovie = await Movie.findOne({
       title: { $regex: req.body.title, $options: "$i" },
@@ -527,7 +522,6 @@ exports.createMovies = async (req, res) => {
           }
         });
         var genreobject = [];
-        // console.log(genrearr);
         genrearr.forEach((list) => {
           genreobject.push(list._id);
         });
@@ -691,13 +685,12 @@ exports.displayMovie = async (req, res) => {
   moviesearch.forEach((list) => {
     list.genreId.forEach((lost) => {
       if (genresearch) {
-        if (lost._id.toString() == genresearch._id.toString()) {
+        if (lost._id.toString() === genresearch._id.toString()) {
           genreSearch.push(list);
         }
       }
     });
   });
-  // console.log(genreSearch);
   let genre = await Genre.find({
     name: { $regex: req.query.title, $options: "$i" },
   });
