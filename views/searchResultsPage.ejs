@@ -27,11 +27,6 @@
   />
   <link rel="stylesheet" type="text/css" href="/css/style.css" />
 </head>
-<style>
-  h1 {
-    text-align: center;
-  }
-</style>
 <body>
   <title>Search Results for "<%=title%>"</title>
 
@@ -41,7 +36,7 @@
 
   <div class="search">
     <form action="/api/movies/search/" method="GET">
-      <div class="container row">
+      <div class="search-bar">
         <input
           type="search"
           class="form-control input"
@@ -56,7 +51,7 @@
   <div class="moviesBox">
     <%genre.forEach(list=>{%>
     <div>
-      <h5 style="font-weight: bold"><%=list.name%></h5>
+      <h4><%=list.name%></h4>
       <p class="ptag"><%=list.description%></p>
     </div>
 

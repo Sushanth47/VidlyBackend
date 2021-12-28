@@ -33,7 +33,6 @@ exports.getMovies = async (req, res) => {
         $limit: perPage,
       },
     ]);
-    // console.log(movies);
     return res.status(200).render("movies.ejs", {
       movies: movies,
       url: process.env.WEBURL,
@@ -307,8 +306,10 @@ exports.getSpecificMovie = async (req, res) => {
     } else if (req.user.subject == "Customer") {
       var customer = await Customer.findOne(
         { _id: req.user._id },
-        "rentedMovies"
+        "rentedMovies cart wishList"
       );
+      var rentedMovies = customer.rentedMovies;
+      var carted = customer.cart;
       var movie = await Movie.aggregate([
         {
           $match: { _id: ObjectId(req.params.mid) },
@@ -336,7 +337,8 @@ exports.getSpecificMovie = async (req, res) => {
             links: 1,
             numberInStock: 1,
             dailyRentalRate: 1,
-            iReviewed: { $in: ["$_id", customer.rentedMovies] },
+            iReviewed: { $in: ["$_id", rentedMovies] },
+            isCarted: { $in: ["$_id", carted] },
             ismovieCreated: 1,
             director: 1,
             aspectRatio: 1,
@@ -401,8 +403,6 @@ exports.getSpecificMovie = async (req, res) => {
     { _id: req.params.mid },
     "genreId clicks"
   ).populate("genreId");
-  // console.table(tester);
-  rgenres = [];
   tester.genreId.forEach((list) => {
     rgenres.push(list.name);
   });
@@ -412,7 +412,6 @@ exports.getSpecificMovie = async (req, res) => {
     },
     " title year img genreId"
   ).populate("genreId", "_id");
-  // console.table(otherMovies);
   otherMovies.forEach((list) => {
     for (var i = 0; i < tester.genreId.length; i++) {
       list.genreId.forEach((lost) => {
@@ -422,11 +421,9 @@ exports.getSpecificMovie = async (req, res) => {
       });
     }
   });
-  // console.log(othermovies);
   tester.clicks += 1;
   tester.save();
   var p = [...new Set(othermovies)];
-
   p.length = Math.min(p.length, 10);
   return res.status(200).render("./moviePage.ejs", {
     movie: movie[0],
@@ -634,7 +631,6 @@ exports.requestedMovie = async (req, res) => {
     }
   } catch (err) {
     console.log(err);
-    // return res.status(200).json(err);
   }
 };
 
@@ -662,7 +658,6 @@ exports.displayMovie = async (req, res) => {
     },
     "_id"
   );
-  // console.log(genresearch);
   var genreSearch = [];
 
   var moviesearch = await Movie.find(
