@@ -78,17 +78,11 @@ exports.getAllMoviesTester = async (req, res) => {
   try {
     const movies = await Movie.aggregate([
       {
-        $match: { numberInStock: { $gte: 1 } },
-      },
-      {
         $project: {
           title: 1,
           year: 1,
           img: 1,
         },
-      },
-      {
-        $sort: { _id: -1 },
       },
       {
         $limit:10
