@@ -74,6 +74,36 @@ exports.getAllMovies = async (req, res) => {
   }
 };
 
+exports.getAllMoviesTester = async (req, res) => {
+  try {
+    const movies = await Movie.aggregate([
+      {
+        $match: { numberInStock: { $gte: 1 } },
+      },
+      {
+        $project: {
+          title: 1,
+          year: 1,
+          img: 1,
+        },
+      },
+      {
+        $sort: { _id: -1 },
+      },
+      {
+        $limit:10
+      }
+    ]);
+    return res.status(200).json({
+      movies: movies,
+      url: process.env.WEBURL,
+
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 exports.getMoviesSort = async (req, res) => {
   try {
     if (req.query.sortBy == "Name") {
