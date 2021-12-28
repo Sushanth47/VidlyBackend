@@ -10,6 +10,7 @@ const {
   getAllMovies,
   getSpecificMovie,
   requestedMoviePage,
+  getAllMoviesTester,
   addToWishlist,
 } = require("../controllers/movieController");
 const router = express.Router();
@@ -26,6 +27,8 @@ router.get("/addToCart/:movieId", customerauth, addToCart);
 router.post("/requestmovie", customerauth, requestedMovie);
 
 router.get("/movies", checkauth, getMovies);
+
+router.get('/movies/test', getAllMoviesTester);
 
 router.get("/createmoviespage", userauth, createMoviesPage);
 
