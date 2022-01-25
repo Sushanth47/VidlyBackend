@@ -1,100 +1,45 @@
 <%- include('./partials/header') %>
 <head>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Alegreya:wght@500&display=swap"
-    rel="stylesheet"
-  />
-  <link rel="stylesheet" type="text/css" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/loginCustomer.css">
 </head>
-<title>Login | Vidly</title>
-<style>
-  body {
-    max-width: 105%;
-    overflow-x: hidden;
-    scroll-behavior: smooth;
-    background-color: rgb(52, 58, 64);
-    color: white;
-    /* background-image: url("./styles/img.svg"); */
-    /* background-image: url("./styles/img.svg"); */
-  }
-  .centering {
-    padding-left: 5.5rem;
-  }
-</style>
+<title>Login | Vidly</title>  
 
-<div class="container mt--8 pb-5">
-  <h1 class="text-center mb-4" style="color: white">VIDLY</h1>
-  <br />
-  <br />
-  <div class="row justify-content-center">
-    <div class="col-lg-5 col-md-7">
-      <div class="card">
-        <div class="card-body px-lg-5 py-lg-5">
-          <div class="text-center text-muted mb-4">
-            <h5 style="color: red">Sign in</h5>
-          </div>
-          <%if(message.length>0){%>
+<body>
+  <div class="mainbox">
+    <h1 >VIDLY Login</h1>
 
-          <div
-            class="alert alert-danger alert-dismissible fade show"
-            role="alert"
-          >
-            <strong><%=message%></strong>
-          </div>
-          <%}%>
+      <%if(message.length>0){%>
 
-          <form role="form" action="/api/auth/customerlogin" method="POST">
-            <div class="form-group mb-3">
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"
-                    ><i class="fas fa-phone"></i
-                  ></span>
-                </div>
-                <input
-                  type="text"
-                  class="form-control"
-                  name="phone"
-                  placeholder="phone"
-                />
-              </div>
-            </div>
-            <div class="form-group">
-              <div
-                class="input-group input-group-merge input-group-alternative"
-              >
-                <div class="input-group-prepend">
-                  <span class="input-group-text"
-                    ><i class="fas fa-lock"></i
-                  ></span>
-                </div>
-                <input
-                  class="form-control"
-                  placeholder="Password"
-                  name="password"
-                  type="password"
-                />
-              </div>
-            </div>
-
-            <div class="text-center">
-              <button type="submit" class="btn btn-primary my-4">Log in</button>
-            </div>
-          </form>
-
-          <span class="centering" style="color: red"
-            >Dont have an Account?</span
-          >
-          <br /><br />
-          <a class="centering" href="/api/auth/signupPage"
-            ><button type="submit" class="btn btn-success">
-              Create an account
-            </button></a
-          >
-        </div>
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong><%=message%></strong>
       </div>
+      <%}%>
+
+      <form role="form" action="/api/auth/customerlogin" method="POST">
+        <div class="input-class">
+          <p><i class="fas fa-phone"></i></p>
+          <input type="text" name="phone" placeholder="Phone" />
+        </div>
+
+        <div class="input-class">
+          <p><i class="fas fa-lock"></i></p>
+          <input type="password" name="password" placeholder="Password" />
+        </div>
+
+        <div class="text-center">
+          <button type="submit" class="btn btn-success">Log in</button>
+        </div>
+      </form>
+
+      <p style="color: rgb(243, 85, 85); font-size:1em;">Dont have an Account?</p>
+      
+      <a class="centering" href="/api/auth/signupPage"
+        ><button type="submit" class="btn btn-success">
+          Create an account
+        </button></a
+      >
     </div>
   </div>
-</div>
+</body>
 
 <%- include('./partials/footer') %>

@@ -26,22 +26,19 @@ body {
 }
 
 .ptag {
-  max-width: max(10vh, 20rem);
+  max-width: max(10vw, 20rem);
   text-size-adjust: 2rem;
 }
 
 .input {
+  outline: none;
   width: 35%;
-  border-radius: 1.6rem;
+  border-radius: 5px;
   padding: 0.5rem 1rem;
 }
 
 .search {
   margin-bottom: 4rem;
-}
-
-.input:focus {
-  outline: none !important;
 }
 
 .search-bar {
@@ -73,7 +70,7 @@ body {
   display: block;
   color: var(---clr-text);
   margin-left: 5px;
-  outline: 0;
+  outline: none;
   overflow: hidden;
 }
 
