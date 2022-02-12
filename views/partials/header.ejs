@@ -1,6 +1,5 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" href="https://4vector.com/i/free-vector-compact-disk-04_099812_compact_disk_04.png" type="image" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" data-auto-replace-svg="nest"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
@@ -47,14 +46,11 @@ i {
     background: rgba(253, 253, 253, 0.5);
     width: auto;
     color:rgb(72, 255, 0);
-    /* height: auto; */
     margin: 0;
     border-radius: 50%;
     position:absolute;
     top:-13px;
-    /* right:8px; */
     left:3px;
-    /* padding:5px; */
 }
   .loginContainer{
     float:right;
@@ -78,7 +74,8 @@ i {
     font-family: 'Carrois Gothic', sans-serif;
   }
   .nav-link:hover{
-    padding-top:0.1rem;
+    border-bottom:3px solid #f9f9f9;
+    position:sticky;
   }
   /* Links inside the dropdown */
   .dropdown-content a {
@@ -89,15 +86,20 @@ i {
   }
   
   /* Change color of dropdown links on hover */
-  .dropdown-content a:hover {background-color: #a2ffaf}
+  .dropdown-content a:hover {border:1px solid #a2ffaf}
   
   /* Show the dropdown menu on hover */
   .dropdown:hover .dropdown-content {
     display: block;
   }
-  /* .navbar{
-    position:fixed
-  } */
+  i{
+    padding:5px 7px;
+    border-radius:45%;
+    transition:translation 100ms;
+  }
+  i:hover{
+    background-color:rgba(238, 237, 237, 0.315);
+  }
   /* Change the background color of the dropdown button when the dropdown content is shown */
   .dropdown:hover .dropbtn {
     background-color: #3e8e41;

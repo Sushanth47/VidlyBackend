@@ -84,10 +84,9 @@ exports.getAllMoviesTester = async (req, res) => {
         },
       },
     ]);
-    let allmovies = movies.splice(0, 10);
     return res.status(200).json({
-      movies: allmovies,
-      url: process.env.WEBURL,
+      movies: movies,
+      // url: process.env.WEBURL,
     });
   } catch (err) {
     console.log(err);

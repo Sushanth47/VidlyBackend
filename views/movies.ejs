@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+
 <%- include('./partials/header') %>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -26,16 +28,13 @@
     href="https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap"
     rel="stylesheet"
   />
-  <meta name="description" content="" />
-  <meta name="keywords" content="" />
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <link rel="stylesheet" type="text/css" href="/css/style.css" />
 </head>
 
 <body>
-  <head>
-    <title>Vidly</title>
-  </head>
+  <title>Vidly</title>
+
   <header>
     <h1 class="text-center" style="font-size: 80px">Vidly</h1>
     <h6 class="text-center" style="font-weight: 400">
@@ -49,10 +48,12 @@
       <div class="search-bar">
         <input
           type="search"
-          class="input"
           name="title"
+          id="input-bar"
           placeholder="Type Movie, Genre or Something"
         />
+        <!-- <div class="recommend"></div> -->
+
         <button type="submit" id="submitButton">Search</button>
       </div>
     </form>
@@ -65,11 +66,9 @@
         ><div class="img-hover">
           <img class="img" src="<%=list.img%>" /></div
       ></a>
-
-      <br />
       <div class="card-body">
         <a href="/api/movies/<%=list._id%>" target="_blank"
-          ><h6 style="color: white" class="movietitle text-center">
+          ><h6 style="color: white" class="text-center">
             <%=list.title%> (<%=list.year%>)
           </h6></a
         >
@@ -85,17 +84,23 @@
   <%}%>
 </form>
 
-<!-- <script>
-  getMovies();
-  async function getMovies() {
-    const url = "/api/movies/movies/";
-    var data = [];
-    await axios.get(url).then((response) => (data = response.data));
-    for (var i = 0; i < data.movies.length; i++) {
-      console.log(data.movies[i].title);
-      document.getElementsByClassName("movietitle").value =
-        data.movies[i].title;
-    }
-  }
-</script> -->
+<script>
+  var movieData = [];
+  const url = "/api/movies/movies/test";
+  fetch(url)
+    .then((response) => response.json())
+    .then((data) =>
+      data.movies.forEach((list) => {
+        movieData.push(list);
+      })
+    );
+
+  console.log(movieData);
+
+  const searchBar = document.getElementById("input-bar");
+  searchBar.addEventListener("keyup", (e) => {
+    console.log(e.target.value);
+  });
+</script>
+
 <%- include('./partials/footer') %>

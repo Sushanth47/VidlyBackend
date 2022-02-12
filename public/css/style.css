@@ -20,6 +20,22 @@ body {
   background-color: var(--clr-background);
   color: var(--clr-text);
 }
+p {
+  font-weight: 900;
+  margin-right: 50;
+}
+
+h1,
+h6,
+h5,
+h4,
+h5,
+p,
+span {
+  font-family: var(--font-family);
+  cursor: default;
+  color: var(--clr-text);
+}
 
 .pagination {
   font-size: 1.25rem;
@@ -30,11 +46,13 @@ body {
   text-size-adjust: 2rem;
 }
 
-.input {
+#input-bar {
   outline: none;
+  border: none;
   width: 35%;
-  border-radius: 5px;
+  border-radius: 3px;
   padding: 0.5rem 1rem;
+  box-shadow: 0px 2px 4px #242424;
 }
 
 .search {
@@ -47,11 +65,20 @@ body {
   align-items: center;
 }
 
+.recommend {
+  padding: 30px;
+  background-color: white;
+}
+
+.searchh {
+  display: flex;
+  flex-direction: column;
+}
+
 .moviesBox {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  flex-shrink: initial;
   justify-content: center;
   align-items: center;
   margin: 2rem 1rem 2rem 0;
@@ -63,15 +90,20 @@ body {
 }
 
 #submitButton {
+  border: none;
+  outline: none;
   background-color: var(--clr-search);
   border-radius: 20px;
   border: 1px solid transparent;
-  padding: 0.48rem;
-  display: block;
+  padding: 0.55rem;
   color: var(---clr-text);
   margin-left: 5px;
-  outline: none;
   overflow: hidden;
+  box-shadow: 0px 2px 4px #242424;
+}
+
+#submitButton:hover {
+  background-color: #0da085;
 }
 
 #cardStyling {
@@ -81,7 +113,6 @@ body {
   border: 25px;
   border-radius: 0.25rem;
   background-color: var(--clr-background);
-  box-shadow: 0 0 1px 2px transparent;
   overflow: hidden;
 }
 
@@ -92,7 +123,6 @@ body {
 }
 
 .card-text {
-  font-family: var(--font-family);
   font-weight: bold;
 }
 
@@ -133,23 +163,6 @@ ul {
 a,
 a:hover {
   text-decoration: none;
-}
-
-p {
-  font-weight: 900;
-  margin-right: 50;
-}
-
-h1,
-h6,
-h5,
-h4,
-h5,
-p,
-span {
-  font-family: var(--font-family);
-  cursor: default;
-  color: var(--clr-text);
 }
 
 #imdb {

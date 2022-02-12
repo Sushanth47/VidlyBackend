@@ -16,7 +16,7 @@ const {
 const router = express.Router();
 const { checkauth, customerauth, userauth } = require("../middleware/auth");
 
-router.get("/requestMovie", customerauth, requestedMoviePage);
+router.get("/requestMovie", requestedMoviePage);
 
 router.get("/addtowishlist/:movieId", customerauth, addToWishlist);
 
@@ -28,7 +28,7 @@ router.post("/requestmovie", customerauth, requestedMovie);
 
 router.get("/movies", checkauth, getMovies);
 
-router.get('/movies/test', getAllMoviesTester);
+router.get("/movies/test", getAllMoviesTester);
 
 router.get("/createmoviespage", userauth, createMoviesPage);
 
