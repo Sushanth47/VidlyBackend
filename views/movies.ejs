@@ -86,16 +86,16 @@
 
 <script>
   var movieData = [];
-  const url = "/api/movies/movies/test";
-  fetch(url)
-    .then((response) => response.json())
-    .then((data) =>
-      data.movies.forEach((list) => {
-        movieData.push(list);
-      })
-    );
+  // const url = "/api/movies/movies/test";
+  // fetch(url)
+  //   .then((response) => response.json())
+  //   .then((data) =>
+  //     data.movies.forEach((list) => {
+  //       movieData.push(list);
+  //     })
+  //   );
 
-  console.log(movieData);
+  // console.log(movieData);
 
   const searchBar = document.getElementById("input-bar");
   searchBar.addEventListener("keyup", (e) => {
