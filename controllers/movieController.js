@@ -30,7 +30,7 @@ exports.getMovies = async (req, res) => {
         $skip: perPage * (page - 1),
       },
       {
-        $limit: perPage,
+        $limit: 12,
       },
     ]);
     return res.status(200).render("movies.ejs", {
