@@ -56,12 +56,18 @@
   <div class="moviesBox">
     <%movies.forEach(list=>{%>
     <div class="card" id="cardStyling">
-      <a target="_blank" href="/api/movies/<%=list._id%>"
+      <a
+        rel="noopener noreferrer"
+        target="_blank"
+        href="/api/movies/<%=list._id%>"
         ><div class="img-hover">
           <img class="img" src="<%=list.img%>" /></div
       ></a>
       <div class="card-body">
-        <a href="/api/movies/<%=list._id%>" target="_blank"
+        <a
+          href="/api/movies/<%=list._id%>"
+          rel="noopener noreferrer"
+          target="_blank"
           ><h6 style="color: white" class="text-center">
             <%=list.title%> (<%=list.year%>)
           </h6></a

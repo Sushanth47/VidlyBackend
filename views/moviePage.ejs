@@ -20,7 +20,7 @@
     </div>
     <%}%>
   <div class="row">
-    <a target="_blank" href="<%=movie.img%>"
+    <a rel="noopener noreferrer" target="_blank" href="<%=movie.img%>"
       ><img class="moviepagimg"
        
         src="<%=movie.img%>"
@@ -42,7 +42,7 @@
           class="card-text "
           style="text-align: center; position: relative; right: 10"
           href="<%=movie.links%>"
-          target="_blank"
+          rel="noopener noreferrer" target="_blank"
           id="imdb"
           >IMDb: <%=movie.imdbRating%>/10</a
         >
@@ -94,14 +94,14 @@
   <div class="moviesBox">
     <%otherMovies.forEach(list=>{%>
       <div class="card" id="cardStyling">
-        <a target="_blank" href="/api/movies/<%=list._id%>"
+        <a rel="noopener noreferrer" target="_blank" href="/api/movies/<%=list._id%>"
           ><div class="img-hover">
             <img class="img" src="<%=list.img%>" /></div
         ></a>
   
         <br />
         <div class="card-body">
-          <a href="/api/movies/<%=list._id%>" target="_blank"
+          <a href="/api/movies/<%=list._id%>" rel="noopener noreferrer" target="_blank"
             ><h6 style="color: white" class="movietitle text-center">
               <%=list.title%> (<%=list.year%>)
             </h6></a

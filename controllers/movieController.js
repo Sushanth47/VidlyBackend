@@ -9,9 +9,9 @@ const { Customer } = require("../models/customer");
 exports.getMovies = async (req, res) => {
   try {
     const perPage = 12;
-    const page = req.query.pageNo;
+    const page = req.query.pageNo || 1;
     const movieCount = await Movie.countDocuments();
-
+    console.log(page);
     const movies = await Movie.aggregate([
       {
         $match: { numberInStock: { $gte: 1 } },
@@ -27,7 +27,7 @@ exports.getMovies = async (req, res) => {
         $sort: { _id: -1 },
       },
       {
-        $skip: perPage * (page - 1),
+        $skip: 12 * (page - 1),
       },
       {
         $limit: 12,
