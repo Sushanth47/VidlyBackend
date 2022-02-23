@@ -5,9 +5,17 @@ const { Movie } = require("../models/movie");
 const { Requested } = require("../models/requestedModel");
 const { Genre } = require("../models/genre");
 const { Customer } = require("../models/customer");
-
+// const { next } = require("cheerio/lib/api/traversing");
+exports.screenSize = async (req, res) => {
+  let screen = req.params.screenSize;
+  screen = Math.floor(screen / 250);
+  req.user.screenSize = screen;
+  return res.json(screen);
+};
 exports.getMovies = async (req, res) => {
   try {
+    // const pageWidth = req.query.pageWidth;
+    console.log(req.user);
     const perPage = 12;
     const page = req.query.pageNo || 1;
     const movieCount = await Movie.countDocuments();
@@ -77,6 +85,12 @@ exports.getAllMoviesTester = async (req, res) => {
   try {
     const movies = await Movie.aggregate([
       {
+        $limit: 7,
+      },
+      {
+        $match: { title: { $regex: req.query.title, $options: "$i" } },
+      },
+      {
         $project: {
           title: 1,
           year: 1,
@@ -84,9 +98,9 @@ exports.getAllMoviesTester = async (req, res) => {
         },
       },
     ]);
+    movies.forEach((list) => console.log(list.title));
     return res.status(200).json({
       movies: movies,
-      // url: process.env.WEBURL,
     });
   } catch (err) {
     console.log(err);
@@ -308,7 +322,6 @@ exports.getSpecificMovie = async (req, res) => {
             links: 1,
             numberInStock: 1,
             dailyRentalRate: 1,
-
             ismovieCreated: 1,
             director: 1,
             aspectRatio: 1,
@@ -419,35 +432,44 @@ exports.getSpecificMovie = async (req, res) => {
   }
   var othermovies = [],
     rgenres = [];
+
   var tester = await Movie.findOne(
     { _id: req.params.mid },
     "genreId clicks"
   ).populate("genreId");
+
   tester.genreId.forEach((list) => {
     rgenres.push(list.name);
   });
+
   var otherMovies = await Movie.find(
     {
       _id: { $nin: [req.params.mid] },
     },
     " title year img genreId"
   ).populate("genreId", "_id");
+
   otherMovies.forEach((list) => {
     for (var i = 0; i < tester.genreId.length; i++) {
       list.genreId.forEach((lost) => {
-        if (lost._id.toString() == tester.genreId[i]._id.toString()) {
+        if (othermovies.length > 11) return;
+        if (
+          lost._id.toString() == tester.genreId[i]._id.toString() &&
+          !othermovies.includes(list)
+        ) {
           othermovies.push(list);
         }
       });
     }
   });
+
   tester.clicks += 1;
   tester.save();
   var p = [...new Set(othermovies)];
   p.length = Math.min(p.length, 12);
   return res.status(200).render("./moviePage.ejs", {
     movie: movie[0],
-    otherMovies: p,
+    otherMovies: othermovies,
     rgenres,
     message: req.flash("message"),
   });
@@ -666,10 +688,19 @@ exports.createMoviesPage = async (req, res) => {
 };
 
 exports.displayMovie = async (req, res) => {
-  var movie = await Movie.find({
-    title: { $regex: req.query.title, $options: "$i" },
-  }).populate("genreId");
-  var genresearch = await Genre.findOne(
+  const movie = await Movie.aggregate([
+    {
+      $match: { title: { $regex: req.query.title, $options: "$i" } },
+    },
+    {
+      $project: {
+        title: 1,
+        year: 1,
+        img: 1,
+      },
+    },
+  ]);
+  const genresearch = await Genre.findOne(
     {
       name: { $regex: req.query.title, $options: "$i" },
     },
@@ -690,9 +721,20 @@ exports.displayMovie = async (req, res) => {
       }
     });
   });
-  let genre = await Genre.find({
-    name: { $regex: req.query.title, $options: "$i" },
-  });
+  let genre = await Genre.aggregate([
+    {
+      $match: { name: { $regex: req.query.title, $options: "$i" } },
+    },
+    {
+      $project: {
+        name: 1,
+        description: 1,
+        createdAt: 1,
+        updatedAt: 1,
+        img: 1,
+      },
+    },
+  ]);
   return res.status(200).render("./searchResultsPage.ejs", {
     movie: movie,
     genre: genre,

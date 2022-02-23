@@ -11,7 +11,7 @@ exports.checkauth = async (req, res, next) => {
   // console.log(typeof checkstring, "cs");
   // console.log(obj, "obj");
   if (checkstring == "{}" || !req.cookies.token) {
-    req.user = { subject: "Guest", genres: [] };
+    req.user = { subject: "Guest", genres: [], screenSize: 4 };
     res.locals.currentUser = req.user;
     next();
   } else {

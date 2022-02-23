@@ -12,6 +12,7 @@ const {
   requestedMoviePage,
   getAllMoviesTester,
   addToWishlist,
+  screenSize,
 } = require("../controllers/movieController");
 const router = express.Router();
 const { checkauth, customerauth, userauth } = require("../middleware/auth");
@@ -26,7 +27,9 @@ router.get("/addToCart/:movieId", customerauth, addToCart);
 
 router.post("/requestmovie", customerauth, requestedMovie);
 
-router.get("/movies", checkauth, getMovies);
+router.get("/movies/", checkauth, getMovies);
+
+router.get("/screensize/:screenSize", checkauth, screenSize);
 
 router.get("/movies/test", getAllMoviesTester);
 

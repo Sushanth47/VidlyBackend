@@ -12,9 +12,9 @@
 </head>
 
 <body>
-  <header style="margin-bottom: 2rem">
-    <h1 class="text-center" style="font-size: 80px">All Movies</h1>
-  </header>
+  <section class="header allmovies">
+    <h1>All Movies</h1>
+  </section>
 
   <div class="search">
     <form action="/api/movies/search/" method="GET">
@@ -44,8 +44,8 @@
         <option value="Name">Name</option>
         <option value="Year">Year</option>
         <option value="Price">Price</option>
-        <option value="IMDb">IMDb Rating</option>
-        <option value="BoxOffice">Box Office</option>
+        <option value="IMDb">IMDb</option>
+        <option value="BoxOffice">BoxOffice</option>
         <option value="Rank">Rank</option>
         <option value="Availability">Availability</option>
         <option value="Popularity">Popularity</option>
@@ -55,22 +55,20 @@
   </div>
   <div class="moviesBox">
     <%movies.forEach(list=>{%>
-    <div class="card" id="cardStyling">
+    <div id="cardStyling">
       <a
         rel="noopener noreferrer"
         target="_blank"
         href="/api/movies/<%=list._id%>"
-        ><div class="img-hover">
-          <img class="img" src="<%=list.img%>" /></div
+        ><div>
+          <img class="img" src="<%=list.img%>" alt="Loading..." /></div
       ></a>
-      <div class="card-body">
+      <div class="cardBody">
         <a
           href="/api/movies/<%=list._id%>"
           rel="noopener noreferrer"
           target="_blank"
-          ><h6 style="color: white" class="text-center">
-            <%=list.title%> (<%=list.year%>)
-          </h6></a
+          ><h6><%=list.title%> (<%=list.year%>)</h6></a
         >
       </div>
     </div>

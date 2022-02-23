@@ -1,11 +1,6 @@
 <%- include('./partials/header') %>
 <head>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Yaldevi:wght@300&display=swap"
-    rel="stylesheet"
-  />
+  
   <link rel="stylesheet" type="text/css" href="/css/style.css" />
 </head>
 <title><%=movie.title%> (<%=movie.year%>)</title>
@@ -31,22 +26,23 @@
       
       <h5>Starring: <b><%=movie.cast%></b></h5>
       <h5>Director: <b><%=movie.director%></b></h5>
-      <h5>Genre: <%for(var i=0; i< rgenres.length; i++){%> <a href="/api/movies/search/?title=<%=rgenres[i]%>" style="text-decoration: none;"><%=rgenres[i]%> </a> <%if(i!=rgenres.length-1){%><span>,</span><%}%> <%}%>
-      <h5>CBFC Rating: <b><%if(movie.mpAARating==""){%>U/A<%}else{%><%=movie.mpAARating%><%}%></b></h5>
-  
-      <%if(movie.worldwide!=""){%>
-      <h5>Box Office: <b><%=movie.worldwide%></b></h5>
-      <%} else {}%>
       <h5>
         <a
           class="card-text "
-          style="text-align: center; position: relative; right: 10"
+          style="text-align: center; position: relative; right: 10; padding:4px 10px;"
           href="<%=movie.links%>"
           rel="noopener noreferrer" target="_blank"
           id="imdb"
-          >IMDb: <%=movie.imdbRating%>/10</a
+          >IMDb: <%=movie.imdbRating%></a
         >
       </h5>
+      <h5>Genre: <%for(var i=0; i< rgenres.length; i++){%> <a href="/api/movies/search/?title=<%=rgenres[i]%>" style="text-decoration: none;"><%=rgenres[i]%> </a> <%if(i!=rgenres.length-1){%><span>,</span><%}%> <%}%>
+      <h5>CBFC Rating: <b><%if(movie.mpAARating==""){%>U/A<%}else{%><%=movie.mpAARating%><%}%></b></h5>
+      
+      <%if(movie.worldwide!=""){%>
+      <h5>Box Office: <b><%=movie.worldwide%></b></h5>
+      <%} else {}%>
+      
       <h5>RunTime: <b><%=movie.runtime%></b></h5>
       <%if(movie.aspectRatio!=""){%>
       <h5>Aspect Ratio: <b><%=movie.aspectRatio%></b></h5>

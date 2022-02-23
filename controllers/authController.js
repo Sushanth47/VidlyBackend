@@ -20,6 +20,7 @@ async function generateAuthToken(res, _id, name, subject, cart, wishList) {
     subject: subject,
     cart: cart,
     wishList: wishList,
+    screenSize: 4,
   };
   res.cookie("token", obj, {
     expires: new Date(Date.now() + expiration),
@@ -31,12 +32,16 @@ async function generateAuthToken(res, _id, name, subject, cart, wishList) {
 
 exports.loginPage = async (req, res) => {
   var type = "userLogin";
-  return res.status(200).render("./loginPage.ejs", { type: type, message:req.flash('message') });
+  return res
+    .status(200)
+    .render("./loginPage.ejs", { type: type, message: req.flash("message") });
 };
 
 exports.signupPage = async (req, res) => {
   var type = "userSignup";
-  return res.status(200).render("./signupPage", { type: type, message:req.flash('message') });
+  return res
+    .status(200)
+    .render("./signupPage", { type: type, message: req.flash("message") });
 };
 
 exports.signupPageCustomer = async (req, res) => {

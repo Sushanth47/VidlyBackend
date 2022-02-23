@@ -106,6 +106,29 @@ span {
   background-color: #0da085;
 }
 
+.header {
+  text-align: center;
+  align-items: center;
+}
+
+.header h1 {
+  font-size: 80px;
+}
+
+.header h6 {
+  font-weight: 400;
+  margin-bottom: 30px;
+}
+
+.cardBody {
+  margin: 15px auto;
+}
+
+.cardBody h6 {
+  color: #fff;
+  text-align: center;
+}
+
 #cardStyling {
   margin: 0 2.2rem 1.5rem 1.3rem;
   width: 10.5rem;
@@ -114,6 +137,14 @@ span {
   border-radius: 0.25rem;
   background-color: var(--clr-background);
   overflow: hidden;
+}
+
+#cardStyling .a {
+  border-radius: 10px;
+}
+
+.allmovies {
+  margin-bottom: 2rem;
 }
 
 .sort {

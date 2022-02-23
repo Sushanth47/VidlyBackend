@@ -1,112 +1,88 @@
 <!DOCTYPE html>
 
-<%- include('./partials/header') %>
-<head>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Yaldevi:wght@300&display=swap"
-    rel="stylesheet"
-  />
-  <script
-    src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-    crossorigin="anonymous"
-  ></script>
-  <script
-    src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-    crossorigin="anonymous"
-  ></script>
-  <script
-    src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
-    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-    crossorigin="anonymous"
-  ></script>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap"
-    rel="stylesheet"
-  />
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="/css/style.css" defer />
-</head>
+<html lang="en">
+  <%- include('./partials/header') %>
+  <head>
+    <link rel="stylesheet" type="text/css" href="/css/style.css" defer />
+    <title>Vidly</title>
+  </head>
 
-<body>
-  <title>Vidly</title>
+  <body>
+    <section class="header">
+      <h1>Vidly</h1>
+      <h6>All of the World Cinema At One Place</h6>
+    </section>
 
-  <header>
-    <h1 class="text-center" style="font-size: 80px">Vidly</h1>
-    <h6 class="text-center" style="font-weight: 400">
-      All of the World Cinema At One Place
-    </h6>
-  </header>
-  <br />
+    <section class="search">
+      <form action="/api/movies/search/" method="GET">
+        <div class="search-bar">
+          <input
+            type="search"
+            name="title"
+            id="input-bar"
+            placeholder="Type Movie, Genre or Something"
+          />
+          <button type="submit" id="submitButton">Search</button>
+        </div>
+      </form>
+    </section>
 
-  <div class="search">
-    <form action="/api/movies/search/" method="GET">
-      <div class="search-bar">
-        <input
-          type="search"
-          name="title"
-          id="input-bar"
-          placeholder="Type Movie, Genre or Something"
-        />
-        <!-- <div class="recommend"></div> -->
-
-        <button type="submit" id="submitButton">Search</button>
-      </div>
-    </form>
-  </div>
-
-  <div class="moviesBox">
-    <%movies.forEach(list=>{%>
-    <div class="card" id="cardStyling">
-      <a
-        rel="noopener noreferrer"
-        target="_blank"
-        href="/api/movies/<%=list._id%>"
-        ><div class="img-hover">
-          <img class="img" src="<%=list.img%>" /></div
-      ></a>
-      <div class="card-body">
+    <div class="moviesBox">
+      <%movies.forEach(list=>{%>
+      <div id="cardStyling">
         <a
-          href="/api/movies/<%=list._id%>"
           rel="noopener noreferrer"
           target="_blank"
-          ><h6 style="color: white" class="text-center">
-            <%=list.title%> (<%=list.year%>)
-          </h6></a
-        >
+          href="/api/movies/<%=list._id%>"
+          ><div>
+            <img class="img" src="<%=list.img%>" alt="Loading..." /></div
+        ></a>
+        <div class="cardBody">
+          <a
+            href="/api/movies/<%=list._id%>"
+            rel="noopener noreferrer"
+            target="_blank"
+            ><h6><%=list.title%> (<%=list.year%>)</h6></a
+          >
+        </div>
       </div>
+      <%})%>
     </div>
-    <%})%>
-  </div>
-</body>
-<%var i =0%>
-<form action="/api/movies/movies/" method="GET" class="text-center">
-  <%for(i=0; i< movieCount/perPage; i++){%>
-  <input type="submit" name="pageNo" class="btn btn-info" value="<%=i+1%>" />
-  <%}%>
-</form>
 
-<script>
-  var movieData = [];
-  // const url = "/api/movies/movies/test";
-  // fetch(url)
-  //   .then((response) => response.json())
-  //   .then((data) =>
-  //     data.movies.forEach((list) => {
-  //       movieData.push(list);
-  //     })
-  //   );
+    <%var i=0 %>
+    <form action="/api/movies/movies/" method="GET" class="text-center">
+      <%for(i=0; i< movieCount/perPage; i++){%>
+      <input
+        type="submit"
+        name="pageNo"
+        class="btn btn-info"
+        value="<%=i+1%>"
+      />
+      <%}%>
+    </form>
+  </body>
 
-  // console.log(movieData);
+  <script>
+    var movieData = [];
+    var screensize;
+    const searchBar = document.getElementById("input-bar");
+    searchBar.addEventListener("keyup", (e) => {
+      console.log(e.target.value);
+      axios
+        .get(`/api/movies/movies/test?title=${e.target.value}`)
+        .then((response) => {
+          movieData = response.data;
+          console.log(movieData);
+        });
+    });
+    function getScreenSize() {
+      const innerWidth = window.screen.availWidth;
+      axios.get(`/api/movies/screensize/${innerWidth}`).then((response) => {
+        console.log(response.data, "daya");
+      });
+    }
+    getScreenSize();
+  </script>
 
-  const searchBar = document.getElementById("input-bar");
-  searchBar.addEventListener("keyup", (e) => {
-    console.log(e.target.value);
-  });
-</script>
-
-<%- include('./partials/footer') %>
+  <%- include('./partials/footer') %>
+</html>
