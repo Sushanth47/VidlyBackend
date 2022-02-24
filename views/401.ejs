@@ -1,6 +1,13 @@
+<!DOCTYPE html>
 <%- include('./partials/header') %>
-<title>401</title>
-<body>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Error</title>
+  </head>
+
   <style>
     .centerBox {
       border: 1px solid rgb(247, 244, 244);
@@ -28,31 +35,33 @@
       margin: auto;
     }
   </style>
-  <div class="centerBox">
-    <h1 class="text-center">You have to login to access this feature</h1>
-    <br /><br />
-    <div class="buttonBox">
-      <a
-        style="margin-right: 350px"
-        class="btn btn-outline-success btn-lg"
-        href="/api/auth/loginCustomer"
-      >
-        Login
-      </a>
-      <a href="/api/auth/signupPage" class="btn btn-outline-primary btn-lg">
-        Signup
-      </a>
+  <body>
+    <div class="centerBox">
+      <h1 class="text-center">You have to login to access this feature</h1>
+      <br /><br />
+      <div class="buttonBox">
+        <a
+          style="margin-right: 350px"
+          class="btn btn-outline-success btn-lg"
+          href="/api/auth/loginCustomer"
+        >
+          Login
+        </a>
+        <a href="/api/auth/signupPage" class="btn btn-outline-primary btn-lg">
+          Signup
+        </a>
+      </div>
+      <br />
+      <div style="margin-left: 320px">
+        <button
+          onclick="history.back()"
+          class="btn btn-primary btn-lg"
+          style="margin: auto"
+        >
+          Go Back
+        </button>
+      </div>
     </div>
-    <br />
-    <div style="margin-left: 320px">
-      <button
-        onclick="history.back()"
-        class="btn btn-primary btn-lg"
-        style="margin: auto"
-      >
-        Go Back
-      </button>
-    </div>
-  </div>
-</body>
-<%- include('./partials/footer') %>
+  </body>
+  <%- include('./partials/footer') %>
+</html>

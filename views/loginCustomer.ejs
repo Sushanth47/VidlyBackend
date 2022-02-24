@@ -1,45 +1,51 @@
+<!DOCTYPE html>
 <%- include('./partials/header') %>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | Vidly</title> 
   <link rel="stylesheet" href="/css/loginCustomer.css">
 </head>
-<title>Login | Vidly</title>  
 
 <body>
   <div class="mainbox">
     <h1 >VIDLY Login</h1>
-
-      <%if(message.length>0){%>
-
+    
+    <%if(message.length>0){%>
+      
       <div class="alert alert-danger alert-dismissible fade show" role="alert">
         <strong><%=message%></strong>
       </div>
       <%}%>
-
+      
       <form role="form" action="/api/auth/customerlogin" method="POST">
         <div class="input-class">
           <p><i class="fas fa-phone"></i></p>
           <input type="text" name="phone" placeholder="Phone" />
         </div>
-
+        
         <div class="input-class">
           <p><i class="fas fa-lock"></i></p>
           <input type="password" name="password" placeholder="Password" />
         </div>
-
+        
         <div class="text-center">
           <button type="submit" class="btn btn-success">Log in</button>
         </div>
       </form>
-
+      
       <p style="color: rgb(243, 85, 85); font-size:1em;">Dont have an Account?</p>
       
       <a class="centering" href="/api/auth/signupPage"
-        ><button type="submit" class="btn btn-success">
-          Create an account
-        </button></a
+      ><button type="submit" class="btn btn-success">
+        Create an account
+      </button></a
       >
     </div>
   </div>
 </body>
 
+</html>
 <%- include('./partials/footer') %>

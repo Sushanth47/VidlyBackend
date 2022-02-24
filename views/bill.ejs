@@ -1,126 +1,134 @@
-<%- include('./partials/header') %> <title>Bill</title>
+<!DOCTYPE html>
+<%- include('./partials/header') %>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bill</title>
+    <script src="https://rawgit.com/moment/moment/2.2.1/min/moment.min.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap"
+      rel="stylesheet"
+    />
+  </head>
 
-<head>
-  <script src="https://rawgit.com/moment/moment/2.2.1/min/moment.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap"
-    rel="stylesheet"
-  />
-</head>
-<style>
-  body {
-    max-width: 100%;
-    background: rgb(2, 0, 36);
-    background: linear-gradient(
-      90deg,
-      rgba(2, 0, 36, 1) 0%,
-      rgba(2, 0, 36, 1) 0%,
-      rgba(2, 0, 36, 1) 0%,
-      rgba(134, 134, 243, 1) 0%,
-      rgba(0, 212, 255, 1) 100%
-    );
-    color: white;
-    overflow-x: hidden;
-  }
-  .billbox {
-    background: white;
-    color: black;
-    margin: auto;
-    margin-top: 20px;
-    max-width: 22%;
-    height: 58%;
-    font-family: "Roboto Condensed", sans-serif;
-    border-radius: 12px;
-  }
+  <style>
+    body {
+      max-width: 100%;
+      background: rgb(2, 0, 36);
+      background: linear-gradient(
+        90deg,
+        rgba(2, 0, 36, 1) 0%,
+        rgba(2, 0, 36, 1) 0%,
+        rgba(2, 0, 36, 1) 0%,
+        rgba(134, 134, 243, 1) 0%,
+        rgba(0, 212, 255, 1) 100%
+      );
+      color: white;
+      overflow-x: hidden;
+    }
+    .billbox {
+      background: white;
+      color: black;
+      margin: auto;
+      margin-top: 20px;
+      max-width: 22%;
+      height: 58%;
+      font-family: "Roboto Condensed", sans-serif;
+      border-radius: 12px;
+    }
 
-  .continue {
-    text-align: center;
-  }
+    .continue {
+      text-align: center;
+    }
 
-  .contents {
-    margin-bottom: 20px;
-    text-align: center;
-  }
+    .contents {
+      margin-bottom: 20px;
+      text-align: center;
+    }
 
-  .buttonbar {
-    background: white;
-    color: rgb(63, 63, 63);
-    margin: auto;
-    max-width: 42%;
-    padding-left: 2rem;
-    border-radius: 16px;
-    margin-top: 1.42rem;
-  }
-  .headings {
-    font-weight: bolder;
-    margin-bottom: 13px;
-  }
-  .values {
-    color: rgb(83, 83, 83);
-  }
-</style>
-<body>
-  <div class="buttonbar">
-    <span style="color: rgb(11, 214, 11)"
-      ><i
-        class="fas fa-check-circle fa-3x"
-        style="
-          left: 34.375rem;
-          position: relative;
-          top: 1.25rem;
-          right: 0.95rem;
-        "
-      ></i
-    ></span>
-    <div style="position: relative; bottom: 25px">
-      <h4>Purchase Successful</h4>
-      <h6 id="totalPrice"></h6>
+    .buttonbar {
+      background: white;
+      color: rgb(63, 63, 63);
+      margin: auto;
+      max-width: 42%;
+      padding-left: 2rem;
+      border-radius: 16px;
+      margin-top: 1.42rem;
+    }
+    .headings {
+      font-weight: bolder;
+      margin-bottom: 13px;
+    }
+    .values {
+      color: rgb(83, 83, 83);
+    }
+  </style>
+  <body>
+    <div class="buttonbar">
+      <span style="color: rgb(11, 214, 11)"
+        ><i
+          class="fas fa-check-circle fa-3x"
+          style="
+            left: 34.375rem;
+            position: relative;
+            top: 1.25rem;
+            right: 0.95rem;
+          "
+        ></i
+      ></span>
+      <div style="position: relative; bottom: 25px">
+        <h4>Purchase Successful</h4>
+        <h6 id="totalPrice"></h6>
+      </div>
     </div>
-  </div>
-  <!-- <div class="midbox">
-    <h6 class="customerName">Customer Name</h6>
-    <p style="position: relative; bottom: 18px; left: 20px">Name</p>
-  </div> -->
-  <div class="billbox">
-    <br />
-    <h6 class="contents headings">Movies</h6>
-    <h6 class="contents values" id="moviesClass"></h6>
-    <h6 class="contents headings">Return On</h6>
-    <h6 class="contents values" id="comingDate"></h6>
-    <h6 class="contents headings">Unique ID:</h6>
-    <h6 class="contents values" id="uniqueval"></h6>
-    <!-- <h6 class="contents headings">Address</h6>
-    <h6 class="contents values" id="address"></h6> -->
-    <!-- <div class="continue">
-      <button style="text-align: center" class="btn btn-outline-primary">
-        Download
-      </button>
+    <!-- <div class="midbox">
+      <h6 class="customerName">Customer Name</h6>
+      <p style="position: relative; bottom: 18px; left: 20px">Name</p>
     </div> -->
-    <br />
-    <div class="continue bottomMost">
-      <a class="btn btn-primary" href="/api/movies/movies">Continue Shopping</a>
+    <div class="billbox">
+      <br />
+      <h6 class="contents headings">Movies</h6>
+      <h6 class="contents values" id="moviesClass"></h6>
+      <h6 class="contents headings">Return On</h6>
+      <h6 class="contents values" id="comingDate"></h6>
+      <h6 class="contents headings">Unique ID:</h6>
+      <h6 class="contents values" id="uniqueval"></h6>
+      <!-- <h6 class="contents headings">Address</h6>
+        <h6 class="contents values" id="address"></h6> -->
+      <!-- <div class="continue">
+          <button style="text-align: center" class="btn btn-outline-primary">
+            Download
+          </button>
+        </div> -->
+      <br />
+      <div class="continue bottomMost">
+        <a class="btn btn-primary" href="/api/movies/movies"
+          >Continue Shopping</a
+        >
+      </div>
     </div>
-  </div>
-</body>
+  </body>
 
-<script>
-  getBill();
-  async function getBill() {
-    var data = [];
-    await axios.get("/api/rentals/rentaldisplay").then((response) => {
-      data = response.data;
-    });
+  <script>
+    getBill();
+    async function getBill() {
+      var data = [];
+      await axios.get("/api/rentals/rentaldisplay").then((response) => {
+        data = response.data;
+      });
 
-    document.getElementById("moviesClass").innerHTML = data.rental[0].movies;
-    document.getElementById("totalPrice").innerHTML =
-      "$" + data.rental[0].rentalFee;
+      document.getElementById("moviesClass").innerHTML = data.rental[0].movies;
+      document.getElementById("totalPrice").innerHTML =
+        "$" + data.rental[0].rentalFee;
 
-    document.getElementById("comingDate").innerHTML = data.rental[0].dateCome;
-    document.getElementById(
-      "uniqueval"
-    ).innerHTML = `MOV-${data.rental[0]._id}`;
-    document.getElementById("address").innerHTML = data.rental[0].address;
-  }
-</script>
+      document.getElementById("comingDate").innerHTML = data.rental[0].dateCome;
+      document.getElementById(
+        "uniqueval"
+      ).innerHTML = `MOV-${data.rental[0]._id}`;
+      document.getElementById("address").innerHTML = data.rental[0].address;
+    }
+  </script>
+</html>
 <%- include('./partials/footer') %>

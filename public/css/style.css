@@ -46,6 +46,11 @@ span {
   text-size-adjust: 2rem;
 }
 
+.searchresultsh1 {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
 #input-bar {
   outline: none;
   border: none;
@@ -141,6 +146,47 @@ span {
 
 #cardStyling .a {
   border-radius: 10px;
+  color: var(---clr-text);
+}
+
+.form-form {
+  display: flex;
+  grid-template-columns: auto auto auto;
+}
+
+form {
+  /* position: absolute; */
+  /* top: 200; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+form .input {
+  margin: 20px auto;
+}
+
+.ul-class {
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.ul-class li {
+  width: 200px;
+  padding: 10px 20px;
+  text-align: center;
+  background-color: var(---clr-text);
+  border: 1px solid var(--clr-text);
+  list-style: none;
+}
+
+.ul-class li:first-child {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  background-color: rgb(15, 247, 247);
+  color: var(--clr-background);
 }
 
 .allmovies {

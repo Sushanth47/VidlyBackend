@@ -1,85 +1,84 @@
+<!DOCTYPE html>
 <%- include('./partials/header') %>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>All Movies</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css" />
+  </head>
 
-<title>All Movies</title>
-<head>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap"
-    rel="stylesheet"
-  />
-  <link rel="stylesheet" type="text/css" href="/css/style.css" />
-</head>
+  <body>
+    <section class="header allmovies">
+      <h1>All Movies</h1>
+    </section>
 
-<body>
-  <section class="header allmovies">
-    <h1>All Movies</h1>
-  </section>
+    <section class="search">
+      <form action="/api/movies/search/" method="GET">
+        <div class="search-bar">
+          <input
+            type="search"
+            id="input-bar"
+            name="title"
+            placeholder="Type Movie, Genre or Something"
+          />
+          <button type="submit" id="submitButton">Search</button>
+        </div>
+      </form>
+    </section>
 
-  <div class="search">
-    <form action="/api/movies/search/" method="GET">
-      <div class="search-bar">
-        <input
-          type="search"
-          id="input-bar"
-          name="title"
-          placeholder="Type Movie, Genre or Something"
-        />
-        <button type="submit" id="submitButton">Search</button>
-      </div>
-    </form>
-  </div>
-  <div class="sort">
-    <form
-      class="text-right"
-      action="/api/movies/movies/select"
-      method="get"
-      id="myForm"
-      style="flex-direction: row"
-      onchange="get()"
-    >
-      <span>Sort By &nbsp;</span>
-      <select name="sortBy" class="form-select selectStyle">
-        <option style="font-weight: lighter">Select</option>
-        <option value="Name">Name</option>
-        <option value="Year">Year</option>
-        <option value="Price">Price</option>
-        <option value="IMDb">IMDb</option>
-        <option value="BoxOffice">BoxOffice</option>
-        <option value="Rank">Rank</option>
-        <option value="Availability">Availability</option>
-        <option value="Popularity">Popularity</option>
-        <option value="Genre">Genre</option>
-      </select>
-    </form>
-  </div>
-  <div class="moviesBox">
-    <%movies.forEach(list=>{%>
-    <div id="cardStyling">
-      <a
-        rel="noopener noreferrer"
-        target="_blank"
-        href="/api/movies/<%=list._id%>"
-        ><div>
-          <img class="img" src="<%=list.img%>" alt="Loading..." /></div
-      ></a>
-      <div class="cardBody">
+    <div class="sort">
+      <form
+        class="text-right"
+        action="/api/movies/movies/select"
+        method="get"
+        id="myForm"
+        onchange="get()"
+      >
+        <span>Sort By &nbsp;</span>
+        <select name="sortBy" class="form-select selectStyle">
+          <option style="font-weight: lighter">Select</option>
+          <option value="Name">Name</option>
+          <option value="Year">Year</option>
+          <option value="Price">Price</option>
+          <option value="IMDb">IMDb</option>
+          <option value="BoxOffice">BoxOffice</option>
+          <option value="Rank">Rank</option>
+          <option value="Availability">Availability</option>
+          <option value="Popularity">Popularity</option>
+          <option value="Genre">Genre</option>
+        </select>
+      </form>
+    </div>
+
+    <div class="moviesBox">
+      <%movies.forEach(list=>{%>
+      <div id="cardStyling">
         <a
-          href="/api/movies/<%=list._id%>"
           rel="noopener noreferrer"
           target="_blank"
-          ><h6><%=list.title%> (<%=list.year%>)</h6></a
-        >
+          href="/api/movies/<%=list._id%>"
+          ><div>
+            <img class="img" src="<%=list.img%>" alt="Loading..." /></div
+        ></a>
+        <div class="cardBody">
+          <a
+            href="/api/movies/<%=list._id%>"
+            rel="noopener noreferrer"
+            target="_blank"
+            ><h6><%=list.title%> (<%=list.year%>)</h6></a
+          >
+        </div>
       </div>
+      <%})%>
     </div>
-    <%})%>
-  </div>
-</body>
+  </body>
 
-<script>
-  async function get() {
-    document.getElementById("myForm").submit();
-  }
-</script>
-
+  <script>
+    async function get() {
+      document.getElementById("myForm").submit();
+    }
+  </script>
+</html>
 <%- include('./partials/footer') %>

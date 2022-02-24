@@ -1,21 +1,23 @@
+<!DOCTYPE html>
 <%- include('./partials/header') %>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
   <link
     href="https://fonts.googleapis.com/css2?family=Alegreya:wght@500&display=swap"
     rel="stylesheet"
   />
   <link rel="stylesheet" type="text/css" href="/css/style.css" />
+  <title>Sign Up</title>
 </head>
-<title>Sign Up</title>
-<script
-  src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"
-  data-auto-replace-svg="nest"
-></script>
 
 <body>
   <div>
     <h1 class="text-center mb-5">Vidly</h1>
-
+    
     <div class="container mt--8 pb-5">
       <div class="row justify-content-center">
         <div class="col-lg-5 col-md-7" style="color: blue">
@@ -25,99 +27,99 @@
                 <small>Sign Up!</small>
               </div>
               <%if(message.length>0){%>
-
-              <div
+                
+                <div
                 class="alert alert-danger alert-dismissible fade show"
                 role="alert"
-              >
+                >
                 <strong><%=message%></strong>
                 <button
-                  type="button"
-                  class="close"
-                  data-dismiss="alert"
-                  aria-label="Close"
+                type="button"
+                class="close"
+                data-dismiss="alert"
+                aria-label="Close"
                 >
-                  <span aria-hidden="true">&times;</span>
-                </button>
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <%}%>
+            <form role="form" action="/api/auth/customersignup" method="POST">
+              <div class="form-group mb-3">
+                <div
+                class="
+                input-group input-group-merge input-group-alternative
+                "
+                >
+                <div class="input-group-prepend">
+                  <span class="input-group-text"
+                  ><i class="fas fa-phone"></i
+                    ></span>
+                  </div>
+                  <input
+                  tye="text"
+                  class="form-control"
+                  name="phone"
+                  placeholder="Phone"
+                  required
+                  />
+                </div>
               </div>
-              <%}%>
-              <form role="form" action="/api/auth/customersignup" method="POST">
-                <div class="form-group mb-3">
-                  <div
-                    class="
-                      input-group input-group-merge input-group-alternative
+              <div class="form-group">
+                <div
+                class="
+                input-group input-group-merge input-group-alternative
                     "
                   >
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"
-                        ><i class="fas fa-phone"></i
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"
+                    ><i class="fas fa-user"></i
                       ></span>
                     </div>
                     <input
-                      tye="text"
-                      class="form-control"
-                      name="phone"
-                      placeholder="Phone"
-                      required
+                    class="form-control"
+                    placeholder="Name"
+                    name="name"
+                    type="text"
+                    required
                     />
                   </div>
                 </div>
                 <div class="form-group">
                   <div
-                    class="
-                      input-group input-group-merge input-group-alternative
-                    "
+                  class="
+                  input-group input-group-merge input-group-alternative
+                  "
                   >
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"
-                        ><i class="fas fa-user"></i
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"
+                    ><i class="fas fa-lock"></i
                       ></span>
                     </div>
                     <input
-                      class="form-control"
-                      placeholder="Name"
-                      name="name"
-                      type="text"
-                      required
+                    class="form-control"
+                    placeholder="Password"
+                    name="password"
+                    type="password"
+                    required
                     />
                   </div>
                 </div>
-                <div class="form-group">
-                  <div
-                    class="
-                      input-group input-group-merge input-group-alternative
-                    "
-                  >
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"
-                        ><i class="fas fa-lock"></i
-                      ></span>
-                    </div>
-                    <input
-                      class="form-control"
-                      placeholder="Password"
-                      name="password"
-                      type="password"
-                      required
-                    />
-                  </div>
-                </div>
-
+                
                 <div class="text-center">
                   <button type="submit" class="btn btn-primary my-4">Sign Up</button>
                   
                 </div>
-
+                
                 <div class="text-center">
                   <h6 style="margin: auto" class="text-center"></h6>
-                    Already have an Account?
-                  </h6>
-                  <br /><br /><a
-                    class="btn btn-info"
-                    href="/api/auth/loginCustomer"
-                    >Login</a
-                  >
-                </div>
+                  Already have an Account?
+                </h6>
+                <br /><br /><a
+                class="btn btn-info"
+                href="/api/auth/loginCustomer"
+                >Login</a
+                >
+              </div>
               </form>
             </div>
           </div>
@@ -126,4 +128,5 @@
     </div>
   </div>
 </body>
+</html>
 <%- include('./partials/footer') %>

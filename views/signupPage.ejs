@@ -1,94 +1,102 @@
+<!DOCTYPE html>
 <%- include('./partials/header') %>
-<title>Sign Up</title>
-<head>
-  <link rel="stylesheet" type="text/css" href="/css/style.css" />
-</head>
-<script
-  src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"
-  data-auto-replace-svg="nest"
-></script>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="/css/style.css" />
+    <title>Sign Up</title>
+  </head>
 
-<div>
-  <div class="container mt--8 pb-5">
-    <h1 style="text-align: center">Vidly</h1>
-    <br /><br />
-    <div class="row justify-content-center">
-      <div class="col-lg-5 col-md-7">
-        <div class="card" style="color: red">
-          <div class="card-body px-lg-5 py-lg-5">
-            <div class="text-center mb-4">
-              <small>Sign Up!</small>
-            </div>
-            <form role="form" action="/api/auth/customersignup" method="POST">
-              <div class="form-group mb-3">
-                <div
-                  class="input-group input-group-merge input-group-alternative"
-                >
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"
-                      ><i class="fas fa-envelope-square"></i
-                    ></span>
-                  </div>
-                  <input
-                    type="email"
-                    class="form-control"
-                    name="email"
-                    placeholder="email"
-                  />
-                </div>
+  <body>
+    <div class="container mt--8 pb-5">
+      <h1 style="text-align: center">Vidly</h1>
+      <div class="row justify-content-center">
+        <div class="col-lg-5 col-md-7">
+          <div class="card" style="color: red">
+            <div class="card-body px-lg-5 py-lg-5">
+              <div class="text-center mb-4">
+                <small>Sign Up!</small>
               </div>
-              <div class="form-group">
-                <div
-                  class="input-group input-group-merge input-group-alternative"
-                >
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"
-                      ><i class="fas fa-user"></i
-                    ></span>
+              <form role="form" action="/api/auth/customersignup" method="POST">
+                <div class="form-group mb-3">
+                  <div
+                    class="
+                      input-group input-group-merge input-group-alternative
+                    "
+                  >
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"
+                        ><i class="fas fa-envelope-square"></i
+                      ></span>
+                    </div>
+                    <input
+                      type="email"
+                      class="form-control"
+                      name="email"
+                      placeholder="email"
+                    />
                   </div>
-                  <input
-                    class="form-control"
-                    placeholder="Name"
-                    name="name"
-                    type="text"
-                  />
                 </div>
-              </div>
-              <div class="form-group">
-                <div
-                  class="input-group input-group-merge input-group-alternative"
-                >
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"
-                      ><i class="fas fa-lock"></i
-                    ></span>
+                <div class="form-group">
+                  <div
+                    class="
+                      input-group input-group-merge input-group-alternative
+                    "
+                  >
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"
+                        ><i class="fas fa-user"></i
+                      ></span>
+                    </div>
+                    <input
+                      class="form-control"
+                      placeholder="Name"
+                      name="name"
+                      type="text"
+                    />
                   </div>
-                  <input
-                    class="form-control"
-                    placeholder="Password"
-                    name="password"
-                    type="password"
-                  />
                 </div>
-              </div>
+                <div class="form-group">
+                  <div
+                    class="
+                      input-group input-group-merge input-group-alternative
+                    "
+                  >
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"
+                        ><i class="fas fa-lock"></i
+                      ></span>
+                    </div>
+                    <input
+                      class="form-control"
+                      placeholder="Password"
+                      name="password"
+                      type="password"
+                    />
+                  </div>
+                </div>
 
-              <div class="text-center">
-                <button type="submit" class="btn btn-primary my-4">
-                  Sign Up
-                </button>
-              </div>
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary my-4">
+                    Sign Up
+                  </button>
+                </div>
 
-              <div class="text-center">
-                <h6 style="color: Red">Already have an Account?</h6>
+                <div class="text-center">
+                  <h6 style="color: Red">Already have an Account?</h6>
+                  <br />
+                  <a href="/api/auth/login" class="btn btn-info">Log In</a>
+                </div>
                 <br />
-                <a href="/api/auth/login" class="btn btn-info">Log In</a>
-              </div>
-              <br />
-            </form>
+              </form>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
+  </body>
+</html>
+
 <%- include('./partials/footer') %>

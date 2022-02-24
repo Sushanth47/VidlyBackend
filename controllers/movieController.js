@@ -5,7 +5,8 @@ const { Movie } = require("../models/movie");
 const { Requested } = require("../models/requestedModel");
 const { Genre } = require("../models/genre");
 const { Customer } = require("../models/customer");
-// const { next } = require("cheerio/lib/api/traversing");
+
+
 exports.screenSize = async (req, res) => {
   let screen = req.params.screenSize;
   screen = Math.floor(screen / 250);

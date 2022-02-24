@@ -1,80 +1,90 @@
+<!DOCTYPE html>
 <%- include('./partials/header') %>
-<title>Login | Vidly</title>
-<head>
-  <link rel="stylesheet" type="text/css" href="/css/style.css" />
-</head>
-<style></style>
-<body>
-  <div class="container mt--8 pb-5">
-    <h1 class="text-center mb-5">VIDLY</h1>
-    <br /><br />
-    <div class="row justify-content-center">
-      <div class="col-lg-5 col-md-7">
-        <div class="card border-0 mb-0">
-          <div class="card-body px-lg-5 py-lg-5">
-            <div class="text-center text-muted mb-4">
-              <h5 style="color: red">Sign in</h5>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login | Vidly</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css" />
+  </head>
+
+  <body>
+    <div class="container mt--8 pb-5">
+      <h1 class="text-center mb-5">VIDLY</h1>
+      <br /><br />
+      <div class="row justify-content-center">
+        <div class="col-lg-5 col-md-7">
+          <div class="card border-0 mb-0">
+            <div class="card-body px-lg-5 py-lg-5">
+              <div class="text-center text-muted mb-4">
+                <h5 style="color: red">Sign in</h5>
+              </div>
+
+              <form role="form" action="/api/auth/loginData" method="POST">
+                <div class="form-group mb-3">
+                  <div
+                    class="
+                      input-group input-group-merge input-group-alternative
+                    "
+                  >
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"
+                        ><i class="fas fa-envelope-square"></i
+                      ></span>
+                    </div>
+                    <input
+                      type="email"
+                      class="form-control"
+                      name="email"
+                      placeholder="Email"
+                    />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div
+                    class="
+                      input-group input-group-merge input-group-alternative
+                    "
+                  >
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"
+                        ><i class="fas fa-lock"></i
+                      ></span>
+                    </div>
+                    <input
+                      class="form-control"
+                      placeholder="Password"
+                      name="password"
+                      type="password"
+                    />
+                  </div>
+                </div>
+
+                <div class="text-center">
+                  <input
+                    type="submit"
+                    class="btn btn-primary my-4"
+                    value="Log in"
+                  />
+                </div>
+              </form>
+              <span style="padding-left: 5.9rem; color: red"
+                >Dont have an Account?</span
+              >
+              <br /><br />
+              <a
+                style="text-align: center; padding-left: 5.9rem"
+                href="/api/auth/signupData"
+                ><button type="submit" class="btn btn-success">
+                  Create an account
+                </button></a
+              >
             </div>
-
-            <form role="form" action="/api/auth/loginData" method="POST">
-              <div class="form-group mb-3">
-                <div
-                  class="input-group input-group-merge input-group-alternative"
-                >
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"
-                      ><i class="fas fa-envelope-square"></i
-                    ></span>
-                  </div>
-                  <input
-                    type="email"
-                    class="form-control"
-                    name="email"
-                    placeholder="Email"
-                  />
-                </div>
-              </div>
-              <div class="form-group">
-                <div
-                  class="input-group input-group-merge input-group-alternative"
-                >
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"
-                      ><i class="fas fa-lock"></i
-                    ></span>
-                  </div>
-                  <input
-                    class="form-control"
-                    placeholder="Password"
-                    name="password"
-                    type="password"
-                  />
-                </div>
-              </div>
-
-              <div class="text-center">
-                <input
-                  type="submit"
-                  class="btn btn-primary my-4"
-                  value="Log in"
-                />
-              </div>
-            </form>
-            <span style="padding-left: 5.9rem; color: red"
-              >Dont have an Account?</span
-            >
-            <br /><br />
-            <a
-              style="text-align: center; padding-left: 5.9rem"
-              href="/api/auth/signupData"
-              ><button type="submit" class="btn btn-success">
-                Create an account
-              </button></a
-            >
           </div>
         </div>
       </div>
     </div>
-  </div>
-</body>
+  </body>
+</html>
 <%- include('./partials/footer') %>

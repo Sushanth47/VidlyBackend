@@ -1,9 +1,13 @@
+<!DOCTYPE html>
 <%- include('./partials/header') %>
+<html lang="en">
 <head>
-  
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="/css/style.css" />
+  <title><%=movie.title%> (<%=movie.year%>)</title>
 </head>
-<title><%=movie.title%> (<%=movie.year%>)</title>
 
 <body>
   <%if(message.length>0){%>
@@ -14,71 +18,68 @@
       </button>
     </div>
     <%}%>
-  <div class="row">
-    <a rel="noopener noreferrer" target="_blank" href="<%=movie.img%>"
-      ><img class="moviepagimg"
-       
+    <div class="row">
+      <a rel="noopener noreferrer" target="_blank" href="<%=movie.img%>"
+        ><img class="moviepagimg"
+        
         src="<%=movie.img%>"
-    /></a>
-    
-    <div class="cardDiv">
-      <div style="min-width:2rem;" ><h1><%=movie.title%> (<%=movie.year%>)</h1></div>
-      
-      <h5>Starring: <b><%=movie.cast%></b></h5>
-      <h5>Director: <b><%=movie.director%></b></h5>
-      <h5>
-        <a
-          class="card-text "
-          style="text-align: center; position: relative; right: 10; padding:4px 10px;"
-          href="<%=movie.links%>"
-          rel="noopener noreferrer" target="_blank"
-          id="imdb"
-          >IMDb: <%=movie.imdbRating%></a
-        >
-      </h5>
-      <h5>Genre: <%for(var i=0; i< rgenres.length; i++){%> <a href="/api/movies/search/?title=<%=rgenres[i]%>" style="text-decoration: none;"><%=rgenres[i]%> </a> <%if(i!=rgenres.length-1){%><span>,</span><%}%> <%}%>
-      <h5>CBFC Rating: <b><%if(movie.mpAARating==""){%>U/A<%}else{%><%=movie.mpAARating%><%}%></b></h5>
-      
-      <%if(movie.worldwide!=""){%>
-      <h5>Box Office: <b><%=movie.worldwide%></b></h5>
-      <%} else {}%>
-      
-      <h5>RunTime: <b><%=movie.runtime%></b></h5>
-      <%if(movie.aspectRatio!=""){%>
-      <h5>Aspect Ratio: <b><%=movie.aspectRatio%></b></h5>
-      <%} else {}%>
-      <h5 >
-        Rental Rate (per day):
+        /></a>
+        
+        <div class="cardDiv">
+          <div style="min-width:2rem;" ><h1><%=movie.title%> (<%=movie.year%>)</h1></div>
+          
+          <h5>Starring: <b><%=movie.cast%></b></h5>
+          <h5>Director: <b><%=movie.director%></b></h5>
+          <h5>
+            <a
+            class="card-text "
+            style="text-align: center; position: relative; right: 10; padding:4px 10px;"
+            href="<%=movie.links%>"
+            rel="noopener noreferrer" target="_blank"
+            id="imdb"
+            >IMDb: <%=movie.imdbRating%></a
+            >
+          </h5>
+          <h5>Genre: <%for(var i=0; i< rgenres.length; i++){%> <a href="/api/movies/search/?title=<%=rgenres[i]%>" style="text-decoration: none;"><%=rgenres[i]%> </a> <%if(i!=rgenres.length-1){%><span>,</span><%}%> <%}%>
+            <h5>CBFC Rating: <b><%if(movie.mpAARating==""){%>U/A<%}else{%><%=movie.mpAARating%><%}%></b></h5>
+            
+            <%if(movie.worldwide!=""){%>
+              <h5>Box Office: <b><%=movie.worldwide%></b></h5>
+              <%} else {}%>
+              
+              <h5>RunTime: <b><%=movie.runtime%></b></h5>
+              <%if(movie.aspectRatio!=""){%>
+                <h5>Aspect Ratio: <b><%=movie.aspectRatio%></b></h5>
+                <%} else {}%>
+                <h5 >
+                  Rental Rate (per day):
         <b style="color: #fff">$<%=movie.dailyRentalRate.toFixed(2)%></b
-        >
-      </h5>
-      
-      <%if(movie.numberInStock <=10){%>
-      <h5 style="color: #fff">Available in Stock: <%=movie.numberInStock%></h5>
-      <span style="color: red; font-size: small"
-        >This item is quickly running out of stock</span
-      >
-      <br>
-      <%}%>
-      <%if(movie.iReviewed){%>
-        <span><a href="#"
-          ><button class="btn btn-success">Review</button></a
-        ></span>
-        <%}%>
-        <br>
-        &nbsp;&nbsp;<span
-        ><a href="/api/movies/addToCart/<%=movie._id%>"
-          ><button class="btn btn-success">Add to Cart</button></a
-        ></span
-      >
-
-      &nbsp;&nbsp;<span><a href="/api/movies/addtowishlist/<%=movie._id%>"
-        ><button class="btn btn-success">Wishlist</button></a
+          >
+        </h5>
+        
+        <%if(movie.numberInStock <=10){%>
+          <h5 style="color: #fff">Available in Stock: <%=movie.numberInStock%></h5>
+          <span style="color: red; font-size: small"
+          >This item is quickly running out of stock</span
+          >
+          <br>
+          <%}%>
+          <%if(movie.iReviewed){%>
+            <span><a href="#"
+              ><button class="btn btn-success">Review</button></a
+              ></span>
+              <%}%>
+              <br>
+              &nbsp;&nbsp;<span
+              ><a href="/api/movies/addToCart/<%=movie._id%>"
+                ><button class="btn btn-success">Add to Cart</button></a
+                ></span
+                >
+                &nbsp;&nbsp;<span><a href="/api/movies/addtowishlist/<%=movie._id%>"
+                  ><button class="btn btn-success">Wishlist</button></a
       ></span>
       
     </div>
-    
-    <br /><br />
     
   </div>
   
@@ -86,27 +87,29 @@
     <h4 style="text-align: center">Related Movies</h4>
   </div>
   <br />
-
+  
   <div class="moviesBox">
     <%otherMovies.forEach(list=>{%>
       <div class="card" id="cardStyling">
         <a rel="noopener noreferrer" target="_blank" href="/api/movies/<%=list._id%>"
           ><div class="img-hover">
             <img class="img" src="<%=list.img%>" /></div
-        ></a>
-  
-        <br />
-        <div class="card-body">
-          <a href="/api/movies/<%=list._id%>" rel="noopener noreferrer" target="_blank"
+            ></a>
+            
+            <br />
+            <div class="card-body">
+              <a href="/api/movies/<%=list._id%>" rel="noopener noreferrer" target="_blank"
             ><h6 style="color: white" class="movietitle text-center">
               <%=list.title%> (<%=list.year%>)
             </h6></a
-          >
+            >
+          </div>
         </div>
+        <%})%>
       </div>
-    <%})%>
-  </div>
- 
-</body>
-
-<%- include('./partials/footer') %>
+      
+    </body>
+    
+    </html>
+    <%- include('./partials/footer') %>
+    
