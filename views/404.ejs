@@ -1,63 +1,35 @@
+<!DOCTYPE html>
 <%- include('./partials/header') %>
-<title>404</title>
-<body>
-  <style>
-    .centerBox {
-      border: 1px solid rgb(247, 244, 244);
-      /* border-radius: 15px; */
-      max-width: 45.5rem;
-      height: 455px;
-      margin: auto;
-      padding: 0.8rem;
-      backdrop-filter: blur(6px) saturate(180%);
-      -webkit-backdrop-filter: blur(6px) saturate(180%);
-      border: 1px solid rgba(255, 255, 255, 0.125);
-      box-shadow: 0 0 10px 2px rgb(236, 50, 50);
-    }
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>404</title>
+    <link rel="stylesheet" type="text/css" href="/css/404.css" />
+  </head>
 
-    .centerBox h1 {
-      text-align: center;
-      margin-bottom: 1.5rem;
-    }
-
-    .backButton {
-      margin: auto;
-      text-align: center;
-      margin-bottom: 1.5rem;
-    }
-    h1 {
-      margin-top: 10px;
-      font-family: "Spartan", sans-serif;
-    }
-
-    .buttonBox {
-      /* margin-top: 30px; */
-      /* padding-left: 30px; */
-      max-width: 37.5rem;
-      margin: auto;
-    }
-  </style>
-  <br />
-  <br />
-  <div class="centerBox">
-    <h1 class="text-center">Login to Access this part</h1>
-    <div class="backButton">
-      <button onclick="history.back()" class="btn btn-primary btn-lg">
-        Go Back
-      </button>
-    </div>
-    <div class="row container">
-      <div style="margin: auto; align-items: center">
-        <a
-          class="btn btn-success btn-lg"
-          style="margin-right: 5rem"
-          href="/api/auth/loginCustomer"
-        >
-          Login
-        </a>
-        <a href="/api/auth/signupPage" class="btn btn-info btn-lg">SignUp</a>
+  <body>
+    <div class="centerBox">
+      <h1 class="text-center">Login to Access this part</h1>
+      <div>
+        <div class="two-buttons">
+          <a
+            class="btn btn-success btn-lg"
+            style="margin-right: 5rem"
+            href="/api/auth/loginCustomer"
+          >
+            Login
+          </a>
+          <a href="/api/auth/signupPage" class="btn btn-info btn-lg">SignUp</a>
+        </div>
+      </div>
+      <div class="backButton">
+        <button onclick="history.back()" class="btn btn-primary btn-lg">
+          Go Back
+        </button>
       </div>
     </div>
-  </div>
-</body>
+  </body>
+</html>
 <%- include('./partials/footer') %>

@@ -196,21 +196,21 @@ app.get("/webscrapmoviedata", async (req, res) => {
         $(".ipc-metadata-list__item", html).each(function () {
           const title = $(this).text();
           if (title) {
-            // if (title.startsWith("Director")) {
-            //   const director = title.substr(8, 25);
-            //   list.director = director;
+            if (title.startsWith("Directors")) {
+              const director = title.substring(9, 25);
+              list.director = director;
 
-            //   //  uniquevals
-            // }
+              //  uniquevals
+            }
 
             // if (title.startsWith("Runtime")) {
             //   const runtime = title.substr(7, title.length);
             //   list.runtime = runtime;
             // }
-            if (title.startsWith("Certificate")) {
-              const certificate = title.substr(11, title.length);
-              list.mpAARating = certificate;
-            }
+            // if (title.startsWith("Certificate")) {
+            //   const certificate = title.substr(11, title.length);
+            //   list.mpAARating = certificate;
+            // }
             // if (title.startsWith("Release date")) {
             //   const releasedate = title.substr(12, title.length);
             //   list.releaseDate = releasedate;

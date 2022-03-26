@@ -6,7 +6,6 @@ const { Requested } = require("../models/requestedModel");
 const { Genre } = require("../models/genre");
 const { Customer } = require("../models/customer");
 
-
 exports.screenSize = async (req, res) => {
   let screen = req.params.screenSize;
   screen = Math.floor(screen / 250);
@@ -15,12 +14,17 @@ exports.screenSize = async (req, res) => {
 };
 exports.getMovies = async (req, res) => {
   try {
-    // const pageWidth = req.query.pageWidth;
-    console.log(req.user);
+    return res.status(200).render("movies.ejs");
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+exports.getMoviesJSON = async (req, res) => {
+  try {
     const perPage = 12;
     const page = req.query.pageNo || 1;
     const movieCount = await Movie.countDocuments();
-    console.log(page);
     const movies = await Movie.aggregate([
       {
         $match: { numberInStock: { $gte: 1 } },
@@ -42,7 +46,7 @@ exports.getMovies = async (req, res) => {
         $limit: 12,
       },
     ]);
-    return res.status(200).render("movies.ejs", {
+    return res.status(200).json({
       movies: movies,
       url: process.env.WEBURL,
       movieCount: movieCount,
@@ -51,6 +55,15 @@ exports.getMovies = async (req, res) => {
   } catch (err) {
     console.log(err);
   }
+};
+
+exports.movieCount = async (req, res) => {
+  const perPage = 12;
+  const movieCount = await Movie.countDocuments();
+  return res.status(200).json({
+    perPage,
+    movieCount,
+  });
 };
 
 exports.getAllMovies = async (req, res) => {
@@ -99,7 +112,6 @@ exports.getAllMoviesTester = async (req, res) => {
         },
       },
     ]);
-    movies.forEach((list) => console.log(list.title));
     return res.status(200).json({
       movies: movies,
     });
@@ -200,7 +212,6 @@ exports.getMoviesSort = async (req, res) => {
             title: 1,
             img: 1,
             genreId: 1,
-
             year: 1,
             numberInStock: 1,
             dailyRentalRate: 1,
@@ -216,7 +227,6 @@ exports.getMoviesSort = async (req, res) => {
           $project: {
             title: 1,
             img: 1,
-
             clicks: 1,
             year: 1,
           },
@@ -281,19 +291,200 @@ exports.getMoviesSort = async (req, res) => {
 
 exports.addToCart = async (req, res) => {
   try {
+    const movieId = req.params.movieId;
     await Customer.updateOne(
       { _id: req.user._id },
-      { $addToSet: { cart: req.params.movieId } }
+      { $addToSet: { cart: movieId } }
     );
     req.flash("message", `Movie Added to Cart`);
-    return res.status(200).redirect(`/api/movies/${req.params.movieId}`);
+    return res.status(200).redirect(`/api/movies/${movieId}`);
   } catch (err) {
     console.log(err);
   }
 };
 
 exports.getSpecificMovie = async (req, res) => {
-  console.log(req.user, "req.user");
+  if (req.user) {
+    if (req.user.subject == "User") {
+      var movie = await Movie.aggregate([
+        {
+          $match: { _id: ObjectId(req.params.mid) },
+        },
+        {
+          $lookup: {
+            from: "genres",
+            localField: "genreId",
+            foreignField: "_id",
+            as: "thegenres",
+          },
+        },
+        {
+          $unwind: "$thegenres",
+        },
+        {
+          $project: {
+            title: 1,
+            img: 1,
+            genreId: 1,
+            rank: 1,
+            cast: 1,
+            year: 1,
+            links: 1,
+            numberInStock: 1,
+            dailyRentalRate: 1,
+            ismovieCreated: 1,
+            director: 1,
+            aspectRatio: 1,
+            requestCount: 1,
+            genre: 1,
+            worldwide: 1,
+            imdbRating: 1,
+            runtime: 1,
+            mpAARating: 1,
+            thegenres: 1,
+            clicks: 1,
+          },
+        },
+      ]);
+    } else if (req.user.subject == "Customer") {
+      var customer = await Customer.findOne(
+        { _id: req.user._id },
+        "rentedMovies cart wishList"
+      );
+      var rentedMovies = customer.rentedMovies;
+      var carted = customer.cart;
+      var movie = await Movie.aggregate([
+        {
+          $match: { _id: ObjectId(req.params.mid) },
+        },
+        {
+          $lookup: {
+            from: "genres",
+            localField: "genreId",
+            foreignField: "_id",
+            as: "thegenres",
+          },
+        },
+        {
+          $unwind: "$thegenres",
+        },
+        {
+          $project: {
+            _id: 1,
+            title: 1,
+            img: 1,
+            genreId: 1,
+            rank: 1,
+            cast: 1,
+            year: 1,
+            links: 1,
+            numberInStock: 1,
+            dailyRentalRate: 1,
+            iReviewed: { $in: ["$_id", rentedMovies] },
+            isCarted: { $in: ["$_id", carted] },
+            ismovieCreated: 1,
+            director: 1,
+            aspectRatio: 1,
+            requestCount: 1,
+            genre: 1,
+            worldwide: 1,
+            imdbRating: 1,
+            runtime: 1,
+            mpAARating: 1,
+            thegenres: 1,
+            clicks: 1,
+          },
+        },
+      ]);
+    } else {
+      var movie = await Movie.aggregate([
+        {
+          $match: { _id: ObjectId(req.params.mid) },
+        },
+        {
+          $lookup: {
+            from: "genres",
+            localField: "genreId",
+            foreignField: "_id",
+            as: "thegenres",
+          },
+        },
+        {
+          $unwind: "$thegenres",
+        },
+        {
+          $project: {
+            _id: 1,
+            title: 1,
+            img: 1,
+            genreId: 1,
+            rank: 1,
+            cast: 1,
+            year: 1,
+            links: 1,
+            numberInStock: 1,
+            dailyRentalRate: 1,
+            ismovieCreated: 1,
+            director: 1,
+            aspectRatio: 1,
+            requestCount: 1,
+            genre: 1,
+            worldwide: 1,
+            imdbRating: 1,
+            runtime: 1,
+            mpAARating: 1,
+            thegenres: 1,
+            clicks: 1,
+          },
+        },
+      ]);
+    }
+  }
+  var rgenres = [];
+
+  var tester = await Movie.findOne(
+    { _id: req.params.mid },
+    "genreId clicks"
+  ).populate("genreId");
+
+  tester.genreId.forEach((list) => {
+    rgenres.push(list.name);
+  });
+
+  // var otherMovies = await Movie.find(
+  //   {
+  //     _id: { $nin: [req.params.mid] },
+  //   },
+  //   " title year img genreId"
+  // ).populate("genreId", "_id");
+  // shuffleArray(otherMovies);
+  // otherMovies.forEach((list) => {
+  //   for (var i = 0; i < tester.genreId.length; i++) {
+  //     list.genreId.forEach((lost) => {
+  //       if (othermovies.length > 11) return;
+  //       if (
+  //         lost._id.toString() == tester.genreId[i]._id.toString() &&
+  //         !othermovies.includes(list)
+  //       ) {
+  //         othermovies.push(list);
+  //       }
+  //     });
+  //   }
+  // });
+
+  tester.clicks += 1;
+  tester.save();
+  // var p = [...new Set(othermovies)];
+  // p.length = Math.min(p.length, 12);
+  return res.status(200).render("./moviePage.ejs", {
+    movie: movie[0],
+    // otherMovies: othermovies,
+    rgenres,
+    message: req.flash("message"),
+  });
+};
+
+exports.getSpecificMovieJSON = async (req, res) => {
   if (req.user) {
     if (req.user.subject == "User") {
       var movie = await Movie.aggregate([
@@ -449,7 +640,7 @@ exports.getSpecificMovie = async (req, res) => {
     },
     " title year img genreId"
   ).populate("genreId", "_id");
-
+  shuffleArray(otherMovies);
   otherMovies.forEach((list) => {
     for (var i = 0; i < tester.genreId.length; i++) {
       list.genreId.forEach((lost) => {
@@ -468,13 +659,20 @@ exports.getSpecificMovie = async (req, res) => {
   tester.save();
   var p = [...new Set(othermovies)];
   p.length = Math.min(p.length, 12);
-  return res.status(200).render("./moviePage.ejs", {
+  return res.status(200).json({
     movie: movie[0],
     otherMovies: othermovies,
     rgenres,
-    message: req.flash("message"),
+    // message: req.flash("message"),
   });
 };
+
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
 
 exports.addToWishlist = async (req, res) => {
   try {
@@ -572,7 +770,7 @@ exports.createMovies = async (req, res) => {
             const title = $(this).text();
             if (title && title.startsWith(".", 1)) {
               const i = title.indexOf("/");
-              var rat = title.substr(0, i);
+              var rat = title.substring(0, i);
               if (!movie.imdbRating) newrat = rat;
             }
           });
@@ -580,25 +778,30 @@ exports.createMovies = async (req, res) => {
             const title = $(this).text();
             if (title) {
               if (title.startsWith("Director")) {
-                const director = title.substr(8, 25);
+                const director = title.substring(8, title.length);
+                direcTor = director;
+              }
+
+              if (title.startsWith("Directors")) {
+                const director = title.substring(9, title.length);
                 direcTor = director;
               }
 
               if (title.startsWith("Runtime")) {
-                const runtime = title.substr(7, title.length);
+                const runtime = title.substring(7, title.length);
                 runTime = runtime;
               }
               if (title.startsWith("Certificate")) {
-                const certificate = title.substr(11, title.length);
+                const certificate = title.substring(11, title.length);
                 mpAA = certificate;
               }
               if (title.startsWith("Gross worldwide")) {
                 const i = title.indexOf("$");
-                const gross = title.substr(i, title.length);
+                const gross = title.substring(i, title.length);
                 worldwide = gross;
               }
               if (title.startsWith("Aspect ratio")) {
-                const rattio = title.substr(12, title.length);
+                const rattio = title.substring(12, title.length);
                 ratio = rattio;
               }
             }
@@ -689,6 +892,7 @@ exports.createMoviesPage = async (req, res) => {
 };
 
 exports.displayMovie = async (req, res) => {
+  // console.log(req.user.subject);
   const movie = await Movie.aggregate([
     {
       $match: { title: { $regex: req.query.title, $options: "$i" } },

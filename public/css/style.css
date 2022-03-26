@@ -54,8 +54,9 @@ span {
 #input-bar {
   outline: none;
   border: none;
-  width: 35%;
-  border-radius: 3px;
+  width: 30rem;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
   padding: 0.5rem 1rem;
   box-shadow: 0px 2px 4px #242424;
 }
@@ -68,6 +69,25 @@ span {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+}
+
+.search-active-class {
+  position: relative;
+  bottom: 68px;
+}
+
+.movie-details {
+  display: flex;
+}
+
+[data-ul] {
+  display: none;
+  list-style: none;
+  padding: 4px 24px 5px 5px;
+  background-color: #fff;
+  color: #000;
+  border-radius: 0px;
 }
 
 .recommend {
@@ -154,7 +174,7 @@ span {
   grid-template-columns: auto auto auto;
 }
 
-form {
+.create-form {
   /* position: absolute; */
   /* top: 200; */
   display: flex;
@@ -163,7 +183,11 @@ form {
   align-items: center;
 }
 
-form .input {
+.inputPageBtn {
+  margin-right: 7px;
+}
+
+.create-form > .input {
   margin: 20px auto;
 }
 
@@ -281,3 +305,12 @@ a:hover {
 .cardDiv h5 {
   margin-top: 25px;
 }
+
+@media only screen and (max-width: 840px) {
+  .movie-details {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+} ;

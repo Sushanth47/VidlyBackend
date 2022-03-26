@@ -18,7 +18,7 @@
       </button>
     </div>
     <%}%>
-    <div class="row">
+    <div class="movie-details">
       <a rel="noopener noreferrer" target="_blank" href="<%=movie.img%>"
         ><img class="moviepagimg"
         
@@ -32,8 +32,6 @@
           <h5>Director: <b><%=movie.director%></b></h5>
           <h5>
             <a
-            class="card-text "
-            style="text-align: center; position: relative; right: 10; padding:4px 10px;"
             href="<%=movie.links%>"
             rel="noopener noreferrer" target="_blank"
             id="imdb"
@@ -83,33 +81,62 @@
     
   </div>
   
-  <div class="container">
+  <div>
     <h4 style="text-align: center">Related Movies</h4>
   </div>
-  <br />
+ 
   
-  <div class="moviesBox">
-    <%otherMovies.forEach(list=>{%>
-      <div class="card" id="cardStyling">
-        <a rel="noopener noreferrer" target="_blank" href="/api/movies/<%=list._id%>"
-          ><div class="img-hover">
-            <img class="img" src="<%=list.img%>" /></div
-            ></a>
-            
-            <br />
-            <div class="card-body">
-              <a href="/api/movies/<%=list._id%>" rel="noopener noreferrer" target="_blank"
-            ><h6 style="color: white" class="movietitle text-center">
-              <%=list.title%> (<%=list.year%>)
-            </h6></a
-            >
-          </div>
-        </div>
-        <%})%>
-      </div>
-      
-    </body>
+    <div class="moviesBox" id="moviesBox">
     
-    </html>
+    </div>
+      
+</body>
+</html>
+<script>
+  moviesjson();
+  function moviesjson() {
+      var mainSection = {};
+      mainSection = document.getElementById("moviesBox");
+      const link = window.location.pathname;
+      const ki = link.substr(12, link.length);
+
+      var div = {};
+      // console.log(typeof k);
+      axios.get(`/api/movies/${ki}/getSpecificMovieJSON`).then((response) => {
+        const movies = response.data.otherMovies;
+        console.log(movies)
+        const movieCount = response.data.movieCount;
+        const perPage = response.data.perPage;
+        movies.forEach((list) => {
+          div = document.createElement("div");
+          const imgDiv = document.createElement("div");
+          const imgTag = document.createElement("img");
+          const aTag = document.createElement("a");
+          const cardBodyDiv = document.createElement("div");
+          const otherAnchor = document.createElement("a");
+          const h6Tag = document.createElement("h6");
+          div.setAttribute("id", "cardStyling");
+          aTag.href = `/api/movies/${list._id}`;
+          aTag.target = `blank`;
+          aTag.rel = `noopener noreferrer`;
+          imgTag.classList.add("img");
+          imgTag.src = `${list.img}`;
+          imgDiv.appendChild(imgTag);
+          aTag.appendChild(imgDiv);
+          cardBodyDiv.setAttribute("class", "cardBody");
+          otherAnchor.href = `/api/movies/${list._id}`;
+          otherAnchor.target = `blank`;
+          otherAnchor.rel = `noopener noreferrer`;
+          h6Tag.innerText = `${list.title} (${list.year})`;
+          otherAnchor.appendChild(h6Tag);
+          cardBodyDiv.appendChild(otherAnchor);
+          div.appendChild(aTag);
+          div.appendChild(cardBodyDiv);
+          mainSection.appendChild(div);
+        });
+      });
+      return k;
+    }
+</script>
     <%- include('./partials/footer') %>
     

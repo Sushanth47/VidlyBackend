@@ -13,75 +13,107 @@
       <h6>All of the World Cinema At One Place</h6>
     </section>
 
-    <section class="search">
+    <div class="search">
       <form action="/api/movies/search/" method="GET">
         <div class="search-bar">
-          <input
-            type="search"
-            name="title"
-            id="input-bar"
-            placeholder="Type Movie, Genre or Something"
-          />
-          <button type="submit" id="submitButton">Search</button>
+          <div style="display: flex; flex-direction: column">
+            <input
+              type="search"
+              name="title"
+              id="input-bar"
+              placeholder="Type Movie, Genre or Something"
+              autocomplete="off"
+            />
+            <ul class="search-ul" data-ul></ul>
+          </div>
+          <!-- <button type="submit" id="submitButton" class=".search-active-class">
+            Search
+          </button> -->
         </div>
       </form>
-    </section>
+    </div>
 
-    <section class="moviesBox">
-      <%movies.forEach(list=>{%>
-      <div id="cardStyling">
-        <a
-          rel="noopener noreferrer"
-          target="_blank"
-          href="/api/movies/<%=list._id%>"
-          ><div>
-            <img class="img" src="<%=list.img%>" alt="Loading..." /></div
-        ></a>
-        <div class="cardBody">
-          <a
-            href="/api/movies/<%=list._id%>"
-            rel="noopener noreferrer"
-            target="_blank"
-            ><h6><%=list.title%> (<%=list.year%>)</h6></a
-          >
-        </div>
-      </div>
-      <%})%>
-    </section>
+    <div class="moviesBox" id="moviesBox"></div>
 
-    <%var i=0 %>
-    <form action="/api/movies/movies/" method="GET" class="text-center">
-      <%for(i=0; i< movieCount/perPage; i++){%>
-      <input
-        type="submit"
-        name="pageNo"
-        class="btn btn-info"
-        value="<%=i+1%>"
-      />
-      <%}%>
-    </form>
+    <div class="text-center" id="page-form"></div>
   </body>
-
   <script>
-    var movieData = [];
-    var screensize;
     const searchBar = document.getElementById("input-bar");
-    searchBar.addEventListener("keyup", (e) => {
+    searchBar.addEventListener("input", (e) => {
       console.log(e.target.value);
       axios
         .get(`/api/movies/movies/test?title=${e.target.value}`)
         .then((response) => {
-          movieData = response.data;
-          console.log(movieData);
+          const movieData = response.data.movies;
+          const ulList = document.querySelector("[data-ul]");
+          const lI = document.createElement("li");
+          movieData.forEach((movie) => {
+            lI.innerText = movie.title;
+            ulList.appendChild(lI);
+          });
         });
     });
-    function getScreenSize() {
-      const innerWidth = window.screen.availWidth;
-      axios.get(`/api/movies/screensize/${innerWidth}`).then((response) => {
-        console.log(response.data, "daya");
+
+    moviesjson(1);
+    axios.get(`/api/movies/movieCount`).then((dat) => {
+      const movieRatio = dat.data.movieCount / dat.data.perPage;
+      var pageForm = document.getElementById("page-form");
+      for (var p = 0; p < Math.floor(movieRatio); p++) {
+        const pageInput = document.createElement("button");
+        pageInput.setAttribute("class", "btn btn-info inputPageBtn");
+        pageInput.innerText = p + 1;
+        pageInput.type = "submit";
+        pageInput.onclick = function () {
+          console.log("clicked", parseInt(pageInput.innerText) + 1);
+          moviesjson(parseInt(pageInput.innerText) + 1);
+          // window.scroll({
+          //   down: 100,
+          //   behavior: smooth,
+          // });
+        };
+        pageForm.appendChild(pageInput);
+      }
+    });
+    function moviesjson(k) {
+      var mainSection = {};
+      mainSection = document.getElementById("moviesBox");
+
+      var div = {};
+      // console.log(typeof k);
+      axios.get(`/api/movies/moviesjson?pageNo=${k}`).then((response) => {
+        const movies = response.data.movies;
+        const movieCount = response.data.movieCount;
+        const perPage = response.data.perPage;
+        movies.forEach((list) => {
+          div = document.createElement("div");
+          const imgDiv = document.createElement("div");
+          const imgTag = document.createElement("img");
+          const aTag = document.createElement("a");
+          const cardBodyDiv = document.createElement("div");
+          const otherAnchor = document.createElement("a");
+          const h6Tag = document.createElement("h6");
+          div.setAttribute("id", "cardStyling");
+          aTag.href = `/api/movies/${list._id}`;
+          aTag.target = `blank`;
+          aTag.rel = `noopener noreferrer`;
+          imgTag.classList.add("img");
+          imgTag.src = `${list.img}`;
+          imgDiv.appendChild(imgTag);
+          aTag.appendChild(imgDiv);
+          cardBodyDiv.setAttribute("class", "cardBody");
+          otherAnchor.href = `/api/movies/${list._id}`;
+          otherAnchor.target = `blank`;
+          otherAnchor.rel = `noopener noreferrer`;
+          h6Tag.innerText = `${list.title} (${list.year})`;
+          otherAnchor.appendChild(h6Tag);
+          cardBodyDiv.appendChild(otherAnchor);
+          div.appendChild(aTag);
+          div.appendChild(cardBodyDiv);
+          mainSection.appendChild(div);
+        });
       });
+      return k;
     }
-    getScreenSize();
   </script>
 
   <%- include('./partials/footer') %>

@@ -1,0 +1,24 @@
+.centerBox {
+  max-width: 45.5rem;
+  height: 255px;
+  margin: 40px auto;
+  padding: 0.8rem;
+  border: 1px solid black;
+}
+
+.centerBox h1 {
+  text-align: center;
+  margin: 20px auto;
+  font-family: "Spartan", sans-serif;
+}
+
+.backButton {
+  margin: auto;
+  text-align: center;
+  margin: 1.5rem auto;
+}
+.two-buttons {
+  text-align: center;
+  margin: auto;
+  align-items: center;
+}
